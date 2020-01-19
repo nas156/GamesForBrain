@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
+<link href="../../static/css/userpanel.css" th:href="@{/css/userpanel.css}" rel="stylesheet">
+
+<head>
+    <title th:text="#{string.login.title.please.login}"></title>
+</head>
+<body>
+<div class="container">
+    <div class="error" th:if="${param.error}" th:text="#{string.login.invalid.username.password}">
+    </div>
+    <div class="panel-heading">
+        <h3 class="panel-title" th:text="#{string.login.pleaselogin}"></h3>
+    </div>
+    <div class="panel-body">
+        <div class="field" th:if="${param.logout}" th:text="#{string.login.user.been.logged.out}">
+        </div>
+        <form th:action="@{/login}" method="post">
+            <div class="field">
+                <label th:text="#{string.login.login}">
+                </label>
+                <input type="text" name="username" class="input"/>
+            </div>
+            <div class="field">
+                <label th:text="#{string.login.password}">
+                </label>
+                <input type="password" name="password" class="input"/>
+            </div>
+            <div class="field"><input type="submit" th:value="#{string.login.button.login}" class="button"/></div>
+        </form>
+        <form class="register" th:action="@{/registration}" method="get">
+            <div class="field"><input type="submit" th:value="#{string.login.button.register}" class="button"/></div>
+        </form>
+    </div>
+    <div class="locale">
+        <a href="?lang=en">EN</a>
+        |
+        <a href="?lang=ua">UA</a>
+    </div>
+
+</div>
+</body>
+</html>
