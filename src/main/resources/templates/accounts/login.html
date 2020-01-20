@@ -15,7 +15,7 @@
     <div class="panel-body">
         <div class="field" th:if="${param.logout}" th:text="#{string.login.user.been.logged.out}">
         </div>
-        <form th:action="@{/login}" method="post">
+        <form th:action="@{/accounts/login/g}" method="post">
             <div class="field">
                 <label th:text="#{string.login.login}">
                 </label>
