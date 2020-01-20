@@ -9,7 +9,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import ua.project.games.entity.User;
 import ua.project.games.entity.enums.Role;
+import ua.project.games.exceptions.UserExistsException;
 import ua.project.games.repository.UserRepository;
+import ua.project.games.service.UserService;
 
 import java.util.Collections;
 import java.util.Map;
@@ -19,8 +21,13 @@ import java.util.Optional;
 @Controller
 public class AccountController {
 
+    final
+    UserService userService;
+
     @Autowired
-    private UserRepository userRepository;
+    public AccountController(UserService userService) {
+        this.userService = userService;
+    }
 
 
     @GetMapping(value = "/login")
@@ -39,17 +46,13 @@ public class AccountController {
 
     @PostMapping("/registration")
     public String addUser(User user, Map<String, Object> model) {
-        User userFromDb = userRepository.findByUsername(user.getUsername());
-
-        if (userFromDb != null) {
-            model.put("message", "User exists!");
+        try {
+            userService.registerUser(user);
+        } catch (UserExistsException e) {
+            e.printStackTrace();
+            model.put("message", e.getMessage());
             return "accounts/registration";
         }
-
-        user.setActive(true);
-        user.setRole(Role.USER);
-        userRepository.save(user);
-
         return "redirect:/accounts/login";
     }
 }
