@@ -15,7 +15,7 @@
     <div class="panel-body">
         <div class="field" th:if="${param.logout}" th:text="#{string.login.user.been.logged.out}">
         </div>
-        <form th:action="@{/accounts/login/g}" method="post">
+        <form th:action="@{/accounts/login}" method="post">
             <div class="field">
                 <label th:text="#{string.login.login}">
                 </label>
@@ -28,7 +28,7 @@
             </div>
             <div class="field"><input type="submit" th:value="#{string.login.button.login}" class="button"/></div>
         </form>
-        <form class="register" th:action="@{/registration}" method="get">
+        <form class="register" th:action="@{/accounts/registration/}" method="get">
             <div class="field"><input type="submit" th:value="#{string.login.button.register}" class="button"/></div>
         </form>
     </div>

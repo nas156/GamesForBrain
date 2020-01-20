@@ -16,10 +16,10 @@ public class User implements UserDetails {
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
 
-    @Column(nullable = false)
+    @Column()
     private String lastName;
 
-    @Column(nullable = false)
+    @Column()
     private String firstName;
 
     @Column(nullable = false,unique = true)
@@ -30,6 +30,14 @@ public class User implements UserDetails {
 
     @Column
     private boolean active;
+
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
+    }
 
     @Enumerated(EnumType.STRING)
     private Role role;

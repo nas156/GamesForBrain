@@ -31,18 +31,8 @@ public class UserService implements UserDetailsService {
         }
     }
 
-    public Role getUserRole(String username){
-        return userRepository.findByUsername(username).get().getRole();
-    }
-
-
-
     @Override
     public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
-        Optional<User> userOpt = Optional.ofNullable(userRepository
-                .findByUsername(s)
-                .orElseThrow(() -> new UsernameNotFoundException(s + " not found")));
-        return userOpt.get();
+        return userRepository.findByUsername(s);
     }
-
 }
