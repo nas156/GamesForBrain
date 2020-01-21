@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
-<link href="../static/css/userpanel.css" th:href="@{/css/userpanel.css}" rel="stylesheet">
+<!--<link href="../static/css/userpanel.css" th:href="@{/css/userpanel.css}" rel="stylesheet">-->
 
 <head>
     <title th:text="#{string.reg.title.registration}"></title>
@@ -8,9 +8,12 @@
 <body>
 Add new user
 <form th:action="@{/accounts/registration}" method="post">
-    <div><label> User Name : <input type="text" name="username"/> </label></div>
-    <div><label> Password: <input type="password" name="password"/> </label></div>
-    <div><input type="submit" value="Sign In"/></div>
+    <div class = "field"><label> User Name : <input type="text" name="username"/> </label></div>
+    <div class = "field"><label> Password: <input type="password" name="password"/> </label></div>
+    <div class = "field"><input type="submit" value="Sign In"/></div>
+    <div>
+        <!--<span class="error" style="font-size: medium" th:if="${#fields.hasErrors('username')}" th:errors="#{string.reg.login.exists}"></span> -->
+    </div>
 </form>
 </body>
 </html>
