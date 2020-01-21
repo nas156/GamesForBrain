@@ -49,9 +49,7 @@ public class AccountController {
         try {
             userService.registerUser(user);
         } catch (UserExistsException e) {
-            e.printStackTrace();
-            model.put("message", e.getMessage());
-            return "accounts/registration";
+            return "redirect:/accounts/registration?error";
         }
         return "redirect:/accounts/login";
     }
