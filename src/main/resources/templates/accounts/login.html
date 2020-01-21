@@ -1,43 +1,39 @@
-<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
-<link href="../../static/css/userpanel.css" th:href="@{/css/userpanel.css}" rel="stylesheet">
+
 
 <head>
-    <title th:text="#{string.login.title.please.login}"></title>
+    <title th:text="#{string.reg.title.login}"></title>
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <link href="../static/css/userpanel.css" th:href="@{/css/userpanel.css}" rel="stylesheet">
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 </head>
-<body>
-<div class="container">
-    <div class="error" th:if="${param.error}" th:text="#{string.login.invalid.username.password}">
-    </div>
-    <div class="panel-heading">
-        <h3 class="panel-title" th:text="#{string.login.pleaselogin}"></h3>
-    </div>
-    <div class="panel-body">
-        <div class="field" th:if="${param.logout}" th:text="#{string.login.user.been.logged.out}">
-        </div>
-        <form th:action="@{/accounts/login}" method="post">
-            <div class="field">
-                <label th:text="#{string.login.login}">
-                </label>
-                <input type="text" name="username" class="input"/>
-            </div>
-            <div class="field">
-                <label th:text="#{string.login.password}">
-                </label>
-                <input type="password" name="password" class="input"/>
-            </div>
-            <div class="field"><input type="submit" th:value="#{string.login.button.login}" class="button"/></div>
-        </form>
-        <form class="register" th:action="@{/accounts/registration/}" method="get">
-            <div class="field"><input type="submit" th:value="#{string.login.button.register}" class="button"/></div>
-        </form>
-    </div>
-    <div class="locale">
-        <a href="?lang=en">EN</a>
-        |
-        <a href="?lang=ua">UA</a>
-    </div>
 
+<body>
+<div class="wrapper fadeInDown">
+    <div id="formContent">
+        <form th:action="@{/accounts/login}" method="post">
+            <h2 class="fadeIn second" th:text="#{string.reg.title.login}"></h2>
+            <label for="username"><input type="text" id="username" class="fadeIn third" name="username"
+                                         th:placeholder="#{string.login.placeholder.username}"></label>
+            <label for="password"><input type="text" id="password" class="fadeIn fourth" name="password"
+                                         th:placeholder="#{string.login.placeholder.password}"></label>
+            <input type="submit" class="fadeIn fifth" th:value="#{string.login.button.login}">
+            <p id="error" class="FadeIn fifth" th:if="${param.error}" th:text="#{string.login.invalid.username.password}"></p>
+            <p id="logout" class="FadeIn fifth" th:if="${param.logout}" th:text="#{string.login.user.been.logged.out}"></p>
+        </form>
+        <div id="formFooter">
+            <ul>
+                <li><a class="underlineHover" th:href="@{/accounts/registration}" th:text="#{string.login.button.register}"></a></li>
+                <li><a class="underlineHover" href="#" th:text="#{string.login.forgot}"></a></li>
+            </ul>
+        </div>
+
+    </div>
+    <ul id="lang">
+        <li><a class="underlineHover" href="?lang=en" th:text="EN"></a></li>
+        <li><a class="underlineHover" href="?lang=ua" th:text="UA"></a></li>
+    </ul>
 </div>
 </body>
 </html>
