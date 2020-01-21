@@ -47,7 +47,8 @@ ul li {
     color: #56baed;
 }
 
-#error {
+.error {
+    display:block;
     font-size : 13px;
     color: #ed1327
 }
@@ -130,7 +131,7 @@ input[type=button]:active, input[type=submit]:active, input[type=reset]:active  
     transform: scale(0.95);
 }
 
-input[type=text] {
+input[type=text], input[type=email], input[type=password]  {
     background-color: #f6f6f6;
     color: #0d0d0d;
     padding: 15px 32px;
@@ -150,12 +151,12 @@ input[type=text] {
     border-radius: 5px 5px 5px 5px;
 }
 
-input[type=text]:focus {
+input[type=text]:focus, input[type=email]:focus, input[type=password]:focus {
     background-color: #fff;
     border-bottom: 2px solid #5fbae9;
 }
 
-input[type=text]::placeholder {
+input[type=text]::placeholder input[type=email]::placeholder, input[type=password]::placeholder {
     color: #cccccc;
 }
 
@@ -214,9 +215,9 @@ input[type=text]::placeholder {
     -moz-animation-fill-mode:forwards;
     animation-fill-mode:forwards;
 
-    -webkit-animation-duration:1.2s;
-    -moz-animation-duration:1.2s;
-    animation-duration:1.2s;
+    -webkit-animation-duration:1.8s;
+    -moz-animation-duration:1.8s;
+    animation-duration:1.8s;
 }
 
 .fadeIn.first {
@@ -248,6 +249,24 @@ input[type=text]::placeholder {
     animation-delay: 1.2s;
 }
 
+.fadeIn.sixth {
+    -webkit-animation-delay: 1.4s;
+    -moz-animation-delay: 1.4s;
+    animation-delay: 1.4s;
+}
+
+.fadeIn.seventh {
+    -webkit-animation-delay: 1.6s;
+    -moz-animation-delay: 1.6s;
+    animation-delay: 1.6s;
+}
+
+.fadeIn.eighth {
+    -webkit-animation-delay: 1.8s;
+    -moz-animation-delay: 1.8s;
+    animation-delay: 1.8s;
+}
+
 /* Simple CSS3 Fade-in Animation */
 .underlineHover:after {
     display: block;
@@ -270,6 +289,10 @@ input[type=text]::placeholder {
 
 
 
+#age {
+    margin: 5px 20px 20px 20px;
+    display: block;
+}
 /* OTHERS */
 
 *:focus {

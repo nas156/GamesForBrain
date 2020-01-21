@@ -1,10 +1,13 @@
 package ua.project.games.entity;
 
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import ua.project.games.entity.enums.Role;
 
 import javax.persistence.*;
+import java.util.Calendar;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
@@ -27,6 +30,40 @@ public class User implements UserDetails {
 
     @Column(nullable = false)
     private String password;
+
+    public Calendar getAge() {
+        return age;
+    }
+
+    public void setAge(Calendar age) {
+        this.age = age;
+    }
+
+    @Column(nullable = false)
+    private String email;
+
+    @Transient
+    private String confirmPassword;
+
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @Temporal(TemporalType.DATE)
+    private Calendar age;
+
+    public String getConfirmPassword() {
+        return confirmPassword;
+    }
+
+    public void setConfirmPassword(String confirmPassword) {
+        this.confirmPassword = confirmPassword;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
 
     @Column
     private boolean active;

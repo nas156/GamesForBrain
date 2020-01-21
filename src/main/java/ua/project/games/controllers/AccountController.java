@@ -3,16 +3,16 @@ package ua.project.games.controllers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.*;
 import ua.project.games.entity.User;
 import ua.project.games.entity.enums.Role;
+import ua.project.games.exceptions.InvalidUserException;
 import ua.project.games.exceptions.UserExistsException;
 import ua.project.games.repository.UserRepository;
 import ua.project.games.service.UserService;
 
+import javax.validation.Valid;
 import java.util.Collections;
 import java.util.Map;
 import java.util.Optional;
@@ -23,6 +23,7 @@ public class AccountController {
 
     final
     UserService userService;
+
 
     @Autowired
     public AccountController(UserService userService) {
@@ -40,16 +41,16 @@ public class AccountController {
     }
 
     @GetMapping(value = "/registration")
-    public String getRegistrationFrom(){
+    public String getRegistrationFrom(@ModelAttribute("user") User user){
         return "accounts/registration";
     }
 
-    @PostMapping("/registration")
-    public String addUser(User user, Map<String, Object> model) {
+    @RequestMapping(value = "/registration", method = RequestMethod.POST)
+    public String addUser(@Valid @ModelAttribute("user") User user, Model model, BindingResult result) {
         try {
-            userService.registerUser(user);
-        } catch (UserExistsException e) {
-            return "redirect:/accounts/registration?error";
+            userService.registerUser(user, result);
+        } catch (UserExistsException | InvalidUserException e) {
+            return "accounts/registration";
         }
         return "redirect:/accounts/login";
     }
