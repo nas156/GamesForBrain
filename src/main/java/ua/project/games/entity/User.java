@@ -3,7 +3,6 @@ package ua.project.games.entity;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import ua.project.games.entity.enums.Role;
 
 import javax.persistence.*;

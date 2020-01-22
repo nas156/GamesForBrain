@@ -9,26 +9,26 @@ import ua.project.games.entity.User;
 import ua.project.games.entity.enums.Role;
 import ua.project.games.exceptions.InvalidUserException;
 import ua.project.games.exceptions.UserExistsException;
-import ua.project.games.repository.UserRepository;
+import ua.project.games.service.RegistrationService;
 import ua.project.games.service.UserService;
 
 import javax.validation.Valid;
-import java.util.Collections;
-import java.util.Map;
-import java.util.Optional;
+import java.security.Principal;
 
 @RequestMapping("/accounts")
 @Controller
 public class AccountController {
 
-    final
-    UserService userService;
+    final UserService userService;
+    private RegistrationService registrationService;
 
 
     @Autowired
-    public AccountController(UserService userService) {
+    public AccountController(UserService userService, RegistrationService registrationService) {
         this.userService = userService;
+        this.registrationService = registrationService;
     }
+
 
 
     @GetMapping(value = "/login")
@@ -48,7 +48,7 @@ public class AccountController {
     @RequestMapping(value = "/registration", method = RequestMethod.POST)
     public String addUser(@Valid @ModelAttribute("user") User user, Model model, BindingResult result) {
         try {
-            userService.registerUser(user, result);
+            registrationService.registerUser(user, result);
         } catch (UserExistsException | InvalidUserException e) {
             return "accounts/registration";
         }
