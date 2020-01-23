@@ -14,9 +14,9 @@
     <div id="formContent">
         <form th:action="@{/accounts/login}" method="post">
             <h2 class="fadeIn second" th:text="#{string.reg.title.login}"></h2>
-            <label for="username"><input type="text" id="username" class="fadeIn third" name="username"
+            <label for="username"><input required type="text" id="username" class="fadeIn third" name="username"
                                          th:placeholder="#{string.login.placeholder.username}"></label>
-            <label for="password"><input type="text" id="password" class="fadeIn fourth" name="password"
+            <label for="password"><input required type="password" id="password" class="fadeIn fourth" name="password"
                                          th:placeholder="#{string.login.placeholder.password}"></label>
             <input type="submit" class="fadeIn fifth" th:value="#{string.login.button.login}">
             <p id="error" class="FadeIn fifth" th:if="${param.error}" th:text="#{string.login.invalid.username.password}"></p>

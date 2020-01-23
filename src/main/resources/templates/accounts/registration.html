@@ -12,14 +12,39 @@
 <body>
 <div class="wrapper fadeInDown">
     <div id="formContent">
-        <form th:action="@{/accounts/registration}" method="post">
+        <form th:action="@{/accounts/registration}" th:object="${user}" method="post">
             <h2 class="fadeIn second" th:text="#{string.reg.title.registration}"></h2>
-            <label for="username"><input type="text" id="username" class="fadeIn third" name="username"
-                                         th:placeholder="#{string.reg.placeholder.username}"></label>
-            <label for="password"><input type="text" id="password" class="fadeIn fourth" name="password"
-                                         th:placeholder="#{string.reg.placeholder.password}"></label>
-            <input type="submit" class="fadeIn fifth" th:value="#{string.reg.button.registration}">
-            <p id="error" class="FadeIn fifth" th:if="${param.error}" th:text="#{string.reg.login.exists}"></p>
+            <label th:for="username">
+                <input th:field="*{username}" required type="text" id="username"
+                                            class="fadeIn third"
+                                            th:placeholder="#{string.reg.placeholder.username}">
+            </label>
+            <span th:errors="*{username}" class="error fadeIn third"></span>
+
+            <label th:for="email">
+                <input th:field="*{email}" required type="email" id="email" class="fadeIn fourth"
+                                         th:placeholder="#{string.reg.placeholder.email}">
+            </label>
+            <span th:errors="*{email}" class="error fadeIn fourth"></span>
+
+            <label th:for="password"><input th:field="*{password}" required type="password" id="password"
+                                            class="fadeIn fifth"
+                                            th:placeholder="#{string.reg.placeholder.password}">
+            </label>
+            <span th:errors="*{password}" class="error fadeIn fifth"></span>
+
+            <label th:for="confirmPassword"><input th:field="*{confirmPassword}" required type="password" id="confirmPassword"
+                                            class="fadeIn sixth"
+                                            th:placeholder="#{string.reg.placeholder.passwordConfirm}">
+            </label>
+            <span th:errors="*{confirmPassword}" class="error fadeIn sixth"></span>
+
+            <label th:for="age"><input th:field="*{age}" required type="date" id="age"
+                                                   class="fadeIn seventh">
+            </label>
+            <span th:errors="*{age}" class="error fadeIn seventh"></span>
+
+            <input type="submit" class="fadeIn eighth" th:value="#{string.reg.button.registration}">
         </form>
         <div id="formFooter">
             <a class="underlineHover" th:href="@{/accounts/login}" th:text="#{string.login.button.login}"></a></li>
