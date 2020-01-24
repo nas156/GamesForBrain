@@ -1,5 +1,5 @@
 function main(){
-    if (isStarted == false){
+    if (isStarted === false){
         textAlign(CENTER, CENTER);
         textSize(24);
         fill(0, 52, 123);

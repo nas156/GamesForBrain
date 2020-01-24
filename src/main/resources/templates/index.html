@@ -1,18 +1,108 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.w3.org/1999/xhtml">
 <head>
-    <meta charset="UTF-8">
-    <title>Index</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+          integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link rel="stylesheet" th:href="@{/css/main.css}">
+    <title>Hello, world!</title>
 </head>
 <body>
-<div sec:authorize="isAuthenticated()">
-    <p th:text="${username}"></p>
+
+<nav class="slideInLeft fadeIn">
+    <div class="row">
+        <div class="col-2"></div>
+        <div class="col-8">
+            <div class="row">
+                <div class="col-auto d-flex align-items-center">
+                    <a id="logo" class="navbar-brand">GameForBrain</a>
+                </div>
+                <div style="display: inline-block;" class="col-5 d-flex align-items-center">
+                    <img id="stat" th:src="@{/img/index/statistic.png}" alt="stat">
+                    <a href="#" class="item nav-item nav-link active">Statistic</a>
+                </div>
+                <div style="display: inline-block" class="col-3 d-flex align-items-center justify-content-end">
+                    <div sec:authorize="isAuthenticated()">
+                        <a href="#" class="item nav-item nav-link active" th:text="${username}"></a>
+                        <a href="#" class="item nav-item nav-link active">logout</a>
+                    </div>
+                    <div sec:authorize="isAnonymous()">
+                        <a class="item nav-item nav-link active" href="/accounts/login">Login</a>
+                        <a class="item nav-item nav-link active" href="/accounts/registration">Registration</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-2"></div>
+    </div>
+</nav>
+
+<div class="slideInRight row fadeIn" id="secblock">
+    <div class="col d-flex justify-content-center align-items-center">
+        <img id="cup" th:src="@{/img/index/cup.png}" alt="cup">
+    </div>
+    <div class="col-lg-5">
+        <div class="row">
+            <h1 style="margin-top: 2rem;">Test and train your reaction, verbal, number, visual memory,typing and
+                hearing</h1>
+        </div>
+        <div class="row">
+            <a href="#">
+                <button class="btn btn-primary btn-lg btn-block" style=" margin: 5rem; padding: 3rem; border-radius: 9999px; ">
+                    <h1 style="font-size: 3rem; color:#d3d3d3;">GO TO TESTS</h1>
+                </button>
+            </a>
+        </div>
+    </div>
+    <div class="col"></div>
 </div>
-<div sec:authorize="isAnonymous()">
-    <ul>
-        <li><a href="/accounts/login">Login</a></li>
-        <li><a href="/accounts/registration">Registration</a></li>
-    </ul>
+<div class="slideInLeft fadeIn row" id="thirdblock">
+    <div class="col-3 d-flex justify-content-center align-items-end ">
+        <img th:src="@{/img/index/laptop.png}" id="laptop">
+    </div>
+    <div class="col-6">
+        <h1 style="margin-top: 2rem">OUR TESTS</h1>
+        <div class="row d-flex justify-content-around">
+            <a th:href="@{/tests/repeatNumbers}">
+                <button class="testbtn btn btn-primary">1</button>
+            </a>
+            <a href="#">
+                <button class="testbtn btn btn-primary">2</button>
+            </a>
+            <a href="#">
+                <button class="testbtn btn btn-primary">3</button>
+            </a>
+        </div>
+        <div class="row d-flex justify-content-around">
+            <a href="#">
+                <button class="testbtn btn btn-primary">4</button>
+            </a>
+            <a href="#">
+                <button class="testbtn btn btn-primary">5</button>
+            </a>
+            <a href="#">
+                <button class="testbtn btn  btn-primary">6</button>
+            </a>
+        </div>
+    </div>
+    <div class="col-3 d-flex justify-content-center">
+        <img th:src="@{/img/index/robot.png}" id="robot">
+    </div>
 </div>
+
+
+<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+        integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
+        crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+        crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+        integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
+        crossorigin="anonymous"></script>
 </body>
 </html>
