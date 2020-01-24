@@ -21,14 +21,13 @@ import javax.sql.DataSource;
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
-    @Autowired
-    private DataSource dataSource;
+
 
     private UserService userService;
+
     @Autowired
     public WebSecurityConfig(UserService userService) {
         this.userService = userService;
-
     }
 
     @Override
@@ -46,14 +45,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     }
 
-    @Override
-    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.jdbcAuthentication()
-                .dataSource(dataSource)
-                .passwordEncoder(NoOpPasswordEncoder.getInstance())
-                .usersByUsernameQuery("SELECT username, password,active  FROM usr WHERE username=?").
-                authoritiesByUsernameQuery("SELECT username, role FROM usr WHERE username=?");
-    }
+
 
     @Bean
     public BCryptPasswordEncoder passwordEncoder() {

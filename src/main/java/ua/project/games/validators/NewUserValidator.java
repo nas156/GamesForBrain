@@ -15,7 +15,7 @@ public class NewUserValidator implements Validator {
     public void validate(Object target, Errors errors) {
         User user = (User) target;
         if(user.getPassword().length() < 8) {
-            errors.rejectValue("password", "1", "password must contain at least 8 characters");
+            errors.rejectValue("password", "1", "#{string.password.length}");
             return;
         }
         try {
