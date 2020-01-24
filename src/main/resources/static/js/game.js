@@ -1,24 +1,38 @@
 function game(rng, width, height, delay, numbersAmount) {  // delay in milliseconds
-    this.init = function () {
+    this.init = function(){
+        // creation arguments
         this.rng = rng;
         this.width = width;
         this.height = height;
         this.delay = delay;
-        this.numbersAmount = numbersAmount;
+        this.numbersAmount = numbersAmount - 1;  // because incrementing just after start of the game
+
+        // global parameters
+        this.numOfGames = 0;
+        this.totalScore = 0;
+        this.avgScore = 0;
+        this.accuracy = 0;
+    }
+
+    this.newGame = function () {
+        // changing global params
+        this.numOfGames += 1;
+        this.numbersAmount += 1
+
         this.genTime = 0;
         this.counter = 0;
         this.numArr = [];
         this.currentNum = 0;
         this.stages = ["justAfter1Stage", "UserInputStage", "SubmittingNumber",
-            "CorrectNum", "InCorrectNum", "ResultStage"]
+            "CorrectNum", "InCorrectNum", "ResultStage", "End game"]
         this.stage = -1;
 
         // for userInputStage
         this.pressedDigits = [];
         this.correctAnswers = 0;
     }
-
     this.init();
+    this.newGame();
 
     this.generateNum = function () {
         return Math.floor(Math.random() * this.rng);
@@ -67,9 +81,21 @@ function game(rng, width, height, delay, numbersAmount) {  // delay in milliseco
         text(res, WIDTH / 2, HEIGHT / 2);
     }
 
+    this.drawHeader = function(){
+        textSize(15);
+        textAlign(CENTER, CENTER);
+        fill(0, 52, 123);
+        let txt = "Games played: " + this.numOfGames;
+        text(txt, WIDTH / 4, HEIGHT / 8);
+        txt = "Numbers amount: " + this.numbersAmount;
+        text(txt, WIDTH * 0.75, HEIGHT / 8);
+        textSize(18);
+        txt = "Total score: " + this.totalScore;
+        text(txt, WIDTH / 2, HEIGHT * 0.06);
+    }
+
     // in keyTyped func
     this.userInputStage = function () {
-        console.log(key);
         if (this.stage === 0 || this.stage === 1) {
             this.pressedDigits.push(key);
             if (this.pressedDigits.length !== 0) {
@@ -95,16 +121,21 @@ function game(rng, width, height, delay, numbersAmount) {  // delay in milliseco
             }
         } else if (this.stage === 5) {
             if (keyCode === 13) {
-                this.init();
+                this.newGame();
             }
         }
         if (this.counter === this.numArr.length - 1) {
             this.stage = 5;
+            this.totalScore += this.correctAnswers;
+            this.avgScore = (this.totalScore / this.numOfGames).toFixed(2);
+
+
         }
     };
 
     // in main draw
     this.draw = function () {
+        this.drawHeader();
         if (this.stage >= 0) {
             if (this.stage === 0) {
                 this.drawUserInput();
