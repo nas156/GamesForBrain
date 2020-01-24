@@ -2,6 +2,7 @@
 
 
 <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title th:text="#{string.reg.title.login}"></title>
     <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
     <link href="../static/css/userpanel.css" th:href="@{/css/userpanel.css}" rel="stylesheet">
@@ -19,7 +20,7 @@
             <label for="password"><input required type="password" id="password" class="fadeIn fourth" name="password"
                                          th:placeholder="#{string.login.placeholder.password}"></label>
             <input type="submit" class="fadeIn fifth" th:value="#{string.login.button.login}">
-            <p id="error" class="FadeIn fifth" th:if="${param.error}" th:text="#{string.login.invalid.username.password}"></p>
+            <p class="FadeIn fifth error" th:if="${param.error}" th:text="#{string.login.invalid.username.password}"></p>
             <p id="logout" class="FadeIn fifth" th:if="${param.logout}" th:text="#{string.login.user.been.logged.out}"></p>
         </form>
         <div id="formFooter">

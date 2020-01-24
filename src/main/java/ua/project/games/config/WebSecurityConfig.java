@@ -34,7 +34,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
-                .antMatchers("/" ,"/js/*", "/accounts/login/**", "/css/*", "/accounts/registration/**", "/games/**").permitAll()
+                .antMatchers("/", "/tests/*/" ,"/js/*", "/img/**", "/accounts/login/**", "/css/*", "/accounts/registration/**").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .exceptionHandling().accessDeniedPage("/denied")
