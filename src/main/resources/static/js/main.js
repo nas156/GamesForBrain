@@ -34,7 +34,8 @@ function setup() {
                       width=WIDTH,
                       height=HEIGHT,
                       delay=600,
-                      numbersAmount=3);
+                      numbersAmount=3,
+                      maxMistakes=1);
 }
 
 function draw() {
