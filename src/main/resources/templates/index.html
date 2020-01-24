@@ -53,7 +53,7 @@
         <div class="row">
             <a href="#">
                 <button class="btn btn-primary btn-lg btn-block" style=" margin: 5rem; padding: 3rem; border-radius: 9999px; ">
-                <h1 style="font-size: 3rem; color:#d3d3d3;">GO TO TESTS</h1>
+                    <h1 style="font-size: 3rem; color:#d3d3d3;">GO TO TESTS</h1>
                 </button>
             </a>
         </div>
@@ -67,7 +67,7 @@
     <div class="col-6">
         <h1 style="margin-top: 2rem">OUR TESTS</h1>
         <div class="row d-flex justify-content-around">
-            <a href="#">
+            <a th:href="@{/tests/repeatNumbers}">
                 <button class="testbtn btn btn-primary">1</button>
             </a>
             <a href="#">
@@ -106,12 +106,3 @@
         crossorigin="anonymous"></script>
 </body>
 </html>
-<!--<div sec:authorize="isAuthen    ticated()">-->
-<!--    <h2 th:text="${username}"></h2>-->
-<!--</div>-->
-<!--<div sec:authorize="isAnonymous()">-->
-<!--    <ul>-->
-<!--        <li><a href="/accounts/login">Login</a></li>-->
-<!--        <li><a href="/accounts/registration">Registration</a></li>-->
-<!--    </ul>-->
-<!--</div>-->
