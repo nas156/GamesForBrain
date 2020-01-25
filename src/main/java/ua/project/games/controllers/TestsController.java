@@ -12,4 +12,10 @@ public class TestsController {
     public String getRepeatNumbers () {
         return "games/repeatNumbers";
     }
+
+
+    @GetMapping(value="/reactionGame")
+    public String getReactionGame () {
+        return "games/reactionGame";
+    }
 }
