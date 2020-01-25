@@ -43,4 +43,9 @@ public class TestsController {
     public List<TestStatistic> getAllTestsStatistic(Principal principal) {
         return testStatisticService.findAllTestsByUsername(principal.getName());
     }
+
+    @GetMapping(value = "/repeatSequence")
+    public String getRepeatSequence() {
+        return "games/repeatSequence";
+    }
 }
