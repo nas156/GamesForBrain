@@ -6,36 +6,41 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import ua.project.games.entity.TestStatistic;
-import ua.project.games.entity.User;
-import ua.project.games.repository.TestStatisticRepository;
+import ua.project.games.service.TestStatisticService;
 import ua.project.games.service.UserService;
 
+import java.security.Principal;
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 @RequestMapping("tests")
 public class TestsController {
 
+    private final TestStatisticService testStatisticService;
+    private final UserService userService;
+
     @Autowired
-    private TestStatisticRepository repo;
-    @Autowired
-    private UserService serv;
+    public TestsController(TestStatisticService testStatisticService, UserService userService) {
+        this.testStatisticService = testStatisticService;
+        this.userService = userService;
+    }
 
     @GetMapping(value = "/repeatNumbers")
-    public String getRepeatNumbers() {
+    public String getRepeatNumbersTest() {
         return "games/repeatNumbers";
     }
 
 
     @GetMapping(value = "/reactionGame")
-    public String getReactionGame() {
+    public String getReactionTest() {
         return "games/reactionGame";
     }
 
-    @GetMapping(value = "/get/tets")
+
+    @GetMapping(value = "/get/tests")
     @ResponseBody
-    public List<TestStatistic> getRactionGame() {
-        User usr = serv.loadUserByUsername("pavel");
-        return repo.findAllByUser(usr);
+    public List<TestStatistic> getAllTestsStatistic(Principal principal) {
+        return testStatisticService.findAllTestsByUsername(principal.getName());
     }
 }

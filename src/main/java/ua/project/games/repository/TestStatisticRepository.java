@@ -5,8 +5,8 @@ import ua.project.games.entity.TestStatistic;
 import ua.project.games.entity.User;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface TestStatisticRepository extends JpaRepository<TestStatistic, Long> {
-    List<TestStatistic> findAllByUser(User user);
-
+    Optional<List<TestStatistic>> findAllByUser_Username(String username);
 }
