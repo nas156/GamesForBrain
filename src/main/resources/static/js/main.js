@@ -27,12 +27,15 @@ function setup() {
     WIDTH = 400;
     HEIGHT = 400;
     isStarted = false;
-    createCanvas(WIDTH, HEIGHT);
+
+    cnv = createCanvas(WIDTH, HEIGHT);
+    cnv.parent('rep-num-game');
     game = new game(rng=100,
                       width=WIDTH,
                       height=HEIGHT,
                       delay=600,
-                      numbersAmount=5);
+                      numbersAmount=3,
+                      maxMistakes=1);
 }
 
 function draw() {
