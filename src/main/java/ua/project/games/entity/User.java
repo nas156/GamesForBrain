@@ -1,15 +1,13 @@
 package ua.project.games.entity;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import ua.project.games.entity.enums.Role;
 
 import javax.persistence.*;
-import java.util.Calendar;
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 @Entity
 @Table(name = "usr")
@@ -40,6 +38,18 @@ public class User implements UserDetails {
 
     @Column(nullable = false)
     private String email;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    @JsonManagedReference
+    private List<TestStatistic> tests;
+
+    public List<TestStatistic> getTests() {
+        return tests;
+    }
+
+    public void setTests(List<TestStatistic> tests) {
+        this.tests = tests;
+    }
 
     @Transient
     private String confirmPassword;
@@ -80,12 +90,13 @@ public class User implements UserDetails {
 
     public User(){}
 
-    public User(String lastName, String firstName, String username, String password, Role role) {
+    public User(String lastName, String firstName, String username, String password, Role role, String email) {
         this.lastName = lastName;
         this.firstName = firstName;
         this.username = username;
         this.password = password;
         this.role = role;
+        this.email = email;
     }
 
 
