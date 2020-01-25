@@ -1,5 +1,6 @@
 package ua.project.games.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -28,6 +29,8 @@ public class TestStatistic {
     private LocalDate testDate;
 
     @ManyToOne
+    @JoinColumn(name = "usr_id")
+    @JsonBackReference
     private User user;
 
     @Enumerated(EnumType.STRING)
