@@ -37,6 +37,11 @@ public class TestsController {
         return "games/reactionGame";
     }
 
+    @GetMapping(value = "/isPrevGame")
+    public String getPrevGame() {
+        return "games/isPrevGame";
+    }
+
 
     @GetMapping(value = "/get/tests")
     @ResponseBody
