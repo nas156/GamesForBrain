@@ -4,6 +4,7 @@ function game(width, height, gridLen, seqLen) {
     this.height = height;
     this.gridLen = gridLen;
     this.seqLen = seqLen;
+    this.txtSize = Math.floor(this.width / 17);
   };
 
   this.init();
@@ -20,7 +21,7 @@ function game(width, height, gridLen, seqLen) {
   };
 
   this.drawStartScreen = () => {
-    textSize(30);
+    textSize(this.txtSize);
     textAlign(CENTER, CENTER);
     fill(0, 52, 123);
     let txt = "Try to repeat tiles in the same order\n"
@@ -32,7 +33,7 @@ function game(width, height, gridLen, seqLen) {
   };
 
   this.drawHeader = () => {
-    textSize(18);
+    textSize(this.txtSize);
     textAlign(CENTER, CENTER);
     fill(0, 52, 123);
     let txt = "Sequence length: " + this.seqLen;
@@ -40,7 +41,7 @@ function game(width, height, gridLen, seqLen) {
   };
 
   this.drawGameOver = () => {
-    textSize(30);
+    textSize(this.txtSize);
     textAlign(CENTER, CENTER);
     fill(0, 52, 123);
     let txt = "Game Over\nYour last sequence length: " + this.seqLen;
@@ -90,7 +91,10 @@ function game(width, height, gridLen, seqLen) {
       this.seqLen += 1;
     } else if (this.stage === 10) {
       this.stage = 1;
-      this.grid = new grid(size = this.gridLen, [100, 150], [500, 550], this.seqLen)
+      let padding = 100;
+      let yPaddingTop = 50
+      this.grid = new grid(size = this.gridLen, [padding, padding + yPaddingTop],
+                           [this.width - padding, this.height - padding + yPaddingTop], this.seqLen)
       this.grid.stage = 1;
       this.grid.genSeq();
     }

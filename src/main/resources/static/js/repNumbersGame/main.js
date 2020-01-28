@@ -1,7 +1,7 @@
 function main() {
   if (isStarted === false) {
     textAlign(CENTER, CENTER);
-    textSize(24);
+    textSize(Math.floor(WIDTH / 17));
     fill(0, 52, 123);
     text('Try to memorize all numbers', WIDTH / 2, HEIGHT / 2);
     text('Press "Enter" to start', WIDTH / 2, HEIGHT / 2 + 50);
@@ -23,8 +23,8 @@ function keyTyped() {
 
 
 function setup() {
-  WIDTH = 400;
-  HEIGHT = 400;
+  WIDTH = 700;
+  HEIGHT = 700;
   isStarted = false;
 
   cnv = createCanvas(WIDTH, HEIGHT);

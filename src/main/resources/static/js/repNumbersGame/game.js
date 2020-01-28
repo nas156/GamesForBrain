@@ -7,6 +7,7 @@ function game(rng, width, height, delay, numbersAmount, maxMistakes) {  // delay
     this.delay = delay;
     this.numbersAmount = numbersAmount - 1;  // because incrementing just after start of the game
     this.maxMistakes = maxMistakes;
+    this.txtSize = Math.floor(this.width / 17)
 
     // global parameters
     this.numOfGames = 0;
@@ -41,42 +42,42 @@ function game(rng, width, height, delay, numbersAmount, maxMistakes) {  // delay
   };
 
   this.drawNumberFromDigit = function () {
-    textSize(40);
+    textSize(Math.floor(this.txtSize * 1.5));
     textAlign(CENTER, CENTER);
     fill(0, 52, 123);
     text(this.pressedDigits.join(separator = ""), WIDTH / 2, HEIGHT / 2);
   };
 
   this.drawNumber = function (num) {
-    textSize(40);
+    textSize(Math.floor(this.txtSize * 1.5));
     textAlign(CENTER, CENTER);
     fill(0, 52, 123);
     text(num, WIDTH / 2, HEIGHT / 2);
   };
 
   this.drawUserInput = function () {
-    textSize(20);
+    textSize(Math.floor(this.txtSize * 1.5));
     textAlign(CENTER, CENTER);
     fill(0, 52, 123);
     text("Type the numbers", WIDTH / 2, HEIGHT / 2);
   };
 
   this.drawCorrect = function () {
-    textSize(40);
+    textSize(Math.floor(this.txtSize * 1.5));
     textAlign(CENTER, CENTER);
     fill(50, 200, 20);
     text("Correct!", WIDTH / 2, HEIGHT / 2);
   };
 
   this.drawInCorrect = function () {
-    textSize(40);
+    textSize(Math.floor(this.txtSize * 1.5));
     textAlign(CENTER, CENTER);
     fill(200, 20, 20);
     text("Wrong!", WIDTH / 2, HEIGHT / 2);
   };
 
   this.drawResult = function () {
-    textSize(40);
+    textSize(Math.floor(this.txtSize * 1.5));
     textAlign(CENTER, CENTER);
     fill(0, 52, 123);
     let res = "Correct answers: " + this.correctAnswers;
@@ -84,7 +85,7 @@ function game(rng, width, height, delay, numbersAmount, maxMistakes) {  // delay
   };
 
   this.drawHeader = function () {
-    textSize(15);
+    textSize(Math.floor(this.txtSize * 0.7));
     textAlign(CENTER, CENTER);
     fill(0, 52, 123);
     let txt = "Stage: " + this.numOfGames;
@@ -93,14 +94,13 @@ function game(rng, width, height, delay, numbersAmount, maxMistakes) {  // delay
     text(txt, WIDTH * 0.5, HEIGHT / 8);
     txt = "Lives left: " + (this.maxMistakes - this.mistakes);
     text(txt, WIDTH * 0.8, HEIGHT / 8);
-    textSize(18);
     txt = "Total score: " + this.totalScore;
     text(txt, WIDTH / 2, HEIGHT * 0.06);
 
   };
 
   this.drawEndGame = function () {
-    textSize(30);
+    textSize(Math.floor(this.txtSize * 0.7));
     textAlign(CENTER, CENTER);
     fill(0, 52, 123);
     let txt = "Game Over";
