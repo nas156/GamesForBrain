@@ -17,7 +17,7 @@ function setup() {
 }
 
 function draw() {
-  background(80);
+  background(228);
   game.draw();
 }
 

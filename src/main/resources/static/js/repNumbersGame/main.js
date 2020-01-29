@@ -2,7 +2,7 @@ function main() {
   if (isStarted === false) {
     textAlign(CENTER, CENTER);
     textSize(Math.floor(WIDTH / 17));
-    fill(0, 52, 123);
+    fill(75, 111, 255);
     text('Try to memorize all numbers', WIDTH / 2, HEIGHT / 2);
     text('Press "Enter" to start', WIDTH / 2, HEIGHT / 2 + 50);
     if (keyIsDown(13)) {
@@ -38,6 +38,6 @@ function setup() {
 }
 
 function draw() {
-  background(220);
+  background(228);
   main();
 }

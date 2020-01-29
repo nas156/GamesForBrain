@@ -15,15 +15,10 @@ function game(width, height, gridLen, seqLen) {
     this.stage = 0;
   };
 
-  this.drawGrid = () => {
-    fill(200, 180, 160);
-    noStroke();
-  };
-
   this.drawStartScreen = () => {
     textSize(this.txtSize);
     textAlign(CENTER, CENTER);
-    fill(0, 52, 123);
+    fill(75, 111, 255);
     let txt = "Try to repeat tiles in the same order\n"
       + "as they were lightened\n"
       + "You won't start next stage until you \n"
@@ -35,7 +30,7 @@ function game(width, height, gridLen, seqLen) {
   this.drawHeader = () => {
     textSize(this.txtSize);
     textAlign(CENTER, CENTER);
-    fill(0, 52, 123);
+    fill(75, 111, 255);
     let txt = "Sequence length: " + this.seqLen;
     text(txt, this.width / 2, this.height / 8);
   };
@@ -43,7 +38,7 @@ function game(width, height, gridLen, seqLen) {
   this.drawGameOver = () => {
     textSize(this.txtSize);
     textAlign(CENTER, CENTER);
-    fill(0, 52, 123);
+    fill(75, 111, 255);
     let txt = "Game Over\nYour last sequence length: " + this.seqLen;
     text(txt, this.width / 2, this.height / 2);
   };
@@ -99,6 +94,4 @@ function game(width, height, gridLen, seqLen) {
       this.grid.genSeq();
     }
   }
-
-
 }
