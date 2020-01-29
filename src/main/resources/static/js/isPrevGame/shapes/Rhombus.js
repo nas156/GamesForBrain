@@ -1,5 +1,5 @@
 function Rhombus() {
-  this.diagonal = CANVAS_WIDTH * 3 / 10
+  this.diagonal = CANVAS_WIDTH * 3 / 10;
 
   this.draw = color => {
     noStroke();

@@ -1,9 +1,10 @@
-nav {
+#nav {
     background-color: #4b6fff;
 }
 
 *{
-    //border: red solid 1px;
+    margin : 0;
+    padding : 0;
 }
 
 h1 {
@@ -87,7 +88,7 @@ a {
     font-size: 20px;
 }
 
-#secblock {
+.secblock {
     display: flex;
     background: #e4e4e4;
 }

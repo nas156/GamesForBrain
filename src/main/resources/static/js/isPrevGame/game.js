@@ -4,9 +4,9 @@ function game() {
   this.singlChange = new singFunc(change);
 
   this.gameBegin = () => {
-    background(0, 102, 204); //blue
+    background(228, 228, 288); //gray
     textSize(CANVAS_HEIGHT / 20);
-    fill(255);
+    fill(75, 111, 255);
     text("Press Enter to start", CANVAS_WIDTH / 2, CANVAS_HEIGHT / 2);
     textAlign(CENTER);
     document.addEventListener("keypress", function handler(e) {
@@ -18,7 +18,7 @@ function game() {
   };
 
   this.firstShape = () => {
-    background(0, 102, 204); //blue
+    background(228, 228, 228); //gray
     this.randShape.run();
     currentShape.form.draw(currentShape.color);
     this.singTimeOut.run(() => {
@@ -30,7 +30,7 @@ function game() {
 
 
   this.showShape = () => {
-    background(0, 102, 204);//blue
+    background(228, 228, 228);//gray
     this.singlChange.run();
     let prevFormIndex = Object.keys(shapes).indexOf(getKeyByValue(shapes, currentShape.form));
     let prevColorIndex = Object.keys(colors).indexOf(getKeyByValue(colors, currentShape.color));
@@ -43,9 +43,9 @@ function game() {
 
   this.gameOver = () => {
     time = 40;
-    background(0, 102, 204); //blue
+    background(228, 228, 228); //gray
     textSize(CANVAS_HEIGHT / 20);
-    fill(255);
+    fill(75, 111, 255);
     text(`You lose, your score is ${score}.\n Press enter to restart`, CANVAS_WIDTH / 2, CANVAS_HEIGHT / 2);
     textAlign(CENTER);
     document.addEventListener("keypress", function handler(e) {

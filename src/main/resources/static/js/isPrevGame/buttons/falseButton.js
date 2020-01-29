@@ -10,7 +10,8 @@ function falseButton() {
       wi = $("#false");
       const posX = CANVAS_WIDTH - CANVAS_WIDTH / 5 - wi.width() * 2;
       const posY = CANVAS_HEIGHT - CANVAS_HEIGHT / 10;
-      this.button.position(posX, posY);
+      //this.button.position(posX, posY);
+      this.button.parent("buttons");
       this.button.mousePressed(compare);
       this.executable = false;
     }

@@ -1,5 +1,5 @@
-const CANVAS_WIDTH = 700;
-const CANVAS_HEIGHT = 700;
+const CANVAS_WIDTH = 500;
+const CANVAS_HEIGHT = 500;
 const Game = new game();
 let stage = 0;
 const g = new Gauss();
@@ -28,7 +28,8 @@ const colors = {
 
 
 function setup() {
-  cnv = createCanvas(CANVAS_WIDTH, CANVAS_HEIGHT);
+  let cnv = createCanvas(CANVAS_WIDTH, CANVAS_HEIGHT);
+  cnv.parent("canvas")
 }
 
 function draw() {
