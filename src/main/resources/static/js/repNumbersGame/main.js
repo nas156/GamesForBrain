@@ -21,6 +21,12 @@ function keyTyped() {
   }
 }
 
+function keyPressed() {
+  if ((game.stage === 1) && (game.pressedDigits.length > 0) && keyCode === 8){
+    game.pressedDigits.pop();
+  }
+}
+
 
 function setup() {
   WIDTH = 700;
