@@ -53,4 +53,9 @@ public class TestsController {
     public String getRepeatSequence() {
         return "games/repeatSequence";
     }
+
+    @GetMapping(value = "/countGreen")
+    public String getCountGreen() {
+        return "games/countGreenGame";
+    }
 }
