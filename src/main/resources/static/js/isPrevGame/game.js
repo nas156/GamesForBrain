@@ -3,10 +3,10 @@ function game() {
   this.singTimeOut = new singFunc(timeDelay);
   this.singlChange = new singFunc(change);
 
-	this.gameBegin = () => {
-    background(0, 102, 204); //blue
-    textSize(CANVAS_HEIGHT/20);
-    fill(255)
+  this.gameBegin = () => {
+    background(228, 228, 288); //gray
+    textSize(CANVAS_HEIGHT / 20);
+    fill(75, 111, 255);
     text("Press Enter to start", CANVAS_WIDTH / 2, CANVAS_HEIGHT / 2);
     textAlign(CENTER);
     document.addEventListener("keypress", function handler(e) {
@@ -16,11 +16,12 @@ function game() {
       }
     });
   };
+
   this.firstShape = () => {
-    background(0, 102, 204); //blue
+    background(228, 228, 228); //gray
     this.randShape.run();
     currentShape.form.draw(currentShape.color);
-    this.singTimeOut.run( () => {
+    this.singTimeOut.run(() => {
       stage = 2;
       this.randShape.executable = true;
       this.singTimeOut.executable = true;
@@ -29,7 +30,7 @@ function game() {
 
 
   this.showShape = () => {
-    background(0, 102, 204);//blue
+    background(228, 228, 228);//gray
     this.singlChange.run();
     let prevFormIndex = Object.keys(shapes).indexOf(getKeyByValue(shapes, currentShape.form));
     let prevColorIndex = Object.keys(colors).indexOf(getKeyByValue(colors, currentShape.color));
@@ -37,23 +38,24 @@ function game() {
     currentShape.form.draw(currentShape.color);
     tb.draw();
     fb.draw();
-  }
+    timer.run();
+  };
 
   this.gameOver = () => {
-    background(0, 102, 204); //blue
-    textSize(CANVAS_HEIGHT/20);
-    fill(255)
+    time = 40;
+    background(228, 228, 228); //gray
+    textSize(CANVAS_HEIGHT / 20);
+    fill(75, 111, 255);
     text(`You lose, your score is ${score}.\n Press enter to restart`, CANVAS_WIDTH / 2, CANVAS_HEIGHT / 2);
     textAlign(CENTER);
     document.addEventListener("keypress", function handler(e) {
       if (e.keyCode === 13) {
-        stage = 1;``
+        score = 0;
+        stage = 1;
         this.removeEventListener("keypress", handler);
       }
     });
   };
-
-
 
 
   function getRandomObj(collection, mean, min, max) {
@@ -71,15 +73,15 @@ function game() {
       meanColor = 1;
     }
     currentShape = {
-          form : getRandomObj(shapes, meanForm, 0, 4),
-          color : getRandomObj(colors, meanColor, 0, 2),
-        };
+      form: getRandomObj(shapes, meanForm, 0, 4),
+      color: getRandomObj(colors, meanColor, 0, 2),
+    };
   }
 
   function singFunc(def) {
     this.executable = true;
-    this.run = (callback, ...args)  =>{
-      if (this.executable){
+    this.run = (callback, ...args) => {
+      if (this.executable) {
         def(callback, args);
         this.executable = false;
       }
@@ -91,10 +93,10 @@ function game() {
   }
 
   function getKeyByValue(object, value) {
-  return Object.keys(object).find(key => object[key] === value);
-}
+    return Object.keys(object).find(key => object[key] === value);
+  }
 
-  function timeDelay (callback, ...args) {
+  function timeDelay(callback, ...args) {
     setTimeout(callback, args);
   }
 }

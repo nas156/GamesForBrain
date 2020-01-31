@@ -13,7 +13,7 @@
 </head>
 <body>
 
-<nav class="slideInLeft fadeIn">
+<div id="nav" class="slideInLeft fadeIn" th:fragment="nav">
     <div class="row">
         <div class="col-2"></div>
         <div class="col-8">
@@ -39,9 +39,9 @@
         </div>
         <div class="col-2"></div>
     </div>
-</nav>
+</div>
 
-<div class="slideInRight row fadeIn" id="secblock">
+<div class="slideInRight row fadeIn secblock">
     <div class="col d-flex justify-content-center align-items-center">
         <img id="cup" th:src="@{/img/index/cup.png}" alt="cup">
     </div>
@@ -78,7 +78,7 @@
             </a>
         </div>
         <div class="row d-flex justify-content-around">
-            <a th:href="@{/test/isPrevGame}">
+            <a th:href="@{/tests/isPrevGame}">
                 <button class="testbtn btn btn-primary">4</button>
             </a>
             <a href="#">
