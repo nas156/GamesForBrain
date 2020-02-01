@@ -7,7 +7,7 @@ function game(rng, width, height, delay, numbersAmount, maxMistakes) {  // delay
     this.delay = delay;
     this.numbersAmount = numbersAmount - 1;  // because incrementing just after start of the game
     this.maxMistakes = maxMistakes;
-    this.txtSize = Math.floor(this.width / 17)
+    this.txtSize = Math.floor(this.width / 17);
 
     // global parameters
     this.numOfGames = 0;
@@ -107,62 +107,60 @@ function game(rng, width, height, delay, numbersAmount, maxMistakes) {  // delay
     text(txt, WIDTH / 2, HEIGHT / 2 - 40);
     txt = "Your score: " + this.totalScore;
     text(txt, WIDTH / 2, HEIGHT / 2);
-    txt = "Reload page to restart test";
+    txt = "Press 'Enter' to restart test";
     text(txt, WIDTH / 2, HEIGHT / 2 + 40);
   };
 
   // in keyTyped func
   this.userInputStage = function () {
-    if (this.stage === 7) {
-      // send res
-    } else {
-      console.log(keyCode);
-      if (this.stage === 0 || this.stage === 1) {
-          this.pressedDigits.push(key);
-          if (this.pressedDigits.length !== 0) {
-            this.stage = 1;
-          }
-        if ((keyCode === 13)) {
-          this.stage = 2;
-          let userDigit = parseInt(this.pressedDigits.join(separator = ""));
-          let realDigit = this.numArr[this.counter];
-          if (userDigit === realDigit) {
-            this.stage = 3;  // stage CorrectNum
-            this.correctAnswers += 1;
-            this.totalScore += 1;
-          } else {
-            this.stage = 4;  //stage InCorrectNum
-            this.mistakes += 1;
-            if (this.mistakes === this.maxMistakes + 1) {
-              this.stage = 6;
-              // sending result
-            }
-          }
-          this.counter += 1;
-          this.pressedDigits = [];
-        }
-      } else if (this.stage === 3 || this.stage === 4) {
-        if (keyIsPressed) {
+    if (this.stage === 6 && keyCode === 13){
+      this.init();
+      this.newGame();
+    }
+    if (this.stage === 0 || this.stage === 1) {
+        this.pressedDigits.push(key);
+        if (this.pressedDigits.length !== 0) {
           this.stage = 1;
-          this.pressedDigits.push(key);
         }
-      } else if (this.stage === 5) {
-        if (keyCode === 13) {
-          this.newGame();
+      if ((keyCode === 13)) {
+        this.stage = 2;
+        let userDigit = parseInt(this.pressedDigits.join(separator = ""));
+        let realDigit = this.numArr[this.counter];
+        if (userDigit === realDigit) {
+          this.stage = 3;  // stage CorrectNum
+          this.correctAnswers += 1;
+          this.totalScore += 1;
+        } else {
+          this.stage = 4;  //stage InCorrectNum
+          this.mistakes += 1;
+          if (this.mistakes === this.maxMistakes + 1) {
+            this.stage = 6;
+            // sending result
+          }
         }
+        this.counter += 1;
+        this.pressedDigits = [];
       }
-      if (this.counter === this.numArr.length - 1 && !(this.stage === 6)) {
-        this.stage = 5;
+    } else if (this.stage === 3 || this.stage === 4) {
+      if (keyIsPressed) {
+        this.stage = 1;
+        this.pressedDigits.push(key);
+      }
+    } else if (this.stage === 5) {
+      if (keyCode === 13) {
+        this.newGame();
+      }
+    }
+    if (this.counter === this.numArr.length - 1 && !(this.stage === 6)) {
+      this.stage = 5;
 
-        this.avgScore = (this.totalScore / this.numOfGames).toFixed(2);
-      }
+      this.avgScore = (this.totalScore / this.numOfGames).toFixed(2);
     }
 
   };
 
   // in main draw
   this.draw = function () {
-    console.log(this.stage);
     if (this.stage !== 6) {
       this.drawHeader();
     }

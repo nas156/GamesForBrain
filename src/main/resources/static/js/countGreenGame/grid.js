@@ -65,7 +65,7 @@ function Grid(topLeft, botRight, size, tileNum, round) {
 
   this.draw = () => {
     for (row of this.tiles){
-      for (tile of row){
+      for (let tile of row){
         tile.draw();
       }
     }

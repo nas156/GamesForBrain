@@ -7,8 +7,6 @@ function Game(width, height) {
   this.txtFill = [75, 111, 255];
   this.stages = ["StartScreen", "Show round", "GuessHowMany"];
   this.gameDuration = 30; // in seconds
-  this.timeLeft = 100000;
-  this.round = 1;
   this.gridPadding = 100;
   this.gridPaddingTop = 100;
   this.gridSizes = [5,5,5,5,6,6,6,6,6,7,7,7,7,7,7,8,8,8,8,8,8,8];
@@ -18,12 +16,18 @@ function Game(width, height) {
     [5,8], [6,9], [7,10], [8,11], [9, 12], [10, 13],
     [6,9], [7,10], [8,11], [9, 12], [10, 13], [11, 14], [12, 15]
   ];
-  this.buttons = [];
-  this.score = 0;
-  this.startTime = new Date().getTime();
-  this.isResultSent = false;
 
-  this.stage = 0;
+  this.init = () => {
+    this.buttons = [];
+    this.score = 0;
+    this.startTime = new Date().getTime();
+    this.isResultSent = false;
+    this.stage = 0;
+    this.round = 1;
+    this.timeLeft = 100000;
+  };
+
+  this.init();
 
   this.newGrid = () =>{
     this.stage = 1;
@@ -74,7 +78,7 @@ function Game(width, height) {
     fill(...this.txtFill);
     let txt = "Time is up or you passed all rounds\n"
               + "Your score: " + this.score + "\n"
-              + "Reload page to restart";
+              + "Press 'Enter' to restart test";
     text(txt, this.width / 2, this.height / 2);
   };
 
@@ -109,6 +113,9 @@ function Game(width, height) {
     if (this.stage === 0 && keyCode === 13){
       this.startTime = new Date().getTime();
       this.newGrid();
+    } else if (this.stage === 10 && keyCode === 13){
+      this.init();
+      this.newGrid();
     }
   };
 
@@ -129,7 +136,10 @@ function Game(width, height) {
                 new Button(
                   this.width * 0.234 + xShift,
                   this.height * 0.93,
-                  this.tilesNumber[this.round-1][0] + i)
+                  this.tilesNumber[this.round-1][0] + i,
+                  this.width,
+                  this.height
+                )
               );
               xShift += xStep;
             }
@@ -142,6 +152,7 @@ function Game(width, height) {
       }
     } else {
       this.drawGameOver();
+      this.stage = 10;
       if (!this.isResultSent){
         // sending result
         this.isResultSent = true
@@ -150,15 +161,18 @@ function Game(width, height) {
   };
 }
 
-function Button(posX, posY, number) {
+function Button(posX, posY, number, width, height) {
   this.posX = posX;
   this.posY = posY;
   this.number = number;
+
   this.btnColor = [75, 111, 255];
   this.btnHoverColor = [60, 90, 240];
   this.txtSize = 24;
-  this.sizeX = 100;
-  this.sizeY = 60;
+  // this.sizeX = 100;
+  // this.sizeY = 60;
+  this.sizeX = width / 7;
+  this.sizeY = height / 10;
 
   this.isUnderMouse = (mousePos) => {
     return (mousePos[0] > posX - this.sizeX / 2) && (mousePos[0] < this.sizeX / 2 + posX)

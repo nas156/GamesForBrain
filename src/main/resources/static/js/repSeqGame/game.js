@@ -39,7 +39,8 @@ function game(width, height, gridLen, seqLen) {
     textSize(this.txtSize);
     textAlign(CENTER, CENTER);
     fill(75, 111, 255);
-    let txt = "Game Over\nYour last sequence length: " + this.seqLen;
+    let txt = "Game Over\nYour last sequence length: " + this.seqLen
+              + "\nPress 'Enter' to restart test";
     text(txt, this.width / 2, this.height / 2);
   };
 
@@ -52,15 +53,15 @@ function game(width, height, gridLen, seqLen) {
   this.keyTyped = () => {
     if ((this.stage === 0) && (keyCode === 13)) {
       this.stage = 10
-    } else if (this.stage === 1) {
-
-    } else if (this.stage === 2) {
-
+    } else if (this.stage === 5) {
+      this.init();
+      this.newGame();
+      this.stage = 10;
     }
   };
 
   this.draw = () => {
-
+    console.log(this.stage);
     if (this.stage === 0) {
       this.drawStartScreen();
     } else if (this.stage === 1) {
@@ -87,8 +88,8 @@ function game(width, height, gridLen, seqLen) {
     } else if (this.stage === 10) {
       this.stage = 1;
       let padding = 100;
-      let yPaddingTop = 50
-      this.grid = new grid(size = this.gridLen, [padding, padding + yPaddingTop],
+      let yPaddingTop = 50;
+      this.grid = new Grid(size = this.gridLen, [padding, padding + yPaddingTop],
                            [this.width - padding, this.height - padding + yPaddingTop], this.seqLen)
       this.grid.stage = 1;
       this.grid.genSeq();

@@ -1,4 +1,4 @@
-function grid(size, topLeft, botRight, seqLen) {
+function Grid(size, topLeft, botRight, seqLen) {
   this.init = () => {
     this.size = size;
     this.bounds = [topLeft, botRight];  // top left point end bottom right point of square where grid will be drawn
@@ -22,7 +22,7 @@ function grid(size, topLeft, botRight, seqLen) {
     for (let i = 0; i < this.size; i++) {
       let row = [];
       for (let j = 0; j < this.size; j++) {
-        row.push(new tile([xPos + xStep / 16, yPos + yStep / 16], xStep * 0.875));
+        row.push(new Tile([xPos + xStep / 16, yPos + yStep / 16], xStep * 0.875));
         xPos += xStep;
       }
       this.tiles.push(row);
@@ -123,7 +123,7 @@ function grid(size, topLeft, botRight, seqLen) {
   }
 }
 
-function tile(pos, size) {
+function Tile(pos, size) {
   this.pos = pos;
   this.size = size;
   this.rounding = 5;
