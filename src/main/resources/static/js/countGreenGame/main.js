@@ -1,10 +1,10 @@
 let game;
 
 function setup() {
-  const WIDTH = 700;
-  const HEIGHT = 700;
+  const WIDTH = 500;
+  const HEIGHT = 500;
   let canvas = createCanvas(WIDTH, HEIGHT);
-  canvas.parent('game');
+  canvas.parent('canvas');
   game = new Game(WIDTH, HEIGHT);
 }
 

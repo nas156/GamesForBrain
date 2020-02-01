@@ -43,6 +43,9 @@ function draw() {
     case 2:
       Game.showShape();
       break;
+    case "greyScreen" :
+      Game.grayScreen();
+      break;
     case 3:
       Game.gameOver();
       break;

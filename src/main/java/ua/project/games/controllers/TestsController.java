@@ -63,7 +63,9 @@ public class TestsController {
     }
 
     @GetMapping(value = "/countGreen")
-    public String getCountGreen() {
+    public String getCountGreen(Principal principal, Model model) {
+        final String currentUserName = SecurityContextHolder.getContext().getAuthentication().getName();
+        model.addAttribute("username", currentUserName);
         return "games/countGreenGame";
     }
 }

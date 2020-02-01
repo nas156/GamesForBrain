@@ -23,6 +23,7 @@ function falseButton() {
       score++;
       Game.randShape.executable = true;
       Game.singlChange.executable = true;
+      stage = "greyScreen";
     } else {
       Game.singlChange.executable = true;
       Game.randShape.executable = true;

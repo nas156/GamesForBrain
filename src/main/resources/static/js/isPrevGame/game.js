@@ -40,6 +40,14 @@ function game() {
     fb.draw();
     timer.run();
   };
+  this.grayScreen = () => {
+    background(228, 228, 228);//gray
+    this.singTimeOut.run(() => {
+      stage = 2;
+      this.randShape.executable = true;
+      this.singTimeOut.executable = true;
+    },500);
+  };
 
   this.gameOver = () => {
     time = 40;
