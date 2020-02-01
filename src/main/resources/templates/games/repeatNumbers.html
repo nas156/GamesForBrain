@@ -3,13 +3,21 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+          integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link rel="stylesheet" th:href="@{/css/main.css}">
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+            integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
+            crossorigin="anonymous"></script>
+    <title>RepeatSequence</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.9.0/p5.js"></script>
     <script th:src="@{/js/repNumbersGame/game.js}"></script>
     <script th:src="@{/js/repNumbersGame/main.js}"></script>
     <meta charset="UTF-8">
     <title>RepeatNumbers</title>
 </head>
-<body>
-<div id="rep-num-game"></div>
+<body th:replace = "~{games/repeatSequence :: test_body}">
 </body>
 </html>

@@ -23,12 +23,12 @@ function keyTyped() {
 
 
 function setup() {
-  WIDTH = 700;
-  HEIGHT = 700;
+  WIDTH = 500;
+  HEIGHT = 500;
   isStarted = false;
 
   cnv = createCanvas(WIDTH, HEIGHT);
-  cnv.parent('rep-num-game');
+  cnv.parent('canvas');
   game = new game(rng = 100,
     width = WIDTH,
     height = HEIGHT,

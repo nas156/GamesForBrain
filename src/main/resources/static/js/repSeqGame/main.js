@@ -1,11 +1,11 @@
 var game;
 
 function setup() {
-  WIDTH = 700;
-  HEIGHT = 700;
+  WIDTH = 500;
+  HEIGHT = 500;
   var canvas = createCanvas(WIDTH, HEIGHT);
   // Move the canvas so it’s inside our <div id="sketch-holder">.
-  canvas.parent('game');
+  canvas.parent('canvas');
   game = new game(
     width = WIDTH,
     height = HEIGHT,

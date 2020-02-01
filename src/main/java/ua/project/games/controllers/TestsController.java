@@ -20,22 +20,24 @@ import java.util.Optional;
 public class TestsController {
 
     private final TestStatisticService testStatisticService;
-    private final UserService userService;
 
     @Autowired
     public TestsController(TestStatisticService testStatisticService, UserService userService) {
         this.testStatisticService = testStatisticService;
-        this.userService = userService;
     }
 
     @GetMapping(value = "/repeatNumbers")
-    public String getRepeatNumbersTest() {
+    public String getRepeatNumbersTest(Principal principal, Model model) {
+        final String currentUserName = SecurityContextHolder.getContext().getAuthentication().getName();
+        model.addAttribute("username", currentUserName);
         return "games/repeatNumbers";
     }
 
 
     @GetMapping(value = "/reactionGame")
-    public String getReactionTest() {
+    public String getReactionTest(Principal principal, Model model) {
+        final String currentUserName = SecurityContextHolder.getContext().getAuthentication().getName();
+        model.addAttribute("username", currentUserName);
         return "games/reactionGame";
     }
 
@@ -54,7 +56,9 @@ public class TestsController {
     }
 
     @GetMapping(value = "/repeatSequence")
-    public String getRepeatSequence() {
+    public String getRepeatSequence(Principal principal, Model model) {
+        final String currentUserName = SecurityContextHolder.getContext().getAuthentication().getName();
+        model.addAttribute("username", currentUserName);
         return "games/repeatSequence";
     }
 }

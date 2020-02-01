@@ -1,10 +1,9 @@
-const CANVAS_WIDTH = 800;
-const CANVAS_HEIGHT = 800;
+const CANVAS_WIDTH = 500;
+const CANVAS_HEIGHT = 500;
 let stage = 0;
 let startTime = 0;
 let endTime = 0;
 let resultTime = 0;
-let kostil;
 
 let singlFunc = () => {
   self = {
@@ -23,7 +22,8 @@ let singlTimeout = singlFunc();
 
 
 function setup() {
-  createCanvas(CANVAS_WIDTH, CANVAS_HEIGHT);
+  let cnv = createCanvas(CANVAS_WIDTH, CANVAS_HEIGHT);
+  cnv.parent("canvas");
 }
 
 function draw() {
@@ -44,8 +44,9 @@ function draw() {
 }
 
 const gameBegin = () => {
-  background(222, 16, 16); //red
-  textSize(40);
+  background(228,228,228); //grey
+  textSize(Math.floor(CANVAS_WIDTH / 17));
+  fill(75, 111, 255);
   text("Press any key when you see green.\n Press Enter to start", CANVAS_WIDTH / 2, CANVAS_HEIGHT / 2);
   textAlign(CENTER);
   document.addEventListener("keypress", function handler(e) {
@@ -57,11 +58,13 @@ const gameBegin = () => {
 };
 
 const waitingPart = (minDelayTime, maxDelayTime) => {
-  background(222, 16, 16); //red
+  background(228,228,228); //grey
+  $("#gr").css({"background": "rgb(228,228,228)"});
   const delay = Math.random() * (maxDelayTime - minDelayTime) + minDelayTime;
   singlTimeout.run(() => {
       setTimeout(() => {
         startTime = Date.now();
+        $("#gr").css({"background": "rgb(23, 194, 0)"});
         background(23, 194, 0); //green
         singlTimeout.executable = true;
         stage = 2;
@@ -88,7 +91,8 @@ const greenPart = () => {
 
 const finalPart = () => {
   background(23, 194, 0); //green
-  textSize(40);
+  textSize(Math.floor(CANVAS_WIDTH / 17));
+  fill(75, 111, 255);
   text(`Your result is ${resultTime}ms.\n Press any key to Restart`, CANVAS_WIDTH / 2, CANVAS_HEIGHT / 2);
   textAlign(CENTER);
   document.addEventListener("keypress", function handler(e) {
