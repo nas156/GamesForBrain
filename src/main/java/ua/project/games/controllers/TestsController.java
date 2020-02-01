@@ -61,4 +61,9 @@ public class TestsController {
         model.addAttribute("username", currentUserName);
         return "games/repeatSequence";
     }
+
+    @GetMapping(value = "/countGreen")
+    public String getCountGreen() {
+        return "games/countGreenGame";
+    }
 }
