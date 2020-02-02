@@ -1,15 +1,18 @@
 package ua.project.games.controllers;
 
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
+import ua.project.games.dto.TestStatisticDTO;
 import ua.project.games.entity.TestStatistic;
 import ua.project.games.service.TestStatisticService;
 import ua.project.games.service.UserService;
 
+import java.awt.*;
 import java.security.Principal;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -53,4 +56,5 @@ public class TestsController {
     public String getRepeatSequence() {
         return "games/repeatSequence";
     }
+
 }
