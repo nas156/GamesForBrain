@@ -7,7 +7,8 @@ function trueButton() {
       this.button = createButton("True");
       const posX = CANVAS_WIDTH/5;
       const posY = CANVAS_HEIGHT - CANVAS_HEIGHT/10;
-      this.button.position(posX, posY);
+      //this.button.position(posX, posY);
+      this.button.parent("buttons");
       this.button.addClass("btn btn-success");
       this.button.mousePressed(compare);
       this.executable = false;
@@ -21,8 +22,9 @@ function trueButton() {
       console.log(score);
       Game.randShape.executable = true;
       Game.singlChange.executable = true;
+      stage = "greyScreen";
     } else {
-      Game.singlChange.executable = true
+      Game.singlChange.executable = true;
       Game.randShape.executable = true;
       Game.singlChange.executable = true;
       this.button.hide();

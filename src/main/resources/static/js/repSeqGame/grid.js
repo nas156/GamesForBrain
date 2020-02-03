@@ -11,7 +11,7 @@ function grid(size, topLeft, botRight, seqLen) {
     this.counter = 0;
     this.timeStamp = new Date().getTime();
     this.showColor = [255, 0, 0];
-    this.defaultColor = [255, 255, 255];
+    this.defaultColor = [75, 111, 255];
     this.guessColor = [0, 255, 0];
     const xStep = (this.bounds[1][0] - this.bounds[0][0]) / this.size;
     const yStep = (this.bounds[1][1] - this.bounds[0][1]) / this.size;
@@ -61,14 +61,11 @@ function grid(size, topLeft, botRight, seqLen) {
 
   };
 
-  this.showSeq = () => {
-    console.log("Showing sequence")
-  };
-
   this.drawTiles = () => {
     for (let i = 0; i < this.size; i++) {
       for (let j = 0; j < this.size; j++) {
         noStroke();
+
         this.tiles[i][j].draw();
       }
     }
@@ -118,9 +115,6 @@ function grid(size, topLeft, botRight, seqLen) {
             this.guesses.push([i, j]);
             if (this.counter === this.seqLen) {
               this.stage = 3;
-              console.log(this.seq);
-              console.log(this.guesses)
-
             }
           }
         }
@@ -133,7 +127,7 @@ function tile(pos, size) {
   this.pos = pos;
   this.size = size;
   this.rounding = 5;
-  this.color = [255, 255, 255];
+  this.color = [75, 111, 255];
   this.number = 0;
   this.txtPos = [this.pos[0] + size / 2, this.pos[1] + size / 2];
 

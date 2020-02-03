@@ -1,5 +1,3 @@
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
-
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
@@ -11,13 +9,11 @@
     <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
             integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
             crossorigin="anonymous"></script>
-    <title>RepeatSequence</title>
+    <title>CountGreen</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.9.0/p5.js"></script>
-    <script th:src="@{/js/repNumbersGame/game.js}"></script>
-    <script th:src="@{/js/repNumbersGame/main.js}"></script>
-    <meta charset="UTF-8">
-    <title>RepeatNumbers</title>
+    <script th:src="@{/js/countGreenGame/grid.js}"></script>
+    <script th:src="@{/js/countGreenGame/game.js}"></script>
+    <script th:src="@{/js/countGreenGame/main.js}"></script>
 </head>
-<body th:replace = "~{games/repeatSequence :: test_body}">
-</body>
+<body th:replace = "~{games/repeatSequence :: test_body}"></body>
 </html>

@@ -1,10 +1,10 @@
-const CANVAS_WIDTH = 800;
-const CANVAS_HEIGHT = 800;
+const CANVAS_WIDTH = 500;
+const CANVAS_HEIGHT = 500;
 let stage = 0;
 let startTime = 0;
 let endTime = 0;
 let resultTime = 0;
-let kostil;
+let timeout;
 
 let singlFunc = () => {
   self = {
@@ -23,7 +23,8 @@ let singlTimeout = singlFunc();
 
 
 function setup() {
-  createCanvas(CANVAS_WIDTH, CANVAS_HEIGHT);
+  let cnv = createCanvas(CANVAS_WIDTH, CANVAS_HEIGHT);
+  cnv.parent("canvas");
 }
 
 function draw() {
@@ -40,12 +41,16 @@ function draw() {
     case 3:
       finalPart();
       break;
+    case 4:
+      invalidPress();
+      break;
   }
 }
 
 const gameBegin = () => {
-  background(222, 16, 16); //red
-  textSize(40);
+  background(228,228,228); //grey
+  textSize(Math.floor(CANVAS_WIDTH / 17));
+  fill(75, 111, 255);
   text("Press any key when you see green.\n Press Enter to start", CANVAS_WIDTH / 2, CANVAS_HEIGHT / 2);
   textAlign(CENTER);
   document.addEventListener("keypress", function handler(e) {
@@ -57,26 +62,40 @@ const gameBegin = () => {
 };
 
 const waitingPart = (minDelayTime, maxDelayTime) => {
-  background(222, 16, 16); //red
+  background(228,228,228); //grey
+  $("#gr").css({"background": "rgb(228,228,228)"});
   const delay = Math.random() * (maxDelayTime - minDelayTime) + minDelayTime;
   singlTimeout.run(() => {
-      setTimeout(() => {
+      timeout = setTimeout(() => {
         startTime = Date.now();
+        $("#gr").css({"background": "rgb(23, 194, 0)"});
         background(23, 194, 0); //green
         singlTimeout.executable = true;
         stage = 2;
       }, delay);
     }
   );
+  document.addEventListener('keydown', function handler() {
+    stage = 4;
+    clearTimeout(timeout);
+    singlTimeout.executable = true;
+    this.removeEventListener('keydown', handler);
+  });
+  document.addEventListener('click', function handler() {
+    stage = 4;
+    clearTimeout(timeout);
+    singlTimeout.executable = true;
+    this.removeEventListener('click', handler);
+  });
 };
 
 const greenPart = () => {
   background(23, 194, 0); //green
-  document.addEventListener('keyup', function handler() {
+  document.addEventListener('keydown', function handler() {
     endTime = Date.now();
     resultTime = endTime - startTime;
     stage = 3;
-    this.removeEventListener('keyup', handler);
+    this.removeEventListener('keydown', handler);
   });
   document.addEventListener('click', function handler() {
     endTime = Date.now();
@@ -88,7 +107,9 @@ const greenPart = () => {
 
 const finalPart = () => {
   background(23, 194, 0); //green
-  textSize(40);
+  $("#gr").css({"background": "rgb(23, 194, 0)"});
+  textSize(Math.floor(CANVAS_WIDTH / 17));
+  fill(75, 111, 255);
   text(`Your result is ${resultTime}ms.\n Press any key to Restart`, CANVAS_WIDTH / 2, CANVAS_HEIGHT / 2);
   textAlign(CENTER);
   var token = $("meta[name='_csrf']").attr("content");
@@ -112,6 +133,18 @@ const finalPart = () => {
 
     }).then(function(res){ return res.json(); })
       .then(function(data){ console.log( JSON.stringify( data ) ) })
+    stage = 1;
+    this.removeEventListener("keypress", handler);
+  });
+};
+
+const invalidPress = () => {
+  background(228,228,228); //grey
+  $("#gr").css({"background": "rgb(228,228,228)"});
+  textSize(Math.floor(CANVAS_WIDTH / 17));
+  fill(75, 111, 255);
+  text(`Too early.\n Press any key to Restart`, CANVAS_WIDTH / 2, CANVAS_HEIGHT / 2);
+  document.addEventListener("keypress", function handler(e) {
     stage = 1;
     this.removeEventListener("keypress", handler);
   });

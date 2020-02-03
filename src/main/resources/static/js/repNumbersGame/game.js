@@ -44,21 +44,21 @@ function game(rng, width, height, delay, numbersAmount, maxMistakes) {  // delay
   this.drawNumberFromDigit = function () {
     textSize(Math.floor(this.txtSize * 1.5));
     textAlign(CENTER, CENTER);
-    fill(0, 52, 123);
+    fill(75, 111, 255);
     text(this.pressedDigits.join(separator = ""), WIDTH / 2, HEIGHT / 2);
   };
 
   this.drawNumber = function (num) {
     textSize(Math.floor(this.txtSize * 1.5));
     textAlign(CENTER, CENTER);
-    fill(0, 52, 123);
+    fill(75, 111, 255);
     text(num, WIDTH / 2, HEIGHT / 2);
   };
 
   this.drawUserInput = function () {
     textSize(Math.floor(this.txtSize * 1.5));
     textAlign(CENTER, CENTER);
-    fill(0, 52, 123);
+    fill(75, 111, 255);
     text("Type the numbers", WIDTH / 2, HEIGHT / 2);
   };
 
@@ -79,7 +79,7 @@ function game(rng, width, height, delay, numbersAmount, maxMistakes) {  // delay
   this.drawResult = function () {
     textSize(Math.floor(this.txtSize * 1.5));
     textAlign(CENTER, CENTER);
-    fill(0, 52, 123);
+    fill(75, 111, 255);
     let res = "Correct answers: " + this.correctAnswers;
     text(res, WIDTH / 2, HEIGHT / 2);
   };
@@ -87,7 +87,7 @@ function game(rng, width, height, delay, numbersAmount, maxMistakes) {  // delay
   this.drawHeader = function () {
     textSize(Math.floor(this.txtSize * 0.7));
     textAlign(CENTER, CENTER);
-    fill(0, 52, 123);
+    fill(75, 111, 255);
     let txt = "Stage: " + this.numOfGames;
     text(txt, WIDTH * 0.2, HEIGHT / 8);
     txt = "Numbers amount: " + this.numbersAmount;
@@ -102,7 +102,7 @@ function game(rng, width, height, delay, numbersAmount, maxMistakes) {  // delay
   this.drawEndGame = function () {
     textSize(Math.floor(this.txtSize * 0.7));
     textAlign(CENTER, CENTER);
-    fill(0, 52, 123);
+    fill(75, 111, 255);
     let txt = "Game Over";
     text(txt, WIDTH / 2, HEIGHT / 2 - 40);
     txt = "Your score: " + this.totalScore;
@@ -116,11 +116,12 @@ function game(rng, width, height, delay, numbersAmount, maxMistakes) {  // delay
     if (this.stage === 7) {
       // send res
     } else {
+      console.log(keyCode);
       if (this.stage === 0 || this.stage === 1) {
-        this.pressedDigits.push(key);
-        if (this.pressedDigits.length !== 0) {
-          this.stage = 1;
-        }
+          this.pressedDigits.push(key);
+          if (this.pressedDigits.length !== 0) {
+            this.stage = 1;
+          }
         if ((keyCode === 13)) {
           this.stage = 2;
           let userDigit = parseInt(this.pressedDigits.join(separator = ""));
@@ -161,6 +162,7 @@ function game(rng, width, height, delay, numbersAmount, maxMistakes) {  // delay
 
   // in main draw
   this.draw = function () {
+    console.log(this.stage);
     if (this.stage !== 6) {
       this.drawHeader();
     }
