@@ -105,7 +105,7 @@ const greenPart = () => {
     stage = 3;
     this.removeEventListener('click', handler);
   });
-}
+};
 
 const finalPart = () => {
   background(23, 194, 0); //green
