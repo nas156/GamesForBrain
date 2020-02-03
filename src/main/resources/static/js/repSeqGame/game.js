@@ -79,7 +79,7 @@ function game(width, height, gridLen, seqLen) {
       body: JSON.stringify({
         score: score,
         username: username,
-        testType: "repeatSequenceGame"
+        testType: "RepeatSequenceGame"
       }),
     })
   };

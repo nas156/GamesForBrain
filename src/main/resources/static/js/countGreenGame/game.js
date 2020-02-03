@@ -137,7 +137,7 @@ function Game(width, height) {
       body: JSON.stringify({
         score: score,
         username: username,
-        testType: "countGreenGame"
+        testType: "CountGreenGame"
       }),
     })
   };

@@ -1,5 +1,6 @@
 package ua.project.games.service;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import ua.project.games.dto.TestStatisticDTO;
 import ua.project.games.entity.TestStatistic;
@@ -10,6 +11,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 @Service
+@Slf4j
 public class TestStatisticService {
     private final TestStatisticRepository testStatisticRepository;
     private final UserService userService;
@@ -33,13 +35,19 @@ public class TestStatisticService {
         testStatisticRepository.saveAll(testStatistics);
     }
 
-    public TestStatistic createStatistic(TestStatisticDTO testStatisticDTO) {
+    public void createStatistic(TestStatisticDTO testStatisticDTO) {
         TestStatistic testStatisticEntity = new TestStatistic();
         testStatisticEntity.setScore(testStatisticDTO.getScore());
         testStatisticEntity.setTestDate(LocalDate.now());
-        testStatisticEntity.setUser(userService.loadUserByUsername(testStatisticDTO.getUsername()));
+        //TODO make validator for this part
+        if (!testStatisticDTO.getUsername().equals("anonymousUser")) {
+            testStatisticEntity.setUser(userService.loadUserByUsername(testStatisticDTO.getUsername()));
+        } else {
+            log.warn("IN anonymous user posted statistic");
+            return;
+        }
         testStatisticEntity.setTestType(TestType.valueOf(testStatisticDTO.getTestType()));
-        return testStatisticRepository.save(testStatisticEntity);
+        testStatisticRepository.save(testStatisticEntity);
     }
 
     public List<TestStatistic> getAll() {
