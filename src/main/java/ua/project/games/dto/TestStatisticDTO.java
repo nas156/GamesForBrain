@@ -14,5 +14,9 @@ public class TestStatisticDTO {
     int score;
     String username;
     String testType;
-    String testDate;
+
+    @Override
+    public String toString() {
+        return String.format("score = %d\nusername = %s\ntestType = %s\n", score, username, testType);
+    }
 }

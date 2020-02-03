@@ -3,6 +3,7 @@ package ua.project.games.controllers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
+import ua.project.games.dto.TestStatisticDTO;
 import ua.project.games.dto.UserDTO;
 import ua.project.games.entity.TestStatistic;
 import ua.project.games.entity.User;
@@ -30,8 +31,7 @@ public class    CreateStatisticController {
 
     @PostMapping
     @ResponseBody
-    public User createStatistic(@RequestBody UserDTO user){
-        return userService.loadUserByUsername(user.getUsername());
+    public void createStatistic(@RequestBody TestStatisticDTO testStatisticDTO){
+        System.out.println(testStatisticDTO);
     }
-
 }

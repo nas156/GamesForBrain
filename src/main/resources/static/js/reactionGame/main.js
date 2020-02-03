@@ -4,22 +4,23 @@ let stage = 0;
 let startTime = 0;
 let endTime = 0;
 let resultTime = 0;
+const username = $("meta[name='username']").attr("content");
+const token = $("meta[name='_csrf']").attr("content");
+const header = $("meta[name='_csrf_header']").attr("content");
 let timeout;
 
-let singlFunc = () => {
-  self = {
-    executable: true
-  };
-  self.run = (def) => {
-    if (self.executable) {
-      self.executable = false;
+function singlFunc() {
+  this.executable = true;
+  this.run = (def) => {
+    if (this.executable) {
+      this.executable = false;
       def();
     }
   };
-  return self
 };
 
-let singlTimeout = singlFunc();
+let singlTimeout = new singlFunc();
+let singlRequest = new singlFunc();
 
 
 function setup() {
@@ -63,6 +64,7 @@ const gameBegin = () => {
 
 const waitingPart = (minDelayTime, maxDelayTime) => {
   background(228,228,228); //grey
+  singlRequest.executable = true;
   $("#gr").css({"background": "rgb(228,228,228)"});
   const delay = Math.random() * (maxDelayTime - minDelayTime) + minDelayTime;
   singlTimeout.run(() => {
@@ -112,8 +114,6 @@ const finalPart = () => {
   fill(75, 111, 255);
   text(`Your result is ${resultTime}ms.\n Press any key to Restart`, CANVAS_WIDTH / 2, CANVAS_HEIGHT / 2);
   textAlign(CENTER);
-  var token = $("meta[name='_csrf']").attr("content");
-  var header = $("meta[name='_csrf_header']").attr("content");
   let headers = new Headers({
     'Accept': 'application/json, text/plain, */*',
     'Content-Type': 'application/json',
@@ -122,17 +122,18 @@ const finalPart = () => {
 
 
   document.addEventListener("keypress", function handler(e) {
-    let v = {username: "pavel"};
-    var data = new FormData();
-    data.append( "json", JSON.stringify( v ) );
-    fetch('http://localhost:8082/createStatistic', {
-      method: 'POST',
-      mode: 'cors',
-      headers,
-      body: JSON.stringify({username: "pavel"}),
-
-    }).then(function(res){ return res.json(); })
-      .then(function(data){ console.log( JSON.stringify( data ) ) })
+    singlRequest.run( () => {
+      fetch('http://localhost:8082/createStatistic', {
+        method: 'POST',
+        mode: 'cors',
+        headers,
+        body: JSON.stringify({
+          score: resultTime,
+          username: username,
+          testType: "reactionGame"
+        }),
+      })
+    });
     stage = 1;
     this.removeEventListener("keypress", handler);
   });
