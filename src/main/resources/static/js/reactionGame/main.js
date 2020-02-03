@@ -123,14 +123,14 @@ const finalPart = () => {
 
   document.addEventListener("keypress", function handler(e) {
     singlRequest.run( () => {
-      fetch('http://localhost:8082/createStatistic', {
+      fetch('/createStatistic', {
         method: 'POST',
         mode: 'cors',
         headers,
         body: JSON.stringify({
           score: resultTime,
           username: username,
-          testType: "reactionGame"
+          testType: "ReactionGame"
         }),
       })
     });
