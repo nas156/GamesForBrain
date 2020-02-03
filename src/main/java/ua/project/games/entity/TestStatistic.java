@@ -1,10 +1,7 @@
 package ua.project.games.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import ua.project.games.entity.enums.Role;
 import ua.project.games.entity.enums.TestType;
@@ -14,6 +11,7 @@ import java.time.LocalDate;
 
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 @Getter
 @Setter
 @Entity
