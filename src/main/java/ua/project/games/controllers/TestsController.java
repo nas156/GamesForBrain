@@ -15,7 +15,7 @@ import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-
+@CrossOrigin
 @Controller
 @RequestMapping("tests")
 public class TestsController {
@@ -33,7 +33,6 @@ public class TestsController {
     public String getRepeatNumbersTest() {
         return "games/repeatNumbers";
     }
-
 
     @GetMapping(value = "/reactionGame")
     public String getReactionTest() {

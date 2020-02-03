@@ -84,14 +84,34 @@ const greenPart = () => {
     stage = 3;
     this.removeEventListener('click', handler);
   });
-};
+}
 
 const finalPart = () => {
   background(23, 194, 0); //green
   textSize(40);
   text(`Your result is ${resultTime}ms.\n Press any key to Restart`, CANVAS_WIDTH / 2, CANVAS_HEIGHT / 2);
   textAlign(CENTER);
+  var token = $("meta[name='_csrf']").attr("content");
+  var header = $("meta[name='_csrf_header']").attr("content");
+  let headers = new Headers({
+    'Accept': 'application/json, text/plain, */*',
+    'Content-Type': 'application/json',
+    [header] : token,
+  });
+
+
   document.addEventListener("keypress", function handler(e) {
+    let v = {username: "pavel"};
+    var data = new FormData();
+    data.append( "json", JSON.stringify( v ) );
+    fetch('http://localhost:8082/createStatistic', {
+      method: 'POST',
+      mode: 'cors',
+      headers,
+      body: JSON.stringify({username: "pavel"}),
+
+    }).then(function(res){ return res.json(); })
+      .then(function(data){ console.log( JSON.stringify( data ) ) })
     stage = 1;
     this.removeEventListener("keypress", handler);
   });
