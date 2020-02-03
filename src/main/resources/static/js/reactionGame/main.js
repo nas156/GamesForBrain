@@ -105,7 +105,7 @@ const greenPart = () => {
     stage = 3;
     this.removeEventListener('click', handler);
   });
-}
+};
 
 const finalPart = () => {
   background(23, 194, 0); //green
@@ -123,7 +123,7 @@ const finalPart = () => {
 
   document.addEventListener("keypress", function handler(e) {
     singlRequest.run( () => {
-      fetch('http://localhost:8082/createStatistic', {
+      fetch('/createStatistic', {
         method: 'POST',
         mode: 'cors',
         headers,

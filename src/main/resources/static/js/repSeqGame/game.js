@@ -1,3 +1,7 @@
+const username = $("meta[name='username']").attr("content");
+const token = $("meta[name='_csrf']").attr("content");
+const header = $("meta[name='_csrf_header']").attr("content");
+
 function game(width, height, gridLen, seqLen) {
   this.init = () => {
     this.width = width;
@@ -5,6 +9,7 @@ function game(width, height, gridLen, seqLen) {
     this.gridLen = gridLen;
     this.seqLen = seqLen;
     this.txtSize = Math.floor(this.width / 17);
+    this.isDataSent = false;
   };
 
   this.init();
@@ -60,8 +65,26 @@ function game(width, height, gridLen, seqLen) {
     }
   };
 
+  this.sendResult = () => {
+    let score = this.seqLen;
+    let headers = new Headers({
+      'Accept': 'application/json, text/plain, */*',
+      'Content-Type': 'application/json',
+      [header] : token,
+    });
+    fetch('/createStatistic', {
+      method: 'POST',
+      mode: 'cors',
+      headers,
+      body: JSON.stringify({
+        score: score,
+        username: username,
+        testType: "repeatSequenceGame"
+      }),
+    })
+  };
+
   this.draw = () => {
-    console.log(this.stage);
     if (this.stage === 0) {
       this.drawStartScreen();
     } else if (this.stage === 1) {
@@ -80,7 +103,10 @@ function game(width, height, gridLen, seqLen) {
       }
     } else if (this.stage === 5) {
       this.drawGameOver();
-      // send results to server
+      if (!this.isDataSent){
+        this.sendResult();
+        this.isDataSent = true;
+      }
     } else if (this.stage === 4) {
       this.stage = 10;
       this.gridLen += 1;

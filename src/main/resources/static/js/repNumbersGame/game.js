@@ -1,3 +1,7 @@
+const username = $("meta[name='username']").attr("content");
+const token = $("meta[name='_csrf']").attr("content");
+const header = $("meta[name='_csrf_header']").attr("content");
+
 function game(rng, width, height, delay, numbersAmount, maxMistakes) {  // delay in milliseconds
   this.init = function () {
     // creation arguments
@@ -111,6 +115,25 @@ function game(rng, width, height, delay, numbersAmount, maxMistakes) {  // delay
     text(txt, WIDTH / 2, HEIGHT / 2 + 40);
   };
 
+  this.sendResult = () => {
+    let score = this.totalScore;
+    let headers = new Headers({
+      'Accept': 'application/json, text/plain, */*',
+      'Content-Type': 'application/json',
+      [header] : token,
+    });
+    fetch('/createStatistic', {
+      method: 'POST',
+      mode: 'cors',
+      headers,
+      body: JSON.stringify({
+        score: score,
+        username: username,
+        testType: "repeatNumbersGame"
+      }),
+    })
+  };
+
   // in keyTyped func
   this.userInputStage = function () {
     if (this.stage === 6 && keyCode === 13){
@@ -135,7 +158,7 @@ function game(rng, width, height, delay, numbersAmount, maxMistakes) {  // delay
           this.mistakes += 1;
           if (this.mistakes === this.maxMistakes + 1) {
             this.stage = 6;
-            // sending result
+            this.sendResult();
           }
         }
         this.counter += 1;
