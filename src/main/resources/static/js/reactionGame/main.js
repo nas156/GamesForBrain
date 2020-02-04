@@ -130,7 +130,7 @@ const finalPart = () => {
         body: JSON.stringify({
           score: resultTime,
           username: username,
-          testType: "ReactionGame"
+          testType: "ReactionTest"
         }),
       })
     });

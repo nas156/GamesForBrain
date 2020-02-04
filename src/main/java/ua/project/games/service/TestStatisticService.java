@@ -36,21 +36,32 @@ public class TestStatisticService {
     }
 
     public void createStatistic(TestStatisticDTO testStatisticDTO) {
-        TestStatistic testStatisticEntity = new TestStatistic();
-        testStatisticEntity.setScore(testStatisticDTO.getScore());
-        testStatisticEntity.setTestDate(LocalDate.now());
-        //TODO make validator for this part
-        if (!testStatisticDTO.getUsername().equals("anonymousUser")) {
-            testStatisticEntity.setUser(userService.loadUserByUsername(testStatisticDTO.getUsername()));
-        } else {
-            log.warn("IN anonymous user posted statistic");
-            return;
+        if (notAnonymousCheck(testStatisticDTO.getUsername())){
+            TestStatistic testStatisticEntity = TestStatistic.builder()
+                    .score(testStatisticDTO.getScore())
+                    .testDate(LocalDate.now())
+                    .testType(TestType.valueOf(testStatisticDTO.getTestType()))
+                    .user(userService.loadUserByUsername(testStatisticDTO.getUsername()))
+                    .build();
+            testStatisticRepository.save(testStatisticEntity);
         }
-        testStatisticEntity.setTestType(TestType.valueOf(testStatisticDTO.getTestType()));
-        testStatisticRepository.save(testStatisticEntity);
+        log.warn("IN anonymous user posted statistic");
     }
 
     public List<TestStatistic> getAll() {
         return testStatisticRepository.findAll();
     }
+
+    private boolean notAnonymousCheck(String username){
+        return !username.equals("anonymousUser");
+    }
+
+    public List<TestStatistic> getUserStatisticForParticularTest(TestType testType, String username){
+        return testStatisticRepository.findAllByTestTypeAndUser_Username(testType, username).get();
+    }
+
+    public List<TestStatistic> getStatisticForTest(TestType testType){
+        return testStatisticRepository.findAllByTestType(testType).get();
+    }
 }
+

@@ -65,6 +65,10 @@ function game(width, height, gridLen, seqLen) {
     }
   };
 
+  this.normalizeScore = (score) => {
+    return parseInt(200 * Math.atan(0.8 * (score - 2)) / Math.PI);
+  };
+
   this.sendResult = () => {
     let score = this.seqLen;
     let headers = new Headers({
@@ -77,9 +81,9 @@ function game(width, height, gridLen, seqLen) {
       mode: 'cors',
       headers,
       body: JSON.stringify({
-        score: score,
+        score: this.normalizeScore(score),
         username: username,
-        testType: "RepeatSequenceGame"
+        testType: "RepeatSequenceTest"
       }),
     })
   };
