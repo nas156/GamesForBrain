@@ -129,7 +129,7 @@ function game(rng, width, height, delay, numbersAmount, maxMistakes) {  // delay
       body: JSON.stringify({
         score: score,
         username: username,
-        testType: "RepeatNumbersGame"
+        testType: "RepeatNumbersTest"
       }),
     })
   };
