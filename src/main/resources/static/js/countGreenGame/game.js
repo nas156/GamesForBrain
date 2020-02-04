@@ -108,7 +108,10 @@ function Game(width, height) {
         this.score += this.round * 10;
         this.newRound();
       } else if (res === 'inCorrect'){
-        this.score -= this.round * 5
+        this.score -= this.round * 5;
+        if (this.score < 0){
+          this.score = 0;
+        }
       }
     }
   };
@@ -123,6 +126,10 @@ function Game(width, height) {
     }
   };
 
+  this.normalizeScore = (score) => {
+    return parseInt(200 * Math.atan(0.0025 * score) / Math.PI);
+  };
+
   this.sendResult = () => {
     let score = this.score;
     let headers = new Headers({
@@ -135,7 +142,7 @@ function Game(width, height) {
       mode: 'cors',
       headers,
       body: JSON.stringify({
-        score: score,
+        score: this.normalizeScore(score),
         username: username,
         testType: "CountGreenTest"
       }),

@@ -115,6 +115,10 @@ function game(rng, width, height, delay, numbersAmount, maxMistakes) {  // delay
     text(txt, WIDTH / 2, HEIGHT / 2 + 40);
   };
 
+  this.normalizeScore = (score) => {
+    return parseInt(200 * Math.atan(0.2 * score) / Math.PI);
+  };
+
   this.sendResult = () => {
     let score = this.totalScore;
     let headers = new Headers({
@@ -127,9 +131,9 @@ function game(rng, width, height, delay, numbersAmount, maxMistakes) {  // delay
       mode: 'cors',
       headers,
       body: JSON.stringify({
-        score: score,
+        score: this.normalizeScore(score),
         username: username,
-        testType: "RepeatNumberTest"
+        testType: "RepeatNumbersTest"
       }),
     })
   };

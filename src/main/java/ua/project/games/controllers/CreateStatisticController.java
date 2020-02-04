@@ -28,5 +28,6 @@ public class CreateStatisticController {
     @ResponseBody
     public void createStatistic(@RequestBody TestStatisticDTO testStatisticDTO) {
         testStatisticService.createStatistic(testStatisticDTO);
+        System.out.println(testStatisticDTO);
     }
 }
