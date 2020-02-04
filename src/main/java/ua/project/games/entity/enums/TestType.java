@@ -1,5 +1,5 @@
 package ua.project.games.entity.enums;
 
 public enum TestType {
-    RepeatNumberTest
+    ReactionTest, RepeatNumbersTest, RepeatSequenceTest, CountGreenTest, IsPreviousTest
 }

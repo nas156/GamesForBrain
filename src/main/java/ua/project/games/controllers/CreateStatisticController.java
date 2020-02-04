@@ -1,26 +1,22 @@
 package ua.project.games.controllers;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-import ua.project.games.dto.UserDTO;
+import ua.project.games.dto.TestStatisticDTO;
 import ua.project.games.entity.TestStatistic;
-import ua.project.games.entity.User;
 import ua.project.games.service.TestStatisticService;
-import ua.project.games.service.UserService;
 
-import java.nio.file.attribute.UserDefinedFileAttributeView;
 import java.util.List;
+
 @CrossOrigin
 @RestController
 @RequestMapping(value = "/createStatistic")
-public class    CreateStatisticController {
-    private final TestStatisticService testStatisticService;
-    private final UserService userService;
+public class CreateStatisticController {
 
-    public CreateStatisticController(TestStatisticService testStatisticService, UserService userService) {
+    private final TestStatisticService testStatisticService;
+
+    public CreateStatisticController(TestStatisticService testStatisticService) {
         this.testStatisticService = testStatisticService;
-        this.userService = userService;
     }
 
     @GetMapping
@@ -30,8 +26,8 @@ public class    CreateStatisticController {
 
     @PostMapping
     @ResponseBody
-    public User createStatistic(@RequestBody UserDTO user){
-        return userService.loadUserByUsername(user.getUsername());
+    public void createStatistic(@RequestBody TestStatisticDTO testStatisticDTO) {
+        testStatisticService.createStatistic(testStatisticDTO);
+        System.out.println(testStatisticDTO);
     }
-
 }

@@ -1,3 +1,7 @@
+const username = $("meta[name='username']").attr("content");
+const token = $("meta[name='_csrf']").attr("content");
+const header = $("meta[name='_csrf_header']").attr("content");
+
 function Game(width, height) {
   // init
   this.width = width;
@@ -104,7 +108,10 @@ function Game(width, height) {
         this.score += this.round * 10;
         this.newRound();
       } else if (res === 'inCorrect'){
-        this.score -= this.round * 5
+        this.score -= this.round * 5;
+        if (this.score < 0){
+          this.score = 0;
+        }
       }
     }
   };
@@ -117,6 +124,29 @@ function Game(width, height) {
       this.init();
       this.newGrid();
     }
+  };
+
+  this.normalizeScore = (score) => {
+    return parseInt(200 * Math.atan(0.0025 * score) / Math.PI);
+  };
+
+  this.sendResult = () => {
+    let score = this.score;
+    let headers = new Headers({
+      'Accept': 'application/json, text/plain, */*',
+      'Content-Type': 'application/json',
+      [header] : token,
+    });
+    fetch('/createStatistic', {
+      method: 'POST',
+      mode: 'cors',
+      headers,
+      body: JSON.stringify({
+        score: this.normalizeScore(score),
+        username: username,
+        testType: "CountGreenTest"
+      }),
+    })
   };
 
   this.draw = () => {
@@ -154,7 +184,7 @@ function Game(width, height) {
       this.drawGameOver();
       this.stage = 10;
       if (!this.isResultSent){
-        // sending result
+        this.sendResult();
         this.isResultSent = true
       }
     }
@@ -169,8 +199,6 @@ function Button(posX, posY, number, width, height) {
   this.btnColor = [75, 111, 255];
   this.btnHoverColor = [60, 90, 240];
   this.txtSize = 24;
-  // this.sizeX = 100;
-  // this.sizeY = 60;
   this.sizeX = width / 7;
   this.sizeY = height / 10;
 
