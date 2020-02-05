@@ -38,7 +38,7 @@ public class TestStatisticService {
     }
 
     public void createStatistic(TestStatisticDTO testStatisticDTO) {
-        if (notAnonymousCheck(testStatisticDTO.getUsername())){
+        if (notAnonymousCheck(testStatisticDTO.getUsername())) {
             TestStatistic testStatisticEntity = TestStatistic.builder()
                     .score(testStatisticDTO.getScore())
                     .testDate(LocalDate.now())
@@ -46,28 +46,28 @@ public class TestStatisticService {
                     .user(userService.loadUserByUsername(testStatisticDTO.getUsername()))
                     .build();
             testStatisticRepository.save(testStatisticEntity);
+        } else {
+            log.warn("IN anonymous user posted statistic");
         }
-        log.warn("IN anonymous user posted statistic");
     }
 
     public List<TestStatistic> getAll() {
         return testStatisticRepository.findAll();
     }
 
-    private boolean notAnonymousCheck(String username){
+    private boolean notAnonymousCheck(String username) {
         return !username.equals("anonymousUser");
     }
 
-    public List<TestStatistic> getUserStatisticForParticularTest(TestType testType, String username){
-       return testStatisticRepository.findAllByTestTypeAndUser_Username(testType, username).get();
-    }
-
-    public List<TestStatistic> getStatisticForTest(TestType testType){
+    @Deprecated
+    public List<TestStatistic> getStatisticForTest(TestType testType) {
         return testStatisticRepository.findAllByTestType(testType).get();
     }
 
-    public List<Integer> getUserScoreForParticularTest(TestType testType, String username){
-        List<TestStatistic> testStatistics = testStatisticRepository.findAllByTestTypeAndUser_Username(testType, username).orElse(new ArrayList<>());
+    public List<Integer> getUserScoreForParticularTest(TestType testType, String username) {
+        List<TestStatistic> testStatistics = testStatisticRepository
+                .findAllByTestTypeAndUser_Username(testType, username)
+                .orElse(new ArrayList<>());
         return testStatistics.stream().map(TestStatistic::getScore).collect(Collectors.toList());
     }
 

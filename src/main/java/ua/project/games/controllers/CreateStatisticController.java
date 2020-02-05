@@ -33,15 +33,15 @@ public class CreateStatisticController {
     }
 
     //TODO html pages and optional processing
-    @RequestMapping(value = "/statisticByUserForRepeatNumbers")
+    @GetMapping(value = "/statisticByUserForRepeatNumbers")
     @ResponseBody
-    public List<TestStatistic> getStatisticByUserAndType(Principal principal){
-        return testStatisticService.getUserStatisticForParticularTest(TestType.RepeatNumbersTest, principal.getName());
+    public List<Integer> getStatisticByUserAndType(Principal principal, @RequestParam(name = "type") String type) {
+        return testStatisticService.getUserScoreForParticularTest(TestType.valueOf(type), principal.getName());
     }
 
     @RequestMapping(value = "/repeatNumbersStatistic")
     @ResponseBody
-    public List<TestStatistic> getRepeatNumbersStatistic(){
+    public List<TestStatistic> getRepeatNumbersStatistic() {
         return testStatisticService.getStatisticForTest(TestType.RepeatNumbersTest);
     }
 

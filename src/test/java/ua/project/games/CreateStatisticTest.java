@@ -17,6 +17,9 @@ import java.util.logging.Logger;
 
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.redirectedUrl;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootTest
@@ -63,5 +66,22 @@ public class CreateStatisticTest {
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk());
+    }
+
+    @Test
+    @WithUserDetails("pavel")
+    public void getStatisticByUserAndType() throws Exception {
+        this.mockMvc.perform(get("/createStatistic/statisticByUserForRepeatNumbers?type=RepeatNumbersTest"))
+                .andDo(print())
+                .andExpect(status().isOk());
+    }
+
+    @Test
+    @WithAnonymousUser
+    public void getStatisticByAnonUserAndType() throws Exception {
+        this.mockMvc.perform(get("/createStatistic/statisticByUserForRepeatNumbers?type=RepeatNumbersTest"))
+                .andDo(print())
+                .andExpect(status().is3xxRedirection())
+                .andExpect(redirectedUrl("http://localhost/accounts/login"));
     }
 }

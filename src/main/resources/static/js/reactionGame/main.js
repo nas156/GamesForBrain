@@ -132,7 +132,13 @@ const finalPart = () => {
           username: username,
           testType: "ReactionTest"
         }),
-      })
+      });
+      fetch('/createStatistic/statisticByUserForRepeatNumbers?type=ReactionTest', {
+        method: 'GET',
+        mode: 'cors',
+        headers,
+      }).then(response => response.json())
+        .then(response => console.log(response));
     });
     stage = 1;
     this.removeEventListener("keypress", handler);
