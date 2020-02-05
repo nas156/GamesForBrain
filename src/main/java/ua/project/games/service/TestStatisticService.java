@@ -8,7 +8,9 @@ import ua.project.games.entity.enums.TestType;
 import ua.project.games.repository.TestStatisticRepository;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @Slf4j
@@ -57,11 +59,17 @@ public class TestStatisticService {
     }
 
     public List<TestStatistic> getUserStatisticForParticularTest(TestType testType, String username){
-        return testStatisticRepository.findAllByTestTypeAndUser_Username(testType, username).get();
+       return testStatisticRepository.findAllByTestTypeAndUser_Username(testType, username).get();
     }
 
     public List<TestStatistic> getStatisticForTest(TestType testType){
         return testStatisticRepository.findAllByTestType(testType).get();
     }
+
+    public List<Integer> getUserScoreForParticularTest(TestType testType, String username){
+        List<TestStatistic> testStatistics = testStatisticRepository.findAllByTestTypeAndUser_Username(testType, username).orElse(new ArrayList<>());
+        return testStatistics.stream().map(TestStatistic::getScore).collect(Collectors.toList());
+    }
+
 }
 
