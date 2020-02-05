@@ -1,14 +1,19 @@
 package ua.project.games;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.extern.flogger.Flogger;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
+import org.springframework.security.test.context.support.WithAnonymousUser;
+import org.springframework.security.test.context.support.WithUserDetails;
 import org.springframework.test.web.servlet.MockMvc;
 import ua.project.games.dto.TestStatisticDTO;
 import ua.project.games.entity.enums.TestType;
+
+import java.util.logging.Logger;
 
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -24,13 +29,15 @@ public class CreateStatisticTest {
 
 
     @Test
-    public void anonymousPostTest() throws Exception {
+    @WithUserDetails("aaa")
+    public void usernamePostTest() throws Exception {
         this.mockMvc.perform(post("/createStatistic")
                 .with(csrf().asHeader())
                 .content(asJsonString(newStatisticDTO))
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk());
+
     }
 
     public static String asJsonString(final Object obj) {
@@ -40,5 +47,21 @@ public class CreateStatisticTest {
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
+    }
+
+    @Test
+    @WithAnonymousUser
+    public void anonymousPostTest() throws Exception{
+        TestStatisticDTO anonymousStatistic = TestStatisticDTO.builder()
+                .score(1)
+                .username("anonymousUser")
+                .testType(TestType.RepeatNumbersTest.toString())
+                .build();
+        this.mockMvc.perform(post("/createStatistic")
+                .with(csrf().asHeader())
+                .content(asJsonString(anonymousStatistic))
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk());
     }
 }
