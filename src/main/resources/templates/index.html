@@ -23,7 +23,7 @@
                 </div>
                 <div style="display: inline-block;" class="col-5 d-flex align-items-center">
                     <img id="stat" th:src="@{/img/index/statistic.png}" alt="stat">
-                    <a href="#" class="item nav-item nav-link active">Statistic</a>
+                    <a th:href="@{/statistic}" class="item nav-item nav-link active">Statistic</a>
                 </div>
                 <div style="display: inline-block" class="col-3 d-flex align-items-center justify-content-end">
                     <div sec:authorize="isAuthenticated()">
