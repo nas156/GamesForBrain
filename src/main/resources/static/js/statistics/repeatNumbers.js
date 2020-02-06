@@ -63,6 +63,14 @@ async function main(){
     const response2 = await getStats('CountGreenTest');
     const data2 = processData(response2);
     plot(data2, 'plot-2', 'Count Green');
+
+    const response3 = await getStats('ReactionTest');
+    const data3 = processData(response3);
+    plot(data3, 'plot-3', 'Reaction');
+
+    const response4 = await getStats('IsPreviousTest');
+    const data4 = processData(response4);
+    plot(data4, 'plot-4', 'Is Previous');
 }
 
 window.onload = main;

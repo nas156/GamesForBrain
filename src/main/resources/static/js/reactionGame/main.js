@@ -128,17 +128,11 @@ const finalPart = () => {
         mode: 'cors',
         headers,
         body: JSON.stringify({
-          score: resultTime,
+          score: normalizeScore(resultTime),
           username: username,
           testType: "ReactionTest"
-        }),
+        })
       });
-      fetch('/createStatistic/statisticByUserForRepeatNumbers?type=ReactionTest', {
-        method: 'GET',
-        mode: 'cors',
-        headers,
-      }).then(response => response.json())
-        .then(response => console.log(response));
     });
     stage = 1;
     this.removeEventListener("keypress", handler);
@@ -155,4 +149,8 @@ const invalidPress = () => {
     stage = 1;
     this.removeEventListener("keypress", handler);
   });
+};
+
+const normalizeScore = (score) => {
+  return parseInt(200 * Math.atan(0.0025 * score) / Math.PI);
 };

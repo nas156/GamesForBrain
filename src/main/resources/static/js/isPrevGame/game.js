@@ -2,6 +2,10 @@ function game() {
   this.randShape = new singFunc(generateShape);
   this.singTimeOut = new singFunc(timeDelay);
   this.singlChange = new singFunc(change);
+  let singlRequest = new singlFunc();
+  const username = $("meta[name='username']").attr("content");
+  const token = $("meta[name='_csrf']").attr("content");
+  const header = $("meta[name='_csrf_header']").attr("content");
 
   this.gameBegin = () => {
     background(228, 228, 288); //gray
@@ -46,7 +50,7 @@ function game() {
       stage = 2;
       this.randShape.executable = true;
       this.singTimeOut.executable = true;
-    },500);
+    }, 500);
   };
 
   this.gameOver = () => {
@@ -56,6 +60,24 @@ function game() {
     fill(75, 111, 255);
     text(`You lose, your score is ${score}.\n Press enter to restart`, CANVAS_WIDTH / 2, CANVAS_HEIGHT / 2);
     textAlign(CENTER);
+
+    let headers = new Headers({
+      'Accept': 'application/json, text/plain, */*',
+      'Content-Type': 'application/json',
+      [header]: token,
+    });
+    singlRequest.run(() => {
+      fetch('/createStatistic', {
+        method: 'POST',
+        mode: 'cors',
+        headers,
+        body: JSON.stringify({
+          score: normalizeScore(score),
+          username: username,
+          testType: "IsPreviousTest"
+        })
+      });
+    });
     document.addEventListener("keypress", function handler(e) {
       if (e.keyCode === 13) {
         score = 0;
@@ -65,6 +87,15 @@ function game() {
     });
   };
 
+  function singlFunc() {
+    this.executable = true;
+    this.run = (def) => {
+      if (this.executable) {
+        this.executable = false;
+        def();
+      }
+    };
+  }
 
   function getRandomObj(collection, mean, min, max) {
     let keys = Array.from(Object.keys(collection));
@@ -95,6 +126,10 @@ function game() {
       }
     };
   }
+
+  const normalizeScore = (score) => {
+    return parseInt(200 * Math.atan(0.0025 * score) / Math.PI);
+  };
 
   function change(callback, ...args) {
     prevShape = currentShape;

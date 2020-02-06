@@ -22,6 +22,8 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.redirectedUrl;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+
+//TODO add external db
 @SpringBootTest
 @AutoConfigureMockMvc
 public class CreateStatisticTest {
@@ -71,7 +73,7 @@ public class CreateStatisticTest {
     @Test
     @WithUserDetails("pavel")
     public void getStatisticByUserAndType() throws Exception {
-        this.mockMvc.perform(get("/createStatistic/statisticByUserForRepeatNumbers?type=RepeatNumbersTest"))
+        this.mockMvc.perform(get("/createStatistic/statisticByUserForRepeatNumbers?type=ReactionTest"))
                 .andDo(print())
                 .andExpect(status().isOk());
     }
@@ -79,7 +81,7 @@ public class CreateStatisticTest {
     @Test
     @WithAnonymousUser
     public void getStatisticByAnonUserAndType() throws Exception {
-        this.mockMvc.perform(get("/createStatistic/statisticByUserForRepeatNumbers?type=RepeatNumbersTest"))
+        this.mockMvc.perform(get("/createStatistic/statisticByUserForRepeatNumbers?type=ReactionTest"))
                 .andDo(print())
                 .andExpect(status().is3xxRedirection())
                 .andExpect(redirectedUrl("http://localhost/accounts/login"));
