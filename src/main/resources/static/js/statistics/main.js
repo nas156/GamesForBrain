@@ -52,7 +52,7 @@ function plot(yData, containerId, testTitle) {
         title: testTitle,
         barmode: 'group'
     };
-    Plotly.newPlot(container1, data, layout);
+    Plotly.newPlot(container1, data, layout, {displayModeBar: false});
 }
 
 async function main(){
