@@ -50,13 +50,6 @@ public class TestsController {
         return "games/isPrevGame";
     }
 
-
-    @GetMapping(value = "/get/tests")
-    @ResponseBody
-    public List<TestStatistic> getAllTestsStatistic(Principal principal) {
-        return testStatisticService.findAllTestsByUsername(principal.getName());
-    }
-
     @GetMapping(value = "/repeatSequence")
     public String getRepeatSequence(Principal principal, Model model) {
         final String currentUserName = SecurityContextHolder.getContext().getAuthentication().getName();
