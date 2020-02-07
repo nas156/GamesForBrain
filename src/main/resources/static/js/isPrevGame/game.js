@@ -128,7 +128,7 @@ function game() {
   }
 
   const normalizeScore = (score) => {
-    return parseInt(200 * Math.atan(0.0025 * score) / Math.PI);
+    return parseInt(200 * Math.atan(0.3 * score) / Math.PI);
   };
 
   function change(callback, ...args) {
