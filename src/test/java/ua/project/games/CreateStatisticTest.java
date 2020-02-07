@@ -92,4 +92,22 @@ public class CreateStatisticTest {
                 .andExpect(status().is3xxRedirection())
                 .andExpect(redirectedUrl("http://localhost/accounts/login"));
     }
+
+    @Test
+    @WithUserDetails("admin")
+    public void getStatisticByTypeOneUserTest() throws Exception {
+        this.mockMvc.perform(get("/createStatistic/statisticByType?type=CountGreenTest"))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(content().string("[3,2,1]"));
+    }
+
+    @Test
+    @WithUserDetails("admin")
+    public void getStatisticByTypeManyUsersTest() throws Exception {
+        this.mockMvc.perform(get("/createStatistic/statisticByType?type=ReactionTest"))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(content().string("[2,1]"));
+    }
 }

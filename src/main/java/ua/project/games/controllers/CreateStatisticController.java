@@ -32,7 +32,7 @@ public class CreateStatisticController {
         System.out.println(testStatisticDTO);
     }
 
-    //TODO html pages and optional processing
+    //TODO change everywhere to /statisticByUserAndType
     @GetMapping(value = "/statisticByUserForRepeatNumbers")
     @ResponseBody
     public List<Integer> getStatisticByUserAndType(Principal principal, @RequestParam(name = "type") String type) {
@@ -41,8 +41,15 @@ public class CreateStatisticController {
 
     @RequestMapping(value = "/repeatNumbersStatistic")
     @ResponseBody
-    public List<TestStatistic> getRepeatNumbersStatistic() {
+    public List<Integer> getRepeatNumbersStatistic() {
         return testStatisticService.getStatisticForTest(TestType.RepeatNumbersTest);
     }
+
+    @RequestMapping(value = "/statisticByType")
+    @ResponseBody
+    public List<Integer> getRepeatNumbersStatistic(@RequestParam(name = "type") String type) {
+        return testStatisticService.getStatisticForTest(TestType.valueOf(type));
+    }
+
 
 }

@@ -11,5 +11,5 @@ import java.util.Optional;
 public interface TestStatisticRepository extends JpaRepository<TestStatistic, Long> {
     Optional<List<TestStatistic>> findAllByUser_Username(String username);
     Optional<List<TestStatistic>> findAllByTestTypeAndUser_Username(TestType testType, String username);
-    Optional<List<TestStatistic>> findAllByTestType(TestType testType);
+    Optional<List<TestStatistic>> findTop100ByTestTypeOrderByIdDesc(TestType testType);
 }

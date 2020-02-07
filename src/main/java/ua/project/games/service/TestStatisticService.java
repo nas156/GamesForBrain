@@ -25,6 +25,7 @@ public class TestStatisticService {
     }
 
     //TODO optional checking
+    @Deprecated
     public List<TestStatistic> findAllTestsByUsername(String username) {
         return testStatisticRepository.findAllByUser_Username(username).get();
     }
@@ -45,7 +46,7 @@ public class TestStatisticService {
                     .testType(TestType.valueOf(testStatisticDTO.getTestType()))
                     .user(userService.loadUserByUsername(testStatisticDTO.getUsername()))
                     .build();
-            testStatisticRepository.save(testStatisticEntity);
+            saveStatistic(testStatisticEntity);
         } else {
             log.warn("IN anonymous user posted statistic");
         }
@@ -59,9 +60,12 @@ public class TestStatisticService {
         return !username.equals("anonymousUser");
     }
 
-    @Deprecated
-    public List<TestStatistic> getStatisticForTest(TestType testType) {
-        return testStatisticRepository.findAllByTestType(testType).get();
+
+    public List<Integer> getStatisticForTest(TestType testType) {
+        List<TestStatistic> testStatistics = testStatisticRepository
+                .findTop100ByTestTypeOrderByIdDesc(testType)
+                .orElse(new ArrayList<>());
+        return testStatistics.stream().map(TestStatistic::getScore).collect(Collectors.toList());
     }
 
     public List<Integer> getUserScoreForParticularTest(TestType testType, String username) {
