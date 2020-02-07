@@ -9,6 +9,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithAnonymousUser;
 import org.springframework.security.test.context.support.WithUserDetails;
+import org.springframework.test.context.TestPropertySource;
+import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.web.servlet.MockMvc;
 import ua.project.games.dto.TestStatisticDTO;
 import ua.project.games.entity.enums.TestType;
@@ -19,22 +21,24 @@ import static org.springframework.security.test.web.servlet.request.SecurityMock
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.redirectedUrl;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 
 //TODO add external db
 @SpringBootTest
 @AutoConfigureMockMvc
+@TestPropertySource("/application-test.properties")
+@Sql(value = {"/create-user-before.sql", "/create-statistic-before.sql"}, executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
+@Sql(value = {"/after.sql"}, executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)
 public class CreateStatisticTest {
 
     @Autowired
     private MockMvc mockMvc;
-    private TestStatisticDTO newStatisticDTO = new TestStatisticDTO(1, "pavel", TestType.IsPreviousTest.toString());
+    private TestStatisticDTO newStatisticDTO = new TestStatisticDTO(1, "admin", TestType.IsPreviousTest.toString());
 
 
     @Test
-    @WithUserDetails("aaa")
+    @WithUserDetails("admin")
     public void usernamePostTest() throws Exception {
         this.mockMvc.perform(post("/createStatistic")
                 .with(csrf().asHeader())
@@ -67,21 +71,23 @@ public class CreateStatisticTest {
                 .content(asJsonString(anonymousStatistic))
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk());
-    }
-
-    @Test
-    @WithUserDetails("pavel")
-    public void getStatisticByUserAndType() throws Exception {
-        this.mockMvc.perform(get("/createStatistic/statisticByUserForRepeatNumbers?type=ReactionTest"))
                 .andDo(print())
                 .andExpect(status().isOk());
     }
 
     @Test
+    @WithUserDetails("admin")
+    public void getStatisticByUserAndType() throws Exception {
+        this.mockMvc.perform(get("/createStatistic/statisticByUserForRepeatNumbers?type=CountGreenTest"))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(content().string("[1,2,3]"));
+    }
+
+    @Test
     @WithAnonymousUser
     public void getStatisticByAnonUserAndType() throws Exception {
-        this.mockMvc.perform(get("/createStatistic/statisticByUserForRepeatNumbers?type=ReactionTest"))
+        this.mockMvc.perform(get("/createStatistic/statisticByUserForRepeatNumbers?type=CountGreenTest"))
                 .andDo(print())
                 .andExpect(status().is3xxRedirection())
                 .andExpect(redirectedUrl("http://localhost/accounts/login"));
