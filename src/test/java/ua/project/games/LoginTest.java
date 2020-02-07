@@ -1,14 +1,23 @@
 package ua.project.games;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.MediaType;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
+import ua.project.games.entity.User;
+
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
+import java.util.Arrays;
+import java.util.Calendar;
 
 import static org.hamcrest.Matchers.containsString;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestBuilders.formLogin;
@@ -50,6 +59,45 @@ public class LoginTest {
         this.mockMvc.perform(formLogin("/accounts/login").user("admin").password("grib11111"))
                 .andDo(print())
                 .andExpect(redirectedUrl("/accounts/login?error"));
+    }
+
+    @Test
+    public void validRegistration () throws Exception {
+        this.mockMvc.perform(post("/accounts/registration")
+                .with(csrf().asHeader())
+                .content(buildUrlEncodedFormEntity(
+                        "username", "test",
+                        "email", "test@test.com",
+                        "password", "test1234",
+                        "confirmPassword", "test1234",
+                        "age", "2020-02-01"
+                ))
+                .contentType(MediaType.APPLICATION_FORM_URLENCODED)
+                .accept(MediaType.APPLICATION_JSON))
+                .andDo(print())
+                .andExpect(status().is3xxRedirection());
+    }
+
+    private String buildUrlEncodedFormEntity(String... params) {
+        if( (params.length % 2) > 0 ) {
+            throw new IllegalArgumentException("Need to give an even number of parameters");
+        }
+        StringBuilder result = new StringBuilder();
+        for (int i=0; i<params.length; i+=2) {
+            if( i > 0 ) {
+                result.append('&');
+            }
+            try {
+                result.
+                        append(URLEncoder.encode(params[i], StandardCharsets.UTF_8.name())).
+                        append('=').
+                        append(URLEncoder.encode(params[i+1], StandardCharsets.UTF_8.name()));
+            }
+            catch (UnsupportedEncodingException e) {
+                throw new RuntimeException(e);
+            }
+        }
+        return result.toString();
     }
 
 }

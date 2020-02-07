@@ -20,11 +20,6 @@ public class CreateStatisticController {
         this.testStatisticService = testStatisticService;
     }
 
-    @GetMapping
-    public List<TestStatistic> getAll() {
-        return testStatisticService.getAll();
-    }
-
     @PostMapping
     @ResponseBody
     public void createStatistic(@RequestBody TestStatisticDTO testStatisticDTO) {
@@ -37,12 +32,6 @@ public class CreateStatisticController {
     @ResponseBody
     public List<Integer> getStatisticByUserAndType(Principal principal, @RequestParam(name = "type") String type) {
         return testStatisticService.getUserScoreForParticularTest(TestType.valueOf(type), principal.getName());
-    }
-
-    @RequestMapping(value = "/repeatNumbersStatistic")
-    @ResponseBody
-    public List<Integer> getRepeatNumbersStatistic() {
-        return testStatisticService.getStatisticForTest(TestType.RepeatNumbersTest);
     }
 
     @RequestMapping(value = "/statisticByType")

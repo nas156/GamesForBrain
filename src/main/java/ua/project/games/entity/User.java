@@ -1,6 +1,10 @@
 package ua.project.games.entity;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -10,6 +14,9 @@ import javax.persistence.*;
 import java.util.*;
 
 @Entity
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 @Table(name = "usr")
 public class User implements UserDetails {
     @Id
@@ -87,18 +94,6 @@ public class User implements UserDetails {
 
     @Enumerated(EnumType.STRING)
     private Role role;
-
-    public User(){}
-
-    public User(String lastName, String firstName, String username, String password, Role role, String email) {
-        this.lastName = lastName;
-        this.firstName = firstName;
-        this.username = username;
-        this.password = password;
-        this.role = role;
-        this.email = email;
-    }
-
 
     public String getLastName() {
         return lastName;
