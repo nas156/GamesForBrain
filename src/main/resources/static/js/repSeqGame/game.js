@@ -4,6 +4,7 @@ const header = $("meta[name='_csrf_header']").attr("content");
 
 function game(width, height, gridLen, seqLen) {
   this.init = () => {
+    this.isGameInformationReady = false;
     this.width = width;
     this.height = height;
     this.gridLen = gridLen;
@@ -110,6 +111,7 @@ function game(width, height, gridLen, seqLen) {
       if (!this.isDataSent){
         this.sendResult();
         this.isDataSent = true;
+        this.isGameInformationReady = true;
       }
     } else if (this.stage === 4) {
       this.stage = 10;
