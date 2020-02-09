@@ -5,6 +5,7 @@ const header = $("meta[name='_csrf_header']").attr("content");
 function game(rng, width, height, delay, numbersAmount, maxMistakes) {  // delay in milliseconds
   this.init = function () {
     // creation arguments
+    this.isGameInformationReady = false;  // flag for showing the statistics about last game
     this.rng = rng;
     this.width = width;
     this.height = height;
@@ -163,6 +164,7 @@ function game(rng, width, height, delay, numbersAmount, maxMistakes) {  // delay
           if (this.mistakes === this.maxMistakes + 1) {
             this.stage = 6;
             this.sendResult();
+            this.isGameInformationReady = true;
           }
         }
         this.counter += 1;

@@ -22,6 +22,7 @@ function Game(width, height) {
   ];
 
   this.init = () => {
+    this.isGameInformationReady = false;
     this.buttons = [];
     this.score = 0;
     this.startTime = new Date().getTime();
@@ -185,7 +186,8 @@ function Game(width, height) {
       this.stage = 10;
       if (!this.isResultSent){
         this.sendResult();
-        this.isResultSent = true
+        this.isResultSent = true;
+        this.isGameInformationReady = true;
       }
     }
   };

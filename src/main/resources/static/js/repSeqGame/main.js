@@ -19,6 +19,12 @@ function setup() {
 function draw() {
   background(228);
   game.draw();
+  if (game.isGameInformationReady){
+    let lastGameResult = lastGameStatistics(DATA, game.normalizeScore(game.seqLen));
+    showLastGameStatistics(lastGameResult);
+    game.isGameInformationReady = false
+
+  }
 }
 
 function keyTyped() {

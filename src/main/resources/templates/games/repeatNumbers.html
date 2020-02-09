@@ -17,6 +17,9 @@
             integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
             crossorigin="anonymous"></script>
     <title>RepeatSequence</title>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <script type="text/javascript" th:src="@{/js/statistics/commonFunctions.js}"></script>
+    <script th:src="@{/js/statistics/repNumbersGame.js}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.9.0/p5.js"></script>
     <script th:src="@{/js/repNumbersGame/game.js}"></script>
     <script th:src="@{/js/repNumbersGame/main.js}"></script>
@@ -24,5 +27,6 @@
     <title>RepeatNumbers</title>
 </head>
 <body th:replace = "~{games/repeatSequence :: test_body}">
+
 </body>
 </html>
