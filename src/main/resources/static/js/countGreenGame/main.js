@@ -12,7 +12,7 @@ function draw() {
   background(228);
   game.draw();
   if (game.isGameInformationReady){
-    let lastGameResult = lastGameStatistics(DATA, game.normalizeScore(game.totalScore));
+    let lastGameResult = lastGameStatistics(DATA, game.normalizeScore(game.score));
     showLastGameStatistics(lastGameResult);
     game.isGameInformationReady = false
   }
