@@ -1,4 +1,9 @@
 function main() {
+  if (game.isGameInformationReady){
+    let lastGameResult = lastGameStatistics(DATA, game.normalizeScore(game.totalScore));
+    showLastGameStatistics(lastGameResult);
+    game.isGameInformationReady = false
+  }
   if (isStarted === false) {
     textAlign(CENTER, CENTER);
     textSize(Math.floor(WIDTH / 17));

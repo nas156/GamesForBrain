@@ -12,29 +12,6 @@ async function getStats(testType) {
         })
 }
 
-function processData(data) {
-    /**
-     * Count how many results in ranges 0-9, 10-19, 20-29, ..., 90-100.
-     * @return {Array} array of 10 elements which says upper mentioned information
-     */
-    // todo rewrite this code in dynamic style, because now it's govno sobaki
-    let result = [];
-    let lowerBound = 0;
-    let upperBound = 9;
-    for (let i = 0; i < 10; i++) {
-        result.push(data.filter(score =>{
-            return (score >= lowerBound) && (score <= upperBound)
-        }));
-        lowerBound += 10;
-        upperBound += 10;
-    }
-    result = result.map(function (arr) {
-        return arr.length
-    });
-    return result
-
-}
-
 function plot(yData, containerId, testTitle) {
     let xData = ['0-9', '10-19', '20-29', '30-39', '40-49', '50-59', '60-69', '70-79', '80-89', '90-100'];
     const container1 = document.getElementById(containerId);
@@ -71,6 +48,8 @@ async function main(){
     const response4 = await getStats('IsPreviousTest');
     const data4 = processData(response4);
     plot(data4, 'plot-4', 'Is Previous');
+
+
 }
 
 window.onload = main;
