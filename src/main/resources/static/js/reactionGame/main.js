@@ -8,6 +8,7 @@ const username = $("meta[name='username']").attr("content");
 const token = $("meta[name='_csrf']").attr("content");
 const header = $("meta[name='_csrf_header']").attr("content");
 let timeout;
+let isGlobalStatisticShowed = false;
 
 function singlFunc() {
   this.executable = true;
@@ -49,6 +50,7 @@ function draw() {
 }
 
 const gameBegin = () => {
+
   background(228,228,228); //grey
   textSize(Math.floor(CANVAS_WIDTH / 17));
   fill(75, 111, 255);
@@ -108,6 +110,13 @@ const greenPart = () => {
 };
 
 const finalPart = () => {
+  if (!isGlobalStatisticShowed){
+    console.log(normalizeScore(resultTime));
+    let lastGameResult = lastGameStatistics(DATA, normalizeScore(resultTime));
+    showLastGameStatistics(lastGameResult);
+  }
+  isGlobalStatisticShowed = true;
+
   background(23, 194, 0); //green
   $("#gr").css({"background": "rgb(23, 194, 0)"});
   textSize(Math.floor(CANVAS_WIDTH / 17));
@@ -135,6 +144,7 @@ const finalPart = () => {
       });
     });
     stage = 1;
+    isGlobalStatisticShowed = false;
     this.removeEventListener("keypress", handler);
   });
 };
@@ -152,5 +162,6 @@ const invalidPress = () => {
 };
 
 const normalizeScore = (score) => {
-  return parseInt(200 * Math.atan(0.0025 * score) / Math.PI);
+  return parseInt(-200 * Math.atan(0.0025 * score) / Math.PI + 100);
 };
+
