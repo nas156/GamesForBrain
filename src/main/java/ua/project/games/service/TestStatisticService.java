@@ -2,6 +2,7 @@ package ua.project.games.service;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import ua.project.games.dto.AllTestsStatisticDTO;
 import ua.project.games.dto.TestStatisticDTO;
 import ua.project.games.entity.TestStatistic;
 import ua.project.games.entity.enums.TestType;
@@ -70,10 +71,19 @@ public class TestStatisticService {
 
     public List<Integer> getUserScoreForParticularTest(TestType testType, String username) {
         List<TestStatistic> testStatistics = testStatisticRepository
-                .findAllByTestTypeAndUser_Username(testType, username)
+                .findTop100ByTestTypeAndUser_UsernameOrderByScoreDesc(testType, username)
                 .orElse(new ArrayList<>());
         return testStatistics.stream().map(TestStatistic::getScore).collect(Collectors.toList());
     }
 
+    public AllTestsStatisticDTO getAllTestsStatisticByUser(String username){
+        return AllTestsStatisticDTO.builder()
+                .repeatNumbersTestStatistic(getUserScoreForParticularTest(TestType.RepeatNumbersTest, username))
+                .repeatSequenceTestStatistic(getUserScoreForParticularTest(TestType.RepeatSequenceTest, username))
+                .countGreenTestStatistic(getUserScoreForParticularTest(TestType.CountGreenTest, username))
+                .isPreviousTestStatistic(getUserScoreForParticularTest(TestType.IsPreviousTest, username))
+                .reactionTestStatistic(getUserScoreForParticularTest(TestType.ReactionTest, username))
+                .build();
+    }
 }
 

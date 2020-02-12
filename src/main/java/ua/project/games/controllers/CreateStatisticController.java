@@ -1,6 +1,7 @@
 package ua.project.games.controllers;
 
 import org.springframework.web.bind.annotation.*;
+import ua.project.games.dto.AllTestsStatisticDTO;
 import ua.project.games.dto.TestStatisticDTO;
 import ua.project.games.entity.TestStatistic;
 import ua.project.games.entity.enums.TestType;
@@ -40,5 +41,9 @@ public class CreateStatisticController {
         return testStatisticService.getStatisticForTest(TestType.valueOf(type));
     }
 
-
+    @GetMapping(value = "/getAllTestsStatisticByUser")
+    @ResponseBody
+    public AllTestsStatisticDTO getAllTestsStatisticByUser(Principal principal){
+        return testStatisticService.getAllTestsStatisticByUser(principal.getName());
+    }
 }

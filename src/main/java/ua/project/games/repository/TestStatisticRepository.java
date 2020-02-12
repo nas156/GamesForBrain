@@ -12,4 +12,5 @@ public interface TestStatisticRepository extends JpaRepository<TestStatistic, Lo
     Optional<List<TestStatistic>> findAllByUser_Username(String username);
     Optional<List<TestStatistic>> findAllByTestTypeAndUser_Username(TestType testType, String username);
     Optional<List<TestStatistic>> findTop100ByTestTypeOrderByIdDesc(TestType testType);
+    Optional<List<TestStatistic>> findTop100ByTestTypeAndUser_UsernameOrderByScoreDesc(TestType testType, String username);
 }
