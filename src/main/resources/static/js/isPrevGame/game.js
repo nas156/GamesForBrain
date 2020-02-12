@@ -19,6 +19,8 @@ function game() {
         this.removeEventListener("keypress", handler);
       }
     });
+    this.isGlobalStatisticShowed = false;
+
   };
 
   this.firstShape = () => {
@@ -60,6 +62,12 @@ function game() {
     fill(75, 111, 255);
     text(`You lose, your score is ${score}.\n Press enter to restart`, CANVAS_WIDTH / 2, CANVAS_HEIGHT / 2);
     textAlign(CENTER);
+
+    if (!this.isGlobalStatisticShowed){
+      let lastGameResult = lastGameStatistics(DATA, normalizeScore(score));
+      showLastGameStatistics(lastGameResult);
+    }
+    this.isGlobalStatisticShowed = true;
 
     let headers = new Headers({
       'Accept': 'application/json, text/plain, */*',

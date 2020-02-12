@@ -13,6 +13,9 @@
     <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
             integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
             crossorigin="anonymous"></script>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <script type="text/javascript" th:src="@{/js/statistics/commonFunctions.js}"></script>
+    <script th:src="@{/js/statistics/tests/isPrevGame.js}"></script>
     <script src="https://cdn.jsdelivr.net/npm/p5@0.10.2/lib/p5.js"></script>
     <script type="text/javascript" th:src="@{/js/isPrevGame/Timer.js}"></script>
     <script type="text/javascript" th:src="@{/js/isPrevGame/shapes/Rect.js}"></script>
@@ -50,5 +53,7 @@
         <div class="col-4"></div>
     </div>
 </div>
+<div id="plot" style="width:400px;height:300px;"></div>
+<div id="stats-inf" style="width:400px;height:300px;"></div>
 </body>
 </html>
