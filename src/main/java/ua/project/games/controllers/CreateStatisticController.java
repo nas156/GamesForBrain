@@ -1,14 +1,12 @@
 package ua.project.games.controllers;
 
 import org.springframework.web.bind.annotation.*;
-import ua.project.games.dto.AllTestsStatisticDTO;
 import ua.project.games.dto.TestStatisticDTO;
-import ua.project.games.entity.TestStatistic;
-import ua.project.games.entity.enums.TestType;
 import ua.project.games.service.TestStatisticService;
 
 import java.security.Principal;
 import java.util.List;
+import java.util.Map;
 
 @CrossOrigin
 @RestController
@@ -32,18 +30,18 @@ public class CreateStatisticController {
     @GetMapping(value = "/statisticByUserForRepeatNumbers")
     @ResponseBody
     public List<Integer> getStatisticByUserAndType(Principal principal, @RequestParam(name = "type") String type) {
-        return testStatisticService.getUserScoreForParticularTest(TestType.valueOf(type), principal.getName());
+        return testStatisticService.getUserScoreForParticularTest(type, principal.getName());
     }
 
     @RequestMapping(value = "/statisticByType")
     @ResponseBody
     public List<Integer> getRepeatNumbersStatistic(@RequestParam(name = "type") String type) {
-        return testStatisticService.getStatisticForTest(TestType.valueOf(type));
+        return testStatisticService.getStatisticForTest(type);
     }
 
     @GetMapping(value = "/getAllTestsStatisticByUser")
     @ResponseBody
-    public AllTestsStatisticDTO getAllTestsStatisticByUser(Principal principal){
+    public Map<String, List<Integer>> getAllTestsStatisticByUser(Principal principal){
         return testStatisticService.getAllTestsStatisticByUser(principal.getName());
     }
 }

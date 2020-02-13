@@ -4,10 +4,11 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.*;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import ua.project.games.entity.enums.Role;
-import ua.project.games.entity.enums.TestType;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.Collection;
+import java.util.Set;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -31,8 +32,9 @@ public class TestStatistic {
     @JsonBackReference
     private User user;
 
-    @Enumerated(EnumType.STRING)
+    @ManyToOne
     private TestType testType;
 
-
+//    @Enumerated(EnumType.STRING)
+//    private ua.project.games.entity.enums.TestType testType;
 }

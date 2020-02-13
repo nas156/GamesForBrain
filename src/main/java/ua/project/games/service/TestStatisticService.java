@@ -2,15 +2,15 @@ package ua.project.games.service;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-import ua.project.games.dto.AllTestsStatisticDTO;
 import ua.project.games.dto.TestStatisticDTO;
 import ua.project.games.entity.TestStatistic;
-import ua.project.games.entity.enums.TestType;
+import ua.project.games.entity.TestType;
+import ua.project.games.entity.enums.CurrentStatus;
 import ua.project.games.repository.TestStatisticRepository;
+import ua.project.games.repository.TestTypeRepository;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -18,11 +18,13 @@ import java.util.stream.Collectors;
 public class TestStatisticService {
     private final TestStatisticRepository testStatisticRepository;
     private final UserService userService;
+    private final TestTypeRepository testTypeRepository;
 
 
-    public TestStatisticService(TestStatisticRepository testStatisticRepository, UserService userService) {
+    public TestStatisticService(TestStatisticRepository testStatisticRepository, UserService userService, TestTypeRepository testTypeRepository) {
         this.testStatisticRepository = testStatisticRepository;
         this.userService = userService;
+        this.testTypeRepository = testTypeRepository;
     }
 
     //TODO optional checking
@@ -44,7 +46,7 @@ public class TestStatisticService {
             TestStatistic testStatisticEntity = TestStatistic.builder()
                     .score(testStatisticDTO.getScore())
                     .testDate(LocalDate.now())
-                    .testType(TestType.valueOf(testStatisticDTO.getTestType()))
+                    .testType(testTypeRepository.findByTestType(testStatisticDTO.getTestType()).get())
                     .user(userService.loadUserByUsername(testStatisticDTO.getUsername()))
                     .build();
             saveStatistic(testStatisticEntity);
@@ -62,28 +64,29 @@ public class TestStatisticService {
     }
 
 
-    public List<Integer> getStatisticForTest(TestType testType) {
+    public List<Integer> getStatisticForTest(String testType) {
         List<TestStatistic> testStatistics = testStatisticRepository
-                .findTop100ByTestTypeOrderByIdDesc(testType)
+                .findTop100ByTestType_TestTypeOrderByIdDesc(testType)
                 .orElse(new ArrayList<>());
         return testStatistics.stream().map(TestStatistic::getScore).collect(Collectors.toList());
     }
 
-    public List<Integer> getUserScoreForParticularTest(TestType testType, String username) {
+    public List<Integer> getUserScoreForParticularTest(String  testType, String username) {
         List<TestStatistic> testStatistics = testStatisticRepository
-                .findTop100ByTestTypeAndUser_UsernameOrderByScoreDesc(testType, username)
+                .findTop100ByTestType_TestTypeAndUser_UsernameOrderByScoreDesc(testType, username)
                 .orElse(new ArrayList<>());
         return testStatistics.stream().map(TestStatistic::getScore).collect(Collectors.toList());
     }
 
-    public AllTestsStatisticDTO getAllTestsStatisticByUser(String username){
-        return AllTestsStatisticDTO.builder()
-                .repeatNumbersTestStatistic(getUserScoreForParticularTest(TestType.RepeatNumbersTest, username))
-                .repeatSequenceTestStatistic(getUserScoreForParticularTest(TestType.RepeatSequenceTest, username))
-                .countGreenTestStatistic(getUserScoreForParticularTest(TestType.CountGreenTest, username))
-                .isPreviousTestStatistic(getUserScoreForParticularTest(TestType.IsPreviousTest, username))
-                .reactionTestStatistic(getUserScoreForParticularTest(TestType.ReactionTest, username))
-                .build();
+    public Map<String, List<Integer>> getAllTestsStatisticByUser(String username){
+        Map<String, List<Integer>> allTestsStatistic = new HashMap<>();
+
+        for (TestType testType: testTypeRepository.findAllByCurrentStatus(CurrentStatus.Active)
+             ) {
+            allTestsStatistic.put(testType.getTestType(), getUserScoreForParticularTest(testType.getTestType(), username));
+        }
+
+        return allTestsStatistic;
     }
 }
 
