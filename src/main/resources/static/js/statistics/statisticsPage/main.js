@@ -1,5 +1,8 @@
-async function getStats(testType) {
-    let url = '/createStatistic/statisticByUserForRepeatNumbers?type=' + testType;
+async function getStats() {
+    /**
+     * Returns all test's statistics of current user
+     * */
+    let url = '/createStatistic/getAllTestsStatisticByUser';
     return await fetch(url)
         .then(response => {
             return response.json()
@@ -11,6 +14,8 @@ async function getStats(testType) {
             console.log(err)
         })
 }
+
+
 
 function plot(yData, containerId, testTitle) {
     let xData = ['0-9', '10-19', '20-29', '30-39', '40-49', '50-59', '60-69', '70-79', '80-89', '90-100'];
@@ -32,26 +37,43 @@ function plot(yData, containerId, testTitle) {
     Plotly.newPlot(container1, data, layout, {displayModeBar: false});
 }
 
+async function buildPlots(){
+    const response = await getStats();
+    let plotsContainer = document.getElementById("plots");
+    let id = 1;
+    for (let testType in response){
+        let data = processData(response[testType]);
+        let containerId = `plot-${id++}`;
+        let container = document.createElement('DIV');
+        container.setAttribute('id', containerId);
+        container.setAttribute('class', 'plot-container');
+        plotsContainer.appendChild(container);
+        plot(data, containerId, testType);
+    }
+
+}
+
 async function main(){
-    const response1 = await getStats('RepeatNumbersTest');
-    const data1 = processData(response1);
-    plot(data1, 'plot-1', 'Repeat Numbers');
-
-    const response2 = await getStats('ReactionTest');
-    const data2 = processData(response2);
-    plot(data2, 'plot-2', 'Reaction');
-
-    const response3 = await getStats('RepeatSequenceTest');
-    const data3 = processData(response3);
-    plot(data3, 'plot-3', 'Repeat Sequence');
-
-    const response4 = await getStats('IsPreviousTest');
-    const data4 = processData(response4);
-    plot(data4, 'plot-4', 'Is Previous');
-
-    const response5 = await getStats('CountGreenTest');
-    const data5 = processData(response5);
-    plot(data5, 'plot-5', 'Count green');
+    await buildPlots()
+    // const response1 = await getStats('RepeatNumbersTest');
+    // const data1 = processData(response1);
+    // plot(data1, 'plot-1', 'Repeat Numbers');
+    //
+    // const response2 = await getStats('ReactionTest');
+    // const data2 = processData(response2);
+    // plot(data2, 'plot-2', 'Reaction');
+    //
+    // const response3 = await getStats('RepeatSequenceTest');
+    // const data3 = processData(response3);
+    // plot(data3, 'plot-3', 'Repeat Sequence');
+    //
+    // const response4 = await getStats('IsPreviousTest');
+    // const data4 = processData(response4);
+    // plot(data4, 'plot-4', 'Is Previous');
+    //
+    // const response5 = await getStats('CountGreenTest');
+    // const data5 = processData(response5);
+    // plot(data5, 'plot-5', 'Count green');
 }
 
 window.onload = main;
