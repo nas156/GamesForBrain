@@ -48,9 +48,7 @@ function plot(data, containerId, testTitle) {
 
 let searchPlace = function (arr, x, start, end) {
     let mid = Math.floor((start + end)/2);
-    if (start > end) {
-        return mid < 0 ? 0 : mid
-    }
+    if (start > end) return mid;
     if (arr[mid]===x) return mid;
     if(arr[mid] > x)
         return searchPlace(arr, x, start, mid-1);
@@ -90,7 +88,6 @@ function lastGameStatistics(allData, gameResult) {
      * 0.6 means that result is better than 60% of all results
     * */
     let place = searchPlace(allData, gameResult, 0, allData.length-1);
-    console.log(place);
     return (place / allData.length).toFixed(3)
 }
 
