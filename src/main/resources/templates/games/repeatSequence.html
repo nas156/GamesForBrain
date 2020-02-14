@@ -15,6 +15,7 @@
             integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
             crossorigin="anonymous"></script>
     <title>RepeatSequence</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
     <script type="text/javascript" th:src="@{/js/statistics/commonFunctions.js}"></script>
     <script th:src="@{/js/statistics/tests/repSeqGame.js}"></script>
@@ -24,17 +25,28 @@
     <script th:src="@{/js/repSeqGame/grid.js}"></script>
     <script th:src="@{/js/repSeqGame/game.js}"></script>
     <script th:src="@{/js/repSeqGame/main.js}"></script>
+    <script th:scr="@{/js/statistics/slideDownAnimation.js}"></script>
 </head>
 <body th:fragment="test_body">
 <div th:replace="~{index :: nav}"></div>
-<div id = "gr" class="slideInRight row fadeIn secblock">
+<div id="gr" class="slideInRight row fadeIn secblock">
     <div style=" width: 100vw;" class="row">
         <div class="col-12 d-flex justify-content-center align-items-center">
             <div id="canvas"></div>
         </div>
     </div>
 </div>
-<div id="plot" style="width:400px;height:300px;"></div>
-<div id="stats-inf" style="width:400px;height:300px;"></div>
+<div id="statistic">
+    <div style=" width: 100vw;" class="row">
+        <div class="col-12 d-flex justify-content-center align-items-center">
+            <div id="plot" style="width:400px;height:300px;"></div>
+        </div>
+    </div>
+    <div style=" width: 100vw;" class="row">
+        <div class="col-12 d-flex justify-content-center align-items-center">
+            <div id="stats-inf" style="width:400px;height:300px;"></div>
+        </div>
+    </div>
+</div>
 </body>
 </html>

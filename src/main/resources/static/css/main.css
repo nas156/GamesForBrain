@@ -93,3 +93,7 @@ a {
     background: #e4e4e4;
 }
 
+#statistic {
+    display : none;
+}
+

@@ -123,26 +123,26 @@ const finalPart = () => {
   fill(75, 111, 255);
   text(`Your result is ${resultTime}ms.\n Press any key to Restart`, CANVAS_WIDTH / 2, CANVAS_HEIGHT / 2);
   textAlign(CENTER);
+  $("#statistic").slideDown(1000);
   let headers = new Headers({
     'Accept': 'application/json, text/plain, */*',
     'Content-Type': 'application/json',
     [header] : token,
   });
-
-
-  document.addEventListener("keypress", function handler(e) {
-    singlRequest.run( () => {
-      fetch('/createStatistic', {
-        method: 'POST',
-        mode: 'cors',
-        headers,
-        body: JSON.stringify({
-          score: normalizeScore(resultTime),
-          username: username,
-          testType: "ReactionTest"
-        })
-      });
+  singlRequest.run( () => {
+    fetch('/createStatistic', {
+      method: 'POST',
+      mode: 'cors',
+      headers,
+      body: JSON.stringify({
+        score: normalizeScore(resultTime),
+        username: username,
+        testType: "ReactionTest"
+      })
     });
+  });
+  document.addEventListener("keypress", function handler(e) {
+    $("#statistic").slideUp(1000);
     stage = 1;
     isGlobalStatisticShowed = false;
     this.removeEventListener("keypress", handler);
