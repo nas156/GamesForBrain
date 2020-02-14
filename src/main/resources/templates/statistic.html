@@ -3,15 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <meta name="username" th:content="${username}"/>
+    <meta name="_csrf" th:content="${_csrf.token}"/>
+    <!-- default header name is X-CSRF-TOKEN -->
+    <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
+    <link rel="stylesheet" th:href="@{/css/statistics.css}">
     <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
     <script type="text/javascript" th:src="@{/js/statistics/commonFunctions.js}"></script>
     <script type="text/javascript" th:src="@{/js/statistics/statisticsPage/main.js}"></script>
 </head>
 <body>
-<div id="plot-1" style="width:400px;height:500px;"></div>
-<div id="plot-2" style="width:400px;height:500px;"></div>
-<div id="plot-3" style="width:400px;height:500px;"></div>
-<div id="plot-4" style="width:400px;height:500px;"></div>
-<div id="plot-5" style="width:400px;height:500px;"></div>
+<div id="plots">
+</div>
 </body>
 </html>
