@@ -48,6 +48,7 @@ function draw() {
       break;
     case 3:
       Game.gameOver();
+      $("#statistic").slideDown(1000);
       break;
   }
 }

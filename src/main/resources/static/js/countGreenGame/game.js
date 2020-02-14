@@ -85,6 +85,7 @@ function Game(width, height) {
               + "Your score: " + this.score + "\n"
               + "Press 'Enter' to restart test";
     text(txt, this.width / 2, this.height / 2);
+    $("#statistic").slideDown(1000);
   };
 
   this.drawButtons = () => {
@@ -122,6 +123,7 @@ function Game(width, height) {
       this.startTime = new Date().getTime();
       this.newGrid();
     } else if (this.stage === 10 && keyCode === 13){
+      $("#statistic").slideUp(1000);
       this.init();
       this.newGrid();
     }

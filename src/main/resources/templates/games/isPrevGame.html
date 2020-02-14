@@ -15,8 +15,12 @@
             integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
             crossorigin="anonymous"></script>
     <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+            integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
+            crossorigin="anonymous"></script>
     <script type="text/javascript" th:src="@{/js/statistics/commonFunctions.js}"></script>
     <script th:src="@{/js/statistics/tests/isPrevGame.js}"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/p5@0.10.2/lib/p5.js"></script>
     <script type="text/javascript" th:src="@{/js/isPrevGame/Timer.js}"></script>
     <script type="text/javascript" th:src="@{/js/isPrevGame/shapes/Rect.js}"></script>
@@ -29,9 +33,6 @@
     <script type="text/javascript" th:src="@{/js/isPrevGame/buttons/falseButton.js}"></script>
     <script type="text/javascript" th:src="@{/js/isPrevGame/game.js}"></script>
     <script th:src="@{/js/isPrevGame/main.js}"></script>
-    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
-            integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
-            crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
             integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
             crossorigin="anonymous"></script>
@@ -54,7 +55,17 @@
         <div class="col-4"></div>
     </div>
 </div>
-<div id="plot" style="width:400px;height:300px;"></div>
-<div id="stats-inf" style="width:400px;height:300px;"></div>
+<div id="statistic">
+    <div style=" width: 100vw;" class="row">
+        <div class="col-12 d-flex justify-content-center align-items-center">
+            <div id="plot" style="width:400px;height:300px;"></div>
+        </div>
+    </div>
+    <div style=" width: 100vw;" class="row">
+        <div class="col-12 d-flex justify-content-center align-items-center">
+            <div id="stats-inf" style="width:400px;height:300px;"></div>
+        </div>
+    </div>
+</div>
 </body>
 </html>

@@ -113,6 +113,7 @@ function game(rng, width, height, delay, numbersAmount, maxMistakes) {  // delay
     txt = "Your score: " + this.totalScore;
     text(txt, WIDTH / 2, HEIGHT / 2);
     txt = "Press 'Enter' to restart test";
+    $("#statistic").slideDown(1000);
     text(txt, WIDTH / 2, HEIGHT / 2 + 40);
   };
 
@@ -142,6 +143,7 @@ function game(rng, width, height, delay, numbersAmount, maxMistakes) {  // delay
   // in keyTyped func
   this.userInputStage = function () {
     if (this.stage === 6 && keyCode === 13){
+      $("#statistic").slideUp(1000);
       this.init();
       this.newGame();
     }
