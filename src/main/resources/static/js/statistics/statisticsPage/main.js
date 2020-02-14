@@ -55,25 +55,6 @@ async function buildPlots(){
 
 async function main(){
     await buildPlots()
-    // const response1 = await getStats('RepeatNumbersTest');
-    // const data1 = processData(response1);
-    // plot(data1, 'plot-1', 'Repeat Numbers');
-    //
-    // const response2 = await getStats('ReactionTest');
-    // const data2 = processData(response2);
-    // plot(data2, 'plot-2', 'Reaction');
-    //
-    // const response3 = await getStats('RepeatSequenceTest');
-    // const data3 = processData(response3);
-    // plot(data3, 'plot-3', 'Repeat Sequence');
-    //
-    // const response4 = await getStats('IsPreviousTest');
-    // const data4 = processData(response4);
-    // plot(data4, 'plot-4', 'Is Previous');
-    //
-    // const response5 = await getStats('CountGreenTest');
-    // const data5 = processData(response5);
-    // plot(data5, 'plot-5', 'Count green');
 }
 
 window.onload = main;
