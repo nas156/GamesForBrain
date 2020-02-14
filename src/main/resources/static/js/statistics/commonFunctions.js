@@ -36,14 +36,14 @@ function plot(data, containerId, testTitle) {
     const layout = {
         title: testTitle,
         barmode: 'group',
-        plot_bgcolor: 'rgb(228, 228, 228)',
-        bgcolor: 'rgb(228, 228, 228)',
+        //plot_bgcolor: 'rgb(228, 228, 228)',
+        //bgcolor: 'rgb(228, 228, 228)',
 
 };
     Plotly.newPlot(container1, plot_data, layout, {displayModeBar: false});
 
     // setting background of plot
-    document.getElementsByClassName('main-svg')[0].setAttribute('style', 'rgb(228)')
+    //document.getElementsByClassName('main-svg')[0].setAttribute('style', 'rgb(228)')
 }
 
 let searchPlace = function (arr, x, start, end) {

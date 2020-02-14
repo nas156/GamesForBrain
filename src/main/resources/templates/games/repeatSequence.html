@@ -25,19 +25,16 @@
     <script th:src="@{/js/repSeqGame/game.js}"></script>
     <script th:src="@{/js/repSeqGame/main.js}"></script>
 </head>
-<body th:fragment = "test_body">
+<body th:fragment="test_body">
 <div th:replace="~{index :: nav}"></div>
-<div class="slideInRight row fadeIn secblock">
-    <div style="width: 100vw; padding: 0; margin: 0" class="row">
-        <div style="padding: 0; margin: 0" class="col-8 d-flex justify-content-center align-items-center">
-            <div id="canvas" ></div>
-        </div>
-        <div class="col-4" id="stats-container" style="padding: 0; margin: 0" >
-            <div id="plot"></div>
-            <div id="stats-inf" style="width:400px;height:300px;"></div>
+<div id = "gr" class="slideInRight row fadeIn secblock">
+    <div style=" width: 100vw;" class="row">
+        <div class="col-12 d-flex justify-content-center align-items-center">
+            <div id="canvas"></div>
         </div>
     </div>
 </div>
-
+<div id="plot" style="width:400px;height:300px;"></div>
+<div id="stats-inf" style="width:400px;height:300px;"></div>
 </body>
 </html>
