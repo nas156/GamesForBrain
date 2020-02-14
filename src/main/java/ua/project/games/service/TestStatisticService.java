@@ -79,14 +79,17 @@ public class TestStatisticService {
     }
 
     public Map<String, List<Integer>> getAllTestsStatisticByUser(String username){
-        Map<String, List<Integer>> allTestsStatistic = new HashMap<>();
+//        Map<String, List<Integer>> allTestsStatistic = new HashMap<>();
+//
+//        for (TestType testType: testTypeRepository.findAllByCurrentStatus(CurrentStatus.Active)
+//             ) {
+//            allTestsStatistic.put(testType.getTestType(), getUserScoreForParticularTest(testType.getTestType(), username));
+//        }
 
-        for (TestType testType: testTypeRepository.findAllByCurrentStatus(CurrentStatus.Active)
-             ) {
-            allTestsStatistic.put(testType.getTestType(), getUserScoreForParticularTest(testType.getTestType(), username));
-        }
+        return testTypeRepository.findAllByCurrentStatus(CurrentStatus.Active).stream().map(TestType::getTestType)
+                .collect(Collectors.toMap(x -> x, x -> getUserScoreForParticularTest(x, username)));
 
-        return allTestsStatistic;
+//        return allTestsStatistic;
     }
 }
 
