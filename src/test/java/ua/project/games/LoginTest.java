@@ -41,7 +41,6 @@ public class LoginTest {
     @Test
     public void accessDeniedTest() throws Exception {
         this.mockMvc.perform(get("/createStatistic/repeatNumbersStatistic"))
-                .andDo(print())
                 .andExpect(status().is3xxRedirection())
                 .andExpect(redirectedUrl("http://localhost/accounts/login"));
     }
@@ -49,7 +48,6 @@ public class LoginTest {
     @Test
     public void correctLoginTest() throws Exception {
         this.mockMvc.perform(formLogin("/accounts/login").user("admin").password("grib1111"))
-                .andDo(print())
                 .andExpect(status().is3xxRedirection())
                 .andExpect(redirectedUrl("/"));
     }
@@ -57,7 +55,6 @@ public class LoginTest {
     @Test
     public void badCredentials() throws Exception {
         this.mockMvc.perform(formLogin("/accounts/login").user("admin").password("grib11111"))
-                .andDo(print())
                 .andExpect(redirectedUrl("/accounts/login?error"));
     }
 

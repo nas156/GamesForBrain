@@ -25,16 +25,17 @@ public class IndexController {
     @GetMapping(value = "/")
     //TODO add special permissions for user and admin in config class
     public String getIndexPage(Principal principal, Model model){
-        if (!(principal==null)){
-            Role role = userService.getUserRole(principal.getName());
-            switch (role){
-                case USER:
-                    final String currentUserName = SecurityContextHolder.getContext().getAuthentication().getName();
-                    model.addAttribute("username", currentUserName);
-                case ADMIN:
-                    //redirect to admin page
-            }
-        }
+//        if (!(principal==null)){
+//            Role role = userService.getUserRole(principal.getName());
+//            switch (role){
+//                case USER:
+//
+//                case ADMIN:
+//                    //redirect to admin page
+//            }
+//        }
+        final String currentUserName = SecurityContextHolder.getContext().getAuthentication().getName();
+        model.addAttribute("username", currentUserName);
         return "index";
     }
 }
