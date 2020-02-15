@@ -24,7 +24,6 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 
-//TODO add external db
 @SpringBootTest
 @AutoConfigureMockMvc
 @TestPropertySource("/application-test.properties")
@@ -34,7 +33,7 @@ public class CreateStatisticTest {
 
     @Autowired
     private MockMvc mockMvc;
-    private TestStatisticDTO newStatisticDTO = new TestStatisticDTO(1, "admin", TestType.IsPreviousTest.toString());
+    private TestStatisticDTO newStatisticDTO = new TestStatisticDTO(1, "admin", "IsPreviousTest");
 
 
     @Test
@@ -79,7 +78,7 @@ public class CreateStatisticTest {
     public void getStatisticByUserAndType() throws Exception {
         this.mockMvc.perform(get("/createStatistic/statisticByUserForRepeatNumbers?type=CountGreenTest"))
                 .andExpect(status().isOk())
-                .andExpect(content().string("[1,2,3]"));
+                .andExpect(content().string("[3,2,1]"));
     }
 
     @Test
