@@ -10,4 +10,5 @@ import java.util.Optional;
 public interface TestTypeRepository extends JpaRepository<TestType, Long> {
     Optional<TestType> findByTestType(String testType);
     List<TestType> findAllByCurrentStatus(CurrentStatus currentStatus);
+    List<TestType> findAll();
 }
