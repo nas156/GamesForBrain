@@ -1,8 +1,8 @@
-insert into test_statistic(id, score, test_date, test_type, usr_id) VALUES
-(1, 1, '2020-01-25', 'CountGreenTest', 1),
-(2, 2, '2020-01-25', 'CountGreenTest', 1),
-(3, 3, '2020-01-25', 'CountGreenTest', 1),
-(4, 1, '2020-01-25', 'RepeatNumbersTest', 1),
-(5, 1, '2020-01-25', 'ReactionTest', 1),
-(6, 2, '2020-01-25', 'ReactionTest', 2),
-(7, 1, '2020-01-25', 'RepeatSequenceTest', 1);
+insert into test_statistic(id, score, test_date, usr_id, test_type_id) VALUES
+(1, 1, '2020-02-15', 1, 4),
+(2, 2, '2020-01-25', 1, 4),
+(3, 3, '2020-01-25', 1, 4),
+(4, 1, '2020-01-25', 1, 2),
+(5, 1, '2020-01-25', 1, 1),
+(6, 2, '2020-01-25', 2, 1),
+(7, 1, '2020-01-25', 1, 3);
