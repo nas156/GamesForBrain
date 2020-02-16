@@ -10,7 +10,11 @@ import ua.project.games.entity.enums.Role;
 import ua.project.games.repository.TestTypeRepository;
 import ua.project.games.service.UserService;
 
+import javax.sql.DataSource;
 import java.security.Principal;
+import java.sql.DatabaseMetaData;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
 @Controller
 @RequestMapping("")
@@ -26,15 +30,11 @@ public class IndexController {
     }
 
     @GetMapping(value = "/")
-    //TODO add special permissions for user and admin in config class
-    public String getIndexPage(Principal principal, Model model){
-//        if (!(principal==null)){
+    public String getIndexPage(Principal principal, Model model) throws SQLException {
+//        if (!(principal == null)) {
 //            Role role = userService.getUserRole(principal.getName());
-//            switch (role){
-//                case USER:
-//
-//                case ADMIN:
-//                    //redirect to admin page
+//            if (role == Role.ADMIN) {
+//                return "redirect:/admin";
 //            }
 //        }
         final String currentUserName = SecurityContextHolder.getContext().getAuthentication().getName();
