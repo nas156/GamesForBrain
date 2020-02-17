@@ -31,12 +31,6 @@ public class IndexController {
 
     @GetMapping(value = "/")
     public String getIndexPage(Principal principal, Model model) throws SQLException {
-//        if (!(principal == null)) {
-//            Role role = userService.getUserRole(principal.getName());
-//            if (role == Role.ADMIN) {
-//                return "redirect:/admin";
-//            }
-//        }
         final String currentUserName = SecurityContextHolder.getContext().getAuthentication().getName();
         model.addAttribute("tests", testTypeRepository.findAll());
         model.addAttribute("username", currentUserName);
