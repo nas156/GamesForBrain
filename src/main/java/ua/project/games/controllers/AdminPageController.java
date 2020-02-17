@@ -1,37 +1,39 @@
 package ua.project.games.controllers;
 
+import org.apache.catalina.startup.ClassLoaderFactory;
+import org.hibernate.cfg.beanvalidation.GroupsPerOperation;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.config.BeanDefinition;
-import org.springframework.context.annotation.ClassPathScanningCandidateComponentProvider;
-import org.springframework.core.type.filter.RegexPatternTypeFilter;
+import org.springframework.cglib.proxy.InterfaceMaker;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.support.SimpleJpaRepository;
 import org.springframework.data.repository.support.Repositories;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
+import org.springframework.stereotype.Repository;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.context.WebApplicationContext;
 import ua.project.games.entity.User;
+import ua.project.games.repository.TestStatisticRepository;
+import ua.project.games.repository.UserRepository;
 
 import javax.persistence.EntityManager;
 import javax.persistence.metamodel.Attribute;
 import javax.persistence.metamodel.EntityType;
 import javax.sql.DataSource;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+import java.lang.reflect.Proxy;
 import java.security.Principal;
-import java.sql.DatabaseMetaData;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Iterator;
 import java.util.Set;
-import java.util.regex.Pattern;
 
 @Controller
 @RequestMapping("/admin")
 public class AdminPageController {
+
 
     final EntityManager entityManager;
     final DataSource dataSource;
@@ -40,6 +42,8 @@ public class AdminPageController {
 
     Repositories repositories = null;
     private User user = new User();
+
+
 
 
     public AdminPageController(DataSource dataSource, EntityManager entityManager, WebApplicationContext appContext) {
@@ -59,10 +63,14 @@ public class AdminPageController {
     }
 
     @GetMapping(value = "/{entity}")
-    public String getRepeatNumbersTest(Principal principal, Model model, @PathVariable String entity){
+    public String getRepeatNumbersTest(Principal principal, Model model, @PathVariable String entity) throws ClassNotFoundException, NoSuchMethodException, InvocationTargetException, IllegalAccessException {
         for(EntityType<?> clazz : classes){
             if(clazz.toString().equals(entity)){
                 clazz.getAttributes().stream().map(Attribute::getName).forEach(System.out::println);
+                Class<?> repo = Class.forName("ua.project.games.repository."+clazz.getName()+"Repository");
+                Method getAll = repo.getMethod("findAll");
+                System.out.println(getAll.invoke(repositories.getRepositoryFor(
+                        Class.forName("ua.project.games.entity."+clazz.getName())).get()));
             }
         }
         final String currentUserName = SecurityContextHolder.getContext().getAuthentication().getName();
