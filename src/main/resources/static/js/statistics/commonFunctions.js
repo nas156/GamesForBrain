@@ -61,7 +61,7 @@ function processData(data) {
      * Count how many results in ranges 0-9, 10-19, 20-29, ..., 90-100.
      * @return {Array} array of 10 elements which says upper mentioned information
      */
-        // todo rewrite this code in dynamic style, because now it's govno sobaki
+        // todo rewrite this code in dynamic style
     let result = [];
     let lowerBound = 0;
     let upperBound = 9;
