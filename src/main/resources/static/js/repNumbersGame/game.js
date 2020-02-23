@@ -110,11 +110,13 @@ function game(rng, width, height, delay, numbersAmount, maxMistakes) {  // delay
     fill(75, 111, 255);
     let txt = "Game Over";
     text(txt, WIDTH / 2, HEIGHT / 2 - 40);
-    txt = "Your score: " + this.totalScore;
+    txt = "Correct numbers: " + this.totalScore;
     text(txt, WIDTH / 2, HEIGHT / 2);
+    txt = "Your score: " + this.normalizeScore(this.totalScore);
+    text(txt, WIDTH / 2, HEIGHT / 2 + 40);
     txt = "Press 'Enter' to restart test";
     $("#statistic").slideDown(1000);
-    text(txt, WIDTH / 2, HEIGHT / 2 + 40);
+    text(txt, WIDTH / 2, HEIGHT / 2 + 80);
   };
 
   this.normalizeScore = (score) => {

@@ -60,7 +60,8 @@ function game() {
     background(228, 228, 228); //gray
     textSize(CANVAS_HEIGHT / 20);
     fill(75, 111, 255);
-    text(`You lose, your score is ${score}.\n Press enter to restart`, CANVAS_WIDTH / 2, CANVAS_HEIGHT / 2);
+    let txt = `You lose, correct answers ${score}\nYour score: ${normalizeScore(score)}\n Press enter to restart`;
+    text(txt, CANVAS_WIDTH / 2, CANVAS_HEIGHT / 2);
     textAlign(CENTER);
     if (!this.isGlobalStatisticShowed){
       let lastGameResult = lastGameStatistics(DATA, normalizeScore(score));
