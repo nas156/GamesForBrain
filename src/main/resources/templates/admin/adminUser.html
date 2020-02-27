@@ -29,23 +29,28 @@
         <td>age</td>
         <td>password</td>
         <td>role</td>
-        <td>DELETE</td>
     </tr>
     </thead>
     <tbody>
-    <tr th:each = "usr : ${users}">
-        <th scope="row" th:text = "${usr.getId()}"></th>
-        <td th:text = "${usr.getUsername()}"></td>
-        <td th:text = "${usr.getEmail()}"></td>
-        <td th:text = "${usr.isActive()}"></td>
-        <td th:text = "${usr.getAge().getTime()}"></td>
-        <td th:text = "${usr.getPassword()}"></td>
-        <td th:text = "${usr.getRole()}"></td>
+    <tr th:each="usr : ${users}">
+        <th scope="row" th:text="${usr.getId()}"></th>
+        <td th:text="${usr.getUsername()}"></td>
+        <td th:text="${usr.getEmail()}"></td>
+        <td th:text="${usr.isActive()}"></td>
+        <td th:text="${usr.getAge().getTime()}"></td>
+        <td th:text="${usr.getPassword()}"></td>
+        <td th:text="${usr.getRole()}"></td>
         <td>
-            <form th:action = "@{'User/delete/' + ${usr.getId()}}" th:method = "post" >
-            <button type="submit" class="btn btn-danger"
-            onclick="return confirm('You sure?')">DELETE</button>
-        </form>
+            <form th:action="@{'User/delete/' + ${usr.getId()}}" th:method="post">
+                <button type="submit" class="btn btn-danger"
+                        onclick="return confirm('You sure?')">DELETE
+                </button>
+            </form>
+        </td>
+        <td>
+            <form th:action="@{'User/update/' + ${usr.getId()}}" th:method="get">
+                <button type="submit" class="btn btn-warning">UPDATE</button>
+            </form>
         </td>
     </tr>
     <tbody>
