@@ -17,8 +17,8 @@
 </head>
 <body>
     <div th:replace="~{index :: nav}"></div>
-    <div th:each = "class : ${classes}">
-        <a th:href="'/admin/' + ${class}" th:text="${class}">name</a>
+    <div class="list-group" th:each = "class : ${classes}">
+        <a class="list-group-item list-group-item-action" th:href="'/admin/' + ${class}" th:text="${class}">name</a>
     </div>
 </body>
 </html>

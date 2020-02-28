@@ -14,10 +14,32 @@
             integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
             crossorigin="anonymous"></script>
     <title>Users</title>
+    <script>
+        const searchSubmit = () => {
+            let inputSearch = $("#searchString").val();
+            let form = $("#searchForm");
+            let btn = $("#searchButton");
+            var url = "/admin/User?search=" + inputSearch;
+            btn.attr("href", url);
+        }
+    </script>
 </head>
-
 <body>
 <div th:replace="~{index :: nav}"></div>
+<div id="searchForm" class="input-group form-inline mr-auto mb-4 d-flex justify-content-end">
+    <div class="input-group-prepend">
+        <span class="input-group-text" id="basic-addon1">Username</span>
+    </div>
+    <input id="searchString" aria-describedby="basic-addon1" class="form-control mr-sm-2" type="text"
+           placeholder="Search" aria-label="Search">
+    <a id="searchButton">
+        <div class="input-group-append">
+            <button type="button"
+                    class="btn btn-outline-secondary"
+                    onclick="searchSubmit()">Search
+            </button>
+        </div>
+    </a></div>
 <table class="table table-striped table-hover">
     <caption>List of users</caption>
     <thead>
@@ -55,7 +77,9 @@
     </tr>
     <tbody>
 </table>
-<a th:href="@{/admin/User/add}"><button class="btn btn-success">ADD NEW USER</button></a>
+<a th:href="@{/admin/User/add}">
+    <button class="btn btn-success">ADD NEW USER</button>
+</a>
 
 </body>
 </html>

@@ -21,6 +21,7 @@ import javax.sql.DataSource;
 import javax.validation.Valid;
 import java.security.Principal;
 import java.text.SimpleDateFormat;
+import java.util.Optional;
 import java.util.Set;
 
 @Slf4j
@@ -58,9 +59,10 @@ public class AdminPageController {
     }
 
     @GetMapping(value = "/User")
-    public String getUsers(Model model, Principal principal) {
+    public String getUsers(@RequestParam Optional<String> search, Model model, Principal principal) {
         model.addAttribute("username", principal.getName());
-        model.addAttribute("users", userService.getAll());
+        System.out.println(search);
+        model.addAttribute("users", userService.findByUsername(search.orElse("_")).orElseGet(userService::getAll));
         return "admin/user/adminUser";
 
     }
@@ -102,14 +104,12 @@ public class AdminPageController {
         user.setConfirmPassword(user.getPassword());
         try {
             registrationService.registerUser(user, result);
-        }
-        catch (UserExistsException | InvalidUserException e){
+        } catch (UserExistsException | InvalidUserException e) {
             log.warn("Invalid User");
             return "admin/user/addUser";
         }
         return "redirect:/admin/User";
     }
-
 
 
     @GetMapping(value = "/TestType")

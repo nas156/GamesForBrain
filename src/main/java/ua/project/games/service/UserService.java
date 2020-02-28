@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
-import ua.project.games.entity.enums.Role;
 import ua.project.games.entity.User;
 import ua.project.games.repository.UserRepository;
 
@@ -52,5 +51,9 @@ public class UserService implements UserDetailsService {
 
     public void delete(@NonNull User user) {
         userRepository.delete(user);
+    }
+
+    public Optional<List<User>> findByUsername(String username) {
+        return userRepository.findAllByUsername(username);
     }
 }
