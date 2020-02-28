@@ -1,11 +1,17 @@
 package ua.project.games.controllers;
 
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.support.Repositories;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.WebApplicationContext;
 import ua.project.games.entity.User;
+import ua.project.games.exceptions.InvalidUserException;
+import ua.project.games.exceptions.UserExistsException;
+import ua.project.games.service.RegistrationService;
 import ua.project.games.service.TestStatisticService;
 import ua.project.games.service.TestTypeService;
 import ua.project.games.service.UserService;
@@ -17,6 +23,7 @@ import java.security.Principal;
 import java.text.SimpleDateFormat;
 import java.util.Set;
 
+@Slf4j
 @Controller
 @RequestMapping("/admin")
 public class AdminPageController {
@@ -29,8 +36,9 @@ public class AdminPageController {
     private final TestStatisticService testStatisticService;
     private final UserService userService;
     private final TestTypeService testTypeService;
+    private final RegistrationService registrationService;
 
-    public AdminPageController(DataSource dataSource, EntityManager entityManager, WebApplicationContext appContext, TestStatisticService testStatisticService, UserService userService, TestTypeService testTypeService) {
+    public AdminPageController(DataSource dataSource, EntityManager entityManager, WebApplicationContext appContext, TestStatisticService testStatisticService, UserService userService, TestTypeService testTypeService, RegistrationService registrationService) {
         this.dataSource = dataSource;
         this.entityManager = entityManager;
         this.classes = entityManager.getMetamodel().getEntities();
@@ -38,6 +46,7 @@ public class AdminPageController {
         this.testStatisticService = testStatisticService;
         this.userService = userService;
         this.testTypeService = testTypeService;
+        this.registrationService = registrationService;
     }
 
 
@@ -81,6 +90,27 @@ public class AdminPageController {
         userService.updateUser(userToUpdate, user);
         return "redirect:/admin/User";
     }
+
+    @GetMapping(value = "/User/add")
+    public String addUser(Model model, Principal principal, @ModelAttribute("usr") User user) {
+        model.addAttribute("username", principal.getName());
+        return "admin/user/addUser";
+    }
+
+    @PostMapping(value = "/User/add")
+    public String addUser(Model model, @ModelAttribute("usr") User user, BindingResult result) {
+        user.setConfirmPassword(user.getPassword());
+        try {
+            registrationService.registerUser(user, result);
+        }
+        catch (UserExistsException | InvalidUserException e){
+            log.warn("Invalid User");
+            return "admin/user/addUser";
+        }
+        return "redirect:/admin/User";
+    }
+
+
 
     @GetMapping(value = "/TestType")
     public String geTestTypes(Model model, Principal principal) {

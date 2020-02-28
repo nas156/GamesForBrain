@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="username" th:content="${username}"/>
+    <meta name="_csrf" th:content="${_csrf.token}"/>
+    <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+          integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link rel="stylesheet" th:href="@{/css/main.css}">
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+            integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
+            crossorigin="anonymous"></script>
+    <title>Users</title>
+</head>
+<body>
+<div th:replace="~{index :: nav}"></div>
+<form th:object="${usr}" method="post" th:action="@{'/admin/User/add/'}">
+
+    <div class="form-group">
+        <label for="username">Username</label>
+        <input th:field="*{username}" type="text" required class="form-control" id="username"
+               aria-describedby="username" placeholder="Username">
+    </div>
+    <div class="form-group">
+        <label for="age">Age</label>
+        <input th:field="*{age}" type="date" required class="form-control" id="age" aria-describedby="age"
+               placeholder="Age">
+    </div>
+    <div class="form-group">
+        <label for="email">Email</label>
+        <input th:field="*{email}" type="email" required class="form-control" id="email"
+               aria-describedby="email" placeholder="Email">
+    </div>
+    <div class="form-group">
+        <label for="password">Password</label>
+        <input th:field="*{password}" type="text" required class="form-control" id="password"
+               aria-describedby="password" placeholder="Password">
+    </div>
+    <div class="form-group">
+        <label for="role">Role</label>
+        <select th:field="*{role}" required class="form-control" id="role">
+            <option th:value="USER">USER</option>
+            <option th:value="USER">ADMIN</option>
+        </select>
+    </div>
+    <button type="submit" class="btn btn-primary">Submit</button>
+</form>
+</body>
+</html>

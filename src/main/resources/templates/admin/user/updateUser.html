@@ -17,31 +17,38 @@
 </head>
 <body>
 <div th:replace="~{index :: nav}"></div>
-<form th:object = "${usrr}" method="post" th:action="@{'/admin/User/update/' + ${user.getId()}}">
+<form th:object="${usrr}" method="post" th:action="@{'/admin/User/update/' + ${user.getId()}}">
 
     <div class="form-group">
         <label for="username">Username</label>
-        <input th:name="username" th:id="username" type="text" required class="form-control" id="username" aria-describedby="username" placeholder="Username"
+        <input th:name="username" th:id="username" type="text" required class="form-control" id="username"
+               aria-describedby="username" placeholder="Username"
                th:value="${user.getUsername()}">
     </div>
     <div class="form-group">
-        <label for="active">Active</label>
-        <input type="text" th:name="active" th:id="active" class="form-control" id="active" aria-describedby="active" placeholder="Active"
-               th:value="${user.isActive()}">
+        <label for="role">Active</label>
+        <select th:name="active" th:id="active" required class="form-control" id="active">
+            <option th:selected="${user.isActive().toString() == 'true'}">true</option>
+            <option th:selected="${user.isActive().toString() == 'false'}">false</option>
+        </select>
+    </div>
     </div>
     <div class="form-group">
         <label for="age">Age</label>
-        <input th:name="age" th:id="age" type="date" required class="form-control" id="age" aria-describedby="age" placeholder="Age"
+        <input th:name="age" th:id="age" type="date" required class="form-control" id="age" aria-describedby="age"
+               placeholder="Age"
                th:value="${age}">
     </div>
     <div class="form-group">
         <label for="email">Email</label>
-        <input type="text" th:name="email" th:id="email" required class="form-control" id="email" aria-describedby="email" placeholder="Email"
+        <input type="email" th:name="email" th:id="email" required class="form-control" id="email"
+               aria-describedby="email" placeholder="Email"
                th:value="${user.getEmail()}">
     </div>
     <div class="form-group">
         <label for="password">Password</label>
-        <input th:name="password" th:id="password" type="text" required class="form-control" id="password" aria-describedby="password" placeholder="Password"
+        <input th:name="password" th:id="password" type="text" required class="form-control" id="password"
+               aria-describedby="password" placeholder="Password"
                th:value="${user.getPassword()}">
         <small id="passwordHelp" style="color:red" class="form-text">Dont change this field!</small>
     </div>
