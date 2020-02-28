@@ -1,6 +1,5 @@
 package ua.project.games.controllers;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.support.Repositories;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -8,6 +7,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.WebApplicationContext;
 import ua.project.games.entity.User;
 import ua.project.games.service.TestStatisticService;
+import ua.project.games.service.TestTypeService;
 import ua.project.games.service.UserService;
 
 import javax.persistence.EntityManager;
@@ -28,14 +28,16 @@ public class AdminPageController {
     Repositories repositories;
     private final TestStatisticService testStatisticService;
     private final UserService userService;
+    private final TestTypeService testTypeService;
 
-    public AdminPageController(DataSource dataSource, EntityManager entityManager, WebApplicationContext appContext, TestStatisticService testStatisticService, UserService userService) {
+    public AdminPageController(DataSource dataSource, EntityManager entityManager, WebApplicationContext appContext, TestStatisticService testStatisticService, UserService userService, TestTypeService testTypeService) {
         this.dataSource = dataSource;
         this.entityManager = entityManager;
         this.classes = entityManager.getMetamodel().getEntities();
         this.repositories = new Repositories(appContext);
         this.testStatisticService = testStatisticService;
         this.userService = userService;
+        this.testTypeService = testTypeService;
     }
 
 
@@ -50,7 +52,7 @@ public class AdminPageController {
     public String getUsers(Model model, Principal principal) {
         model.addAttribute("username", principal.getName());
         model.addAttribute("users", userService.getAll());
-        return "admin/adminUser";
+        return "admin/user/adminUser";
 
     }
 
@@ -70,7 +72,7 @@ public class AdminPageController {
         String age = format1.format(userToUpdate.getAge().getTime());
         model.addAttribute("user", userToUpdate);
         model.addAttribute("age", age);
-        return "admin/updateUser";
+        return "admin/user/updateUser";
     }
 
     @PostMapping(value = "/User/update/{user_id}")
@@ -78,6 +80,25 @@ public class AdminPageController {
         User userToUpdate = userService.getById(Long.parseLong(user_id));
         userService.updateUser(userToUpdate, user);
         return "redirect:/admin/User";
+    }
+
+    @GetMapping(value = "/TestType")
+    public String geTestTypes(Model model, Principal principal) {
+        model.addAttribute("username", principal.getName());
+        model.addAttribute("testTypes", testTypeService.getAll());
+        return "admin/testType/adminTestType";
+    }
+
+    @PostMapping(value = "/TestType/delete/{test_id}")
+    public String deleteTestType(@PathVariable String test_id) {
+        testTypeService.deleteTestbyId(Long.parseLong(test_id));
+        return "redirect:/admin/TestType";
+    }
+
+    @PostMapping(value = "/TestType/activate/{test_id}")
+    public String activateTestType(@PathVariable String test_id) {
+        testTypeService.activateTestById(Long.parseLong(test_id));
+        return "redirect:/admin/TestType";
     }
 }
 

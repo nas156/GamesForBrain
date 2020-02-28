@@ -6,6 +6,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import ua.project.games.entity.enums.CurrentStatus;
 import ua.project.games.entity.enums.Role;
 import ua.project.games.repository.TestTypeRepository;
 import ua.project.games.service.UserService;
@@ -32,7 +33,7 @@ public class IndexController {
     @GetMapping(value = "/")
     public String getIndexPage(Principal principal, Model model) throws SQLException {
         final String currentUserName = SecurityContextHolder.getContext().getAuthentication().getName();
-        model.addAttribute("tests", testTypeRepository.findAll());
+        model.addAttribute("tests", testTypeRepository.findAllByCurrentStatus(CurrentStatus.Active));
         model.addAttribute("username", currentUserName);
         return "index";
     }

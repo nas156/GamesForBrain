@@ -48,8 +48,8 @@
     <div class="form-group">
         <label for="role">Role</label>
         <select th:name="role" th:id="role" required class="form-control" id="role">
-            <option th:selected="${user.getRole().toString() == 'USER'}">USER</option>
-            <option th:selected="${user.getRole().toString() == 'ADMIN'}">ADMIN</option>
+            <option th:selected="${user.getRole().name() == 'USER'}">USER</option>
+            <option th:selected="${user.getRole().name() == 'ADMIN'}">ADMIN</option>
         </select>
     </div>
     <button type="submit" class="btn btn-primary">Submit</button>
