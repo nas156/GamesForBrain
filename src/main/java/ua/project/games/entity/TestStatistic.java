@@ -35,6 +35,4 @@ public class TestStatistic {
     @ManyToOne
     private TestType testType;
 
-//    @Enumerated(EnumType.STRING)
-//    private ua.project.games.entity.enums.TestType testType;
 }

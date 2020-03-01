@@ -2,6 +2,7 @@ package ua.project.games.controllers;
 
 import org.springframework.web.bind.annotation.*;
 import ua.project.games.dto.TestStatisticDTO;
+import ua.project.games.service.RatingService;
 import ua.project.games.service.TestStatisticService;
 
 import java.security.Principal;
@@ -14,9 +15,11 @@ import java.util.Map;
 public class CreateStatisticController {
 
     private final TestStatisticService testStatisticService;
+    private final RatingService ratingService;
 
-    public CreateStatisticController(TestStatisticService testStatisticService) {
+    public CreateStatisticController(TestStatisticService testStatisticService, RatingService ratingService) {
         this.testStatisticService = testStatisticService;
+        this.ratingService = ratingService;
     }
 
     @PostMapping
@@ -43,5 +46,10 @@ public class CreateStatisticController {
     @ResponseBody
     public Map<String, List<Integer>> getAllTestsStatisticByUser(Principal principal){
         return testStatisticService.getAllTestsStatisticByUser(principal.getName());
+    }
+
+    @PostMapping(value = "/ratingTable")
+    public void createRatingTable(){
+        ratingService.updateRatingTable();
     }
 }

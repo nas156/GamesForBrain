@@ -16,6 +16,10 @@ public class RatingTable {
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
 
-    @OneToMany
-    private Collection<TestStatistic> testStatistic;
+    @OneToOne
+    private TestStatistic testStatistic;
+
+    public RatingTable(TestStatistic testStatistic) {
+        this.testStatistic = testStatistic;
+    }
 }

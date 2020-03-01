@@ -90,7 +90,7 @@ public class TestStatisticService {
 
     public List<TestStatistic> getTopScoresForATest(String test, int score){
         return testStatisticRepository
-                .findTopByScoreGreaterThanAndTestType_TestTypeOrderByScore(score, test)
+                .findTop100ByScoreGreaterThanAndTestType_TestTypeOrderByScore(score, test)
                 .orElse(new ArrayList<>());
     }
 }
