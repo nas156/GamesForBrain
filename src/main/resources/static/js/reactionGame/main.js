@@ -121,7 +121,8 @@ const finalPart = () => {
   $("#gr").css({"background": "rgb(23, 194, 0)"});
   textSize(Math.floor(CANVAS_WIDTH / 17));
   fill(75, 111, 255);
-  text(`Your result is ${resultTime}ms.\n Press any key to Restart`, CANVAS_WIDTH / 2, CANVAS_HEIGHT / 2);
+  let txt = `Your time is ${resultTime} ms.\nYour score: ${normalizeScore(resultTime)}\n Press any key to Restart`;
+  text(txt, CANVAS_WIDTH / 2, CANVAS_HEIGHT / 2);
   textAlign(CENTER);
   $("#statistic").slideDown(1000);
   let headers = new Headers({

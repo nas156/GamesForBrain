@@ -70,7 +70,7 @@ function Game(width, height) {
     fill(...this.txtFill);
     let txt = "Round: " + this.round;
     text(txt, this.width * 0.25, this.height / 12);
-    txt = "Score: " + this.score;
+    txt = "Points: " + this.score;
     text(txt, this.width * 0.5, this.height / 12);
     this.timeLeft = (this.gameDuration - (new Date().getTime() - this.startTime) / 1000).toFixed(1);
     txt = "Time left: " + this.timeLeft;
@@ -82,7 +82,8 @@ function Game(width, height) {
     textAlign(CENTER, CENTER);
     fill(...this.txtFill);
     let txt = "Time is up or you passed all rounds\n"
-              + "Your score: " + this.score + "\n"
+              + "You get " + this.score + " points\n"
+              + "Your score: " + this.normalizeScore(this.score) + "\n"
               + "Press 'Enter' to restart test";
     text(txt, this.width / 2, this.height / 2);
     $("#statistic").slideDown(1000);

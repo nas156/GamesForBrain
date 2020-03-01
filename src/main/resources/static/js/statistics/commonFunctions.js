@@ -12,7 +12,7 @@ async function getStats(testType) {
         })
 }
 
-function plot(data, containerId, testTitle) {
+function plot(data, containerId, testTitle="Global statistics") {
     const yData = processData(data);
     let xData = ['0-9', '10-19', '20-29', '30-39', '40-49', '50-59', '60-69', '70-79', '80-89', '90-100'];
     const container1 = document.getElementById(containerId);
@@ -48,7 +48,9 @@ function plot(data, containerId, testTitle) {
 
 let searchPlace = function (arr, x, start, end) {
     let mid = Math.floor((start + end)/2);
-    if (start > end) return mid;
+    if (start > end) {
+        return mid < 0 ? 0 : mid;
+    }
     if (arr[mid]===x) return mid;
     if(arr[mid] > x)
         return searchPlace(arr, x, start, mid-1);
@@ -61,7 +63,7 @@ function processData(data) {
      * Count how many results in ranges 0-9, 10-19, 20-29, ..., 90-100.
      * @return {Array} array of 10 elements which says upper mentioned information
      */
-        // todo rewrite this code in dynamic style, because now it's govno sobaki
+        // todo rewrite this code in dynamic style
     let result = [];
     let lowerBound = 0;
     let upperBound = 9;

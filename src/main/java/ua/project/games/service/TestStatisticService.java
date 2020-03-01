@@ -80,9 +80,18 @@ public class TestStatisticService {
     }
 
     public Map<String, List<Integer>> getAllTestsStatisticByUser(String username){
-        return testTypeRepository.findAllByCurrentStatus(CurrentStatus.Active).stream().map(TestType::getTestType)
+        return getAllActiveTests().stream().map(TestType::getTestType)
                 .collect(Collectors.toMap(x -> x, x -> getUserScoreForParticularTest(x, username)));
+    }
 
+    public List<TestType> getAllActiveTests(){
+        return testTypeRepository.findAllByCurrentStatus(CurrentStatus.Active);
+    }
+
+    public List<TestStatistic> getTopScoresForATest(String test, int score){
+        return testStatisticRepository
+                .findTop100ByScoreGreaterThanAndTestType_TestTypeOrderByScore(score, test)
+                .orElse(new ArrayList<>());
     }
 
     public void deleteAllbyUser(User user) {

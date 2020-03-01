@@ -47,7 +47,8 @@ function game(width, height, gridLen, seqLen) {
     $("#statistic").slideDown(1000);
     fill(75, 111, 255);
     let txt = "Game Over\nYour last sequence length: " + this.seqLen
-              + "\nPress 'Enter' to restart test";
+        + "\nYour score: " + this.normalizeScore(this.seqLen)
+        + "\nPress 'Enter' to restart test";
     text(txt, this.width / 2, this.height / 2);
   };
 
