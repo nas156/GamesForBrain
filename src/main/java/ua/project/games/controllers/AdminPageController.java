@@ -61,7 +61,6 @@ public class AdminPageController {
     @GetMapping(value = "/User")
     public String getUsers(@RequestParam Optional<String> search, Model model, Principal principal) {
         model.addAttribute("username", principal.getName());
-        System.out.println(search);
         model.addAttribute("users", userService.findByUsername(search.orElse("_")).orElseGet(userService::getAll));
         return "admin/user/adminUser";
 
@@ -72,6 +71,13 @@ public class AdminPageController {
         User userToDelete = userService.getById(Long.parseLong(user_id));
         testStatisticService.deleteAllbyUser(userToDelete);
         userService.delete(userToDelete);
+        return "redirect:/admin/User";
+    }
+
+    @PostMapping(value = "/User/cleatStat/{user_id}")
+    public String clearUserStat(@PathVariable String user_id) {
+        User userToDelete = userService.getById(Long.parseLong(user_id));
+        testStatisticService.deleteAllbyUser(userToDelete);
         return "redirect:/admin/User";
     }
 

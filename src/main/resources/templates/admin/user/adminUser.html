@@ -74,6 +74,11 @@
                 <button type="submit" class="btn btn-warning">UPDATE</button>
             </form>
         </td>
+        <td>
+            <form th:action="@{'User/cleatStat/' + ${usr.getId()}}" th:method="post">
+                <button type="submit" class="btn btn-dark" onclick="return confirm('You sure?')">CLEAR STATS</button>
+            </form>
+        </td>
     </tr>
     <tbody>
 </table>
