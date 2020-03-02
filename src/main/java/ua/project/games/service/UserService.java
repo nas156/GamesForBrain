@@ -2,24 +2,16 @@ package ua.project.games.service;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
-import org.springframework.validation.BindingResult;
-import org.springframework.validation.FieldError;
-import org.springframework.validation.ObjectError;
-import ua.project.games.entity.enums.Role;
 import ua.project.games.entity.User;
-import ua.project.games.exceptions.InvalidUserException;
-import ua.project.games.exceptions.UserExistsException;
+import ua.project.games.entity.enums.Role;
 import ua.project.games.repository.UserRepository;
-import ua.project.games.validators.NewUserValidator;
 
-import java.sql.SQLException;
-import java.util.Optional;
-import java.util.function.Supplier;
-
+/**
+ * Клас, в якому описуються методи для роботи з таблицею usr(класом User)
+ */
 @Slf4j
 @Service
 public class UserService implements UserDetailsService {
@@ -31,6 +23,13 @@ public class UserService implements UserDetailsService {
     }
 
 
+    /**
+     * Метод, який знаходить в таблиці usr запис, поле username якого співпадає з переданим в параметрах об'єктом типу String
+     * Викидає UsernameNotFoundException, якщо запису, поле username якого співпадає з переданою в параметрі строкою немає
+     * @param s
+     * @return Об'єкт типу User, поле username якого співпадає з переданим в параметрах об'єктом типу String, або Optional.empty()
+     * @throws UsernameNotFoundException
+     */
     @Override
     public User loadUserByUsername(String s) throws UsernameNotFoundException {
         return userRepository.findByUsername(s).get();
