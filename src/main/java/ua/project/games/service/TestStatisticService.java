@@ -94,7 +94,7 @@ public class TestStatisticService {
                 .orElse(new ArrayList<>());
     }
 
-    public void deleteAllbyUser(User user) {
+    public void deleteAllByUser(User user) {
         List<TestStatistic> userTests = user.getTests();
         testStatisticRepository.deleteAll(userTests);
     }

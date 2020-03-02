@@ -69,15 +69,15 @@ public class AdminPageController {
     @PostMapping(value = "/User/delete/{user_id}")
     public String deleteUser(@PathVariable String user_id) {
         User userToDelete = userService.getById(Long.parseLong(user_id));
-        testStatisticService.deleteAllbyUser(userToDelete);
+        testStatisticService.deleteAllByUser(userToDelete);
         userService.delete(userToDelete);
         return "redirect:/admin/User";
     }
 
-    @PostMapping(value = "/User/cleatStat/{user_id}")
+    @PostMapping(value = "/User/clearStat/{user_id}")
     public String clearUserStat(@PathVariable String user_id) {
         User userToDelete = userService.getById(Long.parseLong(user_id));
-        testStatisticService.deleteAllbyUser(userToDelete);
+        testStatisticService.deleteAllByUser(userToDelete);
         return "redirect:/admin/User";
     }
 
@@ -112,7 +112,7 @@ public class AdminPageController {
             registrationService.registerUser(user, result);
         } catch (UserExistsException | InvalidUserException e) {
             log.warn("Invalid User");
-            return "admin/user/addUser";
+            return "redirect:/admin/User/add";
         }
         return "redirect:/admin/User";
     }

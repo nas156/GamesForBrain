@@ -70,18 +70,21 @@
         <div th:each="test, row: ${tests}" th:with="numList=${ {2,1,0} }" th:if="${row.count % 3 == 0 or row.last}"
              class="row d-flex justify-content-around">
 
-            <a th:href = "@{'/tests/' + ${test.TestURL}}" th:each="num : ${numList}"
-               th:with="dataIndex=(${row.index} - ${num})"
-               th:if="${row.count % 3 == 0}"
-            >
+            <span th:each="num : ${numList}"
+                  th:with="dataIndex=(${row.index} - ${num})"
+                  th:if="${row.count % 3 == 0}">
+                <a th:href="@{'/tests/' + ${tests[dataIndex].TestURL}}">
                 <button class="testbtn btn btn-primary" th:text="${tests[dataIndex].id}"></button>
-            </a>
+                </a>
+            </span>
 
-            <a th:href = "@{'/tests/' + ${test.TestURL}}" th:each="num : ${numList}"
-               th:with="dataIndex=(${row.index} - ${num})"
-               th:if="${row.last} and ${row.count % 3 != 0} and ${num &lt; row.count % 3}">
-                <button class="testbtn btn btn-primary" th:text="${tests[dataIndex].id}"></button>
-            </a>
+            <span th:each="num : ${numList}"
+                  th:with="dataIndex=(${row.index} - ${num})"
+                  th:if="${row.last} and ${row.count % 3 != 0} and ${num &lt; row.count % 3}">
+                <a th:href="@{'/tests/' + ${tests[dataIndex].TestURL}}">
+                    <button class="testbtn btn btn-primary" th:text="${tests[dataIndex].id}"></button>
+                </a>
+            </span>
 
         </div>
     </div>

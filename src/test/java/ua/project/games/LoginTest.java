@@ -46,6 +46,19 @@ public class LoginTest {
     }
 
     @Test
+    public void getLoginTest() throws Exception {
+        this.mockMvc.perform(get("/accounts/login"))
+                .andExpect(status().isOk());
+
+    }
+
+    @Test
+    public void getRegistrationTest() throws Exception {
+        this.mockMvc.perform(get("/accounts/registration"))
+                .andExpect(status().isOk());
+    }
+
+    @Test
     public void correctUserLoginTest() throws Exception {
         this.mockMvc.perform(formLogin("/accounts/login").user("user").password("grib1111"))
                 .andExpect(status().is3xxRedirection())
