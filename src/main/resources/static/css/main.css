@@ -97,16 +97,3 @@ a {
     display : none;
 }
 
-.plots-container div div {
-    margin: 0 auto;
-}
-
-#header-container {
-    background-color: #4b6fff;
-    width: 50%;
-    margin: 10px auto;
-    border-bottom-left-radius: 15px;
-    border-bottom-right-radius: 15px;
-    border-top-left-radius: 15px;
-    border-top-right-radius: 15px;
-}

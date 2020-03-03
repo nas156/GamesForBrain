@@ -68,6 +68,8 @@ async function main(){
     const response5 = await getStats('CountGreenTest');
     const data5 = processData(response5);
     plot(data5, 'plot-5', 'Count green');
+
+    dropDownAnimation();
 }
 
 window.onload = main;
