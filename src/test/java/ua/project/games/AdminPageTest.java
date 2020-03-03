@@ -12,7 +12,6 @@ import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.web.servlet.MockMvc;
 import ua.project.games.repository.TestStatisticRepository;
-import ua.project.games.repository.UserRepository;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
@@ -22,7 +21,6 @@ import static org.hamcrest.Matchers.containsString;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @SpringBootTest
@@ -205,6 +203,48 @@ public class AdminPageTest {
                 .andExpect(status().isOk())
                 .andExpect(content().string(Matchers.not(containsString("userToUpdate"))))
                 .andExpect(content().string(containsString("updated")));
+
+    }
+
+    @Test
+    @WithUserDetails("admin")
+    public void getTestTypePage() throws Exception {
+        this.mockMvc.perform(get("/admin/TestType"))
+                .andExpect(status().isOk())
+                .andExpect(content().string(containsString("repeatSequence")));
+    }
+
+    @Test
+    @WithUserDetails("admin")
+    public void postDeleteTestType() throws Exception {
+        this.mockMvc.perform(post("/admin/TestType/delete/1")
+                .with(csrf().asHeader())
+                .contentType(MediaType.APPLICATION_FORM_URLENCODED)
+                .accept(MediaType.APPLICATION_JSON))
+                .andExpect(redirectedUrl("/admin/TestType"));
+
+        this.mockMvc.perform(get("/admin/TestType"))
+                .andExpect(status().isOk())
+                .andExpect(content().string(containsString("ACTIVATE")));
+    }
+
+    @Test
+    @WithUserDetails("admin")
+    public void postActivateTestType() throws Exception {
+        this.mockMvc.perform(post("/admin/TestType/delete/1")
+                .with(csrf().asHeader())
+                .contentType(MediaType.APPLICATION_FORM_URLENCODED)
+                .accept(MediaType.APPLICATION_JSON));
+
+        this.mockMvc.perform(post("/admin/TestType/activate/1")
+                .with(csrf().asHeader())
+                .contentType(MediaType.APPLICATION_FORM_URLENCODED)
+                .accept(MediaType.APPLICATION_JSON))
+                .andExpect(redirectedUrl("/admin/TestType"));
+
+        this.mockMvc.perform(get("/admin/TestType"))
+                .andExpect(status().isOk())
+                .andExpect(content().string(Matchers.not(containsString("ACTIVATE"))));
 
     }
 
