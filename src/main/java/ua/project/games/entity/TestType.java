@@ -19,6 +19,10 @@ public class TestType {
     @Column
     private String testType;
 
+    //todo rewrite with small letter
+    @Column
+    private String TestURL;
+
     @Enumerated(EnumType.STRING)
     private CurrentStatus currentStatus;
 }

@@ -44,9 +44,11 @@ function game(width, height, gridLen, seqLen) {
   this.drawGameOver = () => {
     textSize(this.txtSize);
     textAlign(CENTER, CENTER);
+    $("#statistic").slideDown(1000);
     fill(75, 111, 255);
     let txt = "Game Over\nYour last sequence length: " + this.seqLen
-              + "\nPress 'Enter' to restart test";
+        + "\nYour score: " + this.normalizeScore(this.seqLen)
+        + "\nPress 'Enter' to restart test";
     text(txt, this.width / 2, this.height / 2);
   };
 
@@ -60,6 +62,7 @@ function game(width, height, gridLen, seqLen) {
     if ((this.stage === 0) && (keyCode === 13)) {
       this.stage = 10
     } else if (this.stage === 5) {
+      $("#statistic").slideUp(1000);
       this.init();
       this.newGame();
       this.stage = 10;

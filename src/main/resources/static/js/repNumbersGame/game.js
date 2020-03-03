@@ -110,10 +110,13 @@ function game(rng, width, height, delay, numbersAmount, maxMistakes) {  // delay
     fill(75, 111, 255);
     let txt = "Game Over";
     text(txt, WIDTH / 2, HEIGHT / 2 - 40);
-    txt = "Your score: " + this.totalScore;
+    txt = "Correct numbers: " + this.totalScore;
     text(txt, WIDTH / 2, HEIGHT / 2);
-    txt = "Press 'Enter' to restart test";
+    txt = "Your score: " + this.normalizeScore(this.totalScore);
     text(txt, WIDTH / 2, HEIGHT / 2 + 40);
+    txt = "Press 'Enter' to restart test";
+    $("#statistic").slideDown(1000);
+    text(txt, WIDTH / 2, HEIGHT / 2 + 80);
   };
 
   this.normalizeScore = (score) => {
@@ -142,6 +145,7 @@ function game(rng, width, height, delay, numbersAmount, maxMistakes) {  // delay
   // in keyTyped func
   this.userInputStage = function () {
     if (this.stage === 6 && keyCode === 13){
+      $("#statistic").slideUp(1000);
       this.init();
       this.newGame();
     }
@@ -194,18 +198,25 @@ function game(rng, width, height, delay, numbersAmount, maxMistakes) {  // delay
       this.drawHeader();
     }
     if (this.stage >= 0) {
-      if (this.stage === 0) {
-        this.drawUserInput();
-      } else if (this.stage === 1) {
-        this.drawNumberFromDigit();
-      } else if (this.stage === 3) {
-        this.drawCorrect();
-      } else if (this.stage === 4) {
-        this.drawInCorrect();
-      } else if (this.stage === 5) {
-        this.drawResult();
-      } else if (this.stage === 6) {
-        this.drawEndGame();
+      switch(this.stage){
+        case 0:
+          this.drawUserInput();
+          break;
+        case 1:
+          this.drawNumberFromDigit();
+          break;
+        case 3:
+          this.drawCorrect();
+          break;
+        case 4:
+          this.drawInCorrect();
+          break;
+        case 5:
+          this.drawResult();
+          break;
+        case 6:
+          this.drawEndGame();
+          break;
       }
     } else {
       if ((new Date().getTime() - this.genTime) > this.delay) {

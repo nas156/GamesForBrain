@@ -6,35 +6,35 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import ua.project.games.entity.enums.CurrentStatus;
 import ua.project.games.entity.enums.Role;
+import ua.project.games.repository.TestTypeRepository;
 import ua.project.games.service.UserService;
 
+import javax.sql.DataSource;
 import java.security.Principal;
+import java.sql.DatabaseMetaData;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
 @Controller
 @RequestMapping("")
 public class IndexController {
 
     private UserService userService;
+    private final TestTypeRepository testTypeRepository;
 
     @Autowired
-    public IndexController(UserService userService) {
+    public IndexController(UserService userService, TestTypeRepository testTypeRepository) {
         this.userService = userService;
+        this.testTypeRepository = testTypeRepository;
     }
 
     @GetMapping(value = "/")
-    //TODO add special permissions for user and admin in config class
-    public String getIndexPage(Principal principal, Model model){
-        if (!(principal==null)){
-            Role role = userService.getUserRole(principal.getName());
-            switch (role){
-                case USER:
-                    final String currentUserName = SecurityContextHolder.getContext().getAuthentication().getName();
-                    model.addAttribute("username", currentUserName);
-                case ADMIN:
-                    //redirect to admin page
-            }
-        }
+    public String getIndexPage(Principal principal, Model model) throws SQLException {
+        final String currentUserName = SecurityContextHolder.getContext().getAuthentication().getName();
+        model.addAttribute("tests", testTypeRepository.findAllByCurrentStatus(CurrentStatus.Active));
+        model.addAttribute("username", currentUserName);
         return "index";
     }
 }

@@ -1,24 +1,16 @@
 package ua.project.games.service;
 
+import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
-import org.springframework.validation.BindingResult;
-import org.springframework.validation.FieldError;
-import org.springframework.validation.ObjectError;
-import ua.project.games.entity.enums.Role;
 import ua.project.games.entity.User;
-import ua.project.games.exceptions.InvalidUserException;
-import ua.project.games.exceptions.UserExistsException;
 import ua.project.games.repository.UserRepository;
-import ua.project.games.validators.NewUserValidator;
 
-import java.sql.SQLException;
+import java.util.List;
 import java.util.Optional;
-import java.util.function.Supplier;
 
 @Slf4j
 @Service
@@ -33,12 +25,35 @@ public class UserService implements UserDetailsService {
 
     @Override
     public User loadUserByUsername(String s) throws UsernameNotFoundException {
-        return userRepository.findByUsername(s).get();
+        return userRepository.findByUsername(s).orElse(null);
     }
 
 
+    public void updateUser(@NonNull User userToUpdate, @NonNull User dataUser){
+        userToUpdate.setUsername(dataUser.getUsername());
+        userToUpdate.setActive(dataUser.isActive());
+        userToUpdate.setEmail(dataUser.getEmail());
+        userToUpdate.setPassword(dataUser.getPassword());
+        userToUpdate.setRole(dataUser.getRole());
+        userToUpdate.setAge(dataUser.getAge());
+        userRepository.save(userToUpdate);
+    }
 
-    public Role getUserRole(String username) {
-        return userRepository.findByUsername(username).orElse(new User()).getRole();
+    public User getById(long id) {
+        Optional<User> user = userRepository.findById(id);
+        return user.orElse(null);
+
+    }
+
+    public List<User> getAll() {
+        return userRepository.findAll();
+    }
+
+    public void delete(@NonNull User user) {
+        userRepository.delete(user);
+    }
+
+    public Optional<List<User>> findByUsername(String username) {
+        return userRepository.findAllByUsername(username);
     }
 }

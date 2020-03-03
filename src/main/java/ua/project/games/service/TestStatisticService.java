@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import ua.project.games.dto.TestStatisticDTO;
 import ua.project.games.entity.TestStatistic;
 import ua.project.games.entity.TestType;
+import ua.project.games.entity.User;
 import ua.project.games.entity.enums.CurrentStatus;
 import ua.project.games.repository.TestStatisticRepository;
 import ua.project.games.repository.TestTypeRepository;
@@ -79,17 +80,23 @@ public class TestStatisticService {
     }
 
     public Map<String, List<Integer>> getAllTestsStatisticByUser(String username){
-//        Map<String, List<Integer>> allTestsStatistic = new HashMap<>();
-//
-//        for (TestType testType: testTypeRepository.findAllByCurrentStatus(CurrentStatus.Active)
-//             ) {
-//            allTestsStatistic.put(testType.getTestType(), getUserScoreForParticularTest(testType.getTestType(), username));
-//        }
-
-        return testTypeRepository.findAllByCurrentStatus(CurrentStatus.Active).stream().map(TestType::getTestType)
+        return getAllActiveTests().stream().map(TestType::getTestType)
                 .collect(Collectors.toMap(x -> x, x -> getUserScoreForParticularTest(x, username)));
+    }
 
-//        return allTestsStatistic;
+    public List<TestType> getAllActiveTests(){
+        return testTypeRepository.findAllByCurrentStatus(CurrentStatus.Active);
+    }
+
+    public List<TestStatistic> getTopScoresForATest(String test, int score){
+        return testStatisticRepository
+                .findTop100ByScoreGreaterThanAndTestType_TestTypeOrderByScore(score, test)
+                .orElse(new ArrayList<>());
+    }
+
+    public void deleteAllbyUser(User user) {
+        List<TestStatistic> userTests = user.getTests();
+        testStatisticRepository.deleteAll(userTests);
     }
 }
 

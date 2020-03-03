@@ -13,6 +13,7 @@ import ua.project.games.entity.enums.Role;
 import javax.persistence.*;
 import java.util.*;
 
+
 @Entity
 @Builder
 @AllArgsConstructor
@@ -155,4 +156,12 @@ public class User implements UserDetails {
 
     @Override
     public boolean isEnabled() { return true;}
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 }
