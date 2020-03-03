@@ -40,8 +40,10 @@ public class StatisticController {
     }
 
     /**
-     *Method for handling get requests to /accounts/registration page </br>
-     * Метод для обробки get запросів на сторінку accounts/registration
+     *Method for handling get requests to /statistic page </br>
+     * Метод для обробки get запросів на сторінку /statistic
+     * @param model      object for adding attributes for model and than put it in template html</br>
+     *                   обьект для додавання атрибутів до моделі с наступною обробкою в шалонах html
      * @param principal interface object that represents User entity</br>
      *                  інтерфейс об'єкту що презентує сущність User
      * @return          html template</br>

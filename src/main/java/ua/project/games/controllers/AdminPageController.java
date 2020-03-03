@@ -1,13 +1,10 @@
 package ua.project.games.controllers;
 
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.repository.support.Repositories;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.context.WebApplicationContext;
 import ua.project.games.entity.User;
 import ua.project.games.exceptions.InvalidUserException;
 import ua.project.games.exceptions.UserExistsException;
@@ -17,13 +14,19 @@ import ua.project.games.service.TestTypeService;
 import ua.project.games.service.UserService;
 
 import javax.persistence.EntityManager;
-import javax.sql.DataSource;
 import javax.validation.Valid;
 import java.security.Principal;
 import java.text.SimpleDateFormat;
 import java.util.Optional;
 import java.util.Set;
 
+
+/**
+ * Class that controls get's ad post's requests to /admin/** </br>
+ *  Клас для контролю та відданю зображень на запроси які надходять до  /admin/**
+ * @see Controller
+ * @see RequestMapping
+ */
 @Slf4j
 @Controller
 @RequestMapping("/admin")
@@ -31,19 +34,29 @@ public class AdminPageController {
 
 
     final EntityManager entityManager;
-    final DataSource dataSource;
     private final Set<?> classes;
-    Repositories repositories;
     private final TestStatisticService testStatisticService;
     private final UserService userService;
     private final TestTypeService testTypeService;
     private final RegistrationService registrationService;
 
-    public AdminPageController(DataSource dataSource, EntityManager entityManager, WebApplicationContext appContext, TestStatisticService testStatisticService, UserService userService, TestTypeService testTypeService, RegistrationService registrationService) {
-        this.dataSource = dataSource;
+    /**
+     * Constructor for class with dependencies injection provided by Spring framework </br>
+     * Конструктор для классу з підтримкою підставлення залежностей за допомогою Spring framework
+     * @param entityManager             manager for all Entity's in project</br>
+     *                                  менеджер всіх сутностей в проекті
+     * @param testStatisticService      object of service that contains business logic for TestStatistic entity </br>
+     *                                  об'єкт классу сервісу який містить бізнес логігу для сутності TestStatistic
+     * @param userService               object of service that contains business logic for User class </br>
+     *                                  об'єкт классу сервісу який містить бізнес логігу для классу User
+     * @param testTypeService           object of service that contains business logic for TestType entity</br>
+     *                                  об'єкт классу сервісу який містить бізнес логігу для TestType сутності
+     * @param registrationService       object of service that contains business logic for registration </br>
+     *                                  об'єкт классу сервісу який містить бізнес логігу для реєстрування користовачів
+     */
+    public AdminPageController(EntityManager entityManager, TestStatisticService testStatisticService, UserService userService, TestTypeService testTypeService, RegistrationService registrationService) {
         this.entityManager = entityManager;
         this.classes = entityManager.getMetamodel().getEntities();
-        this.repositories = new Repositories(appContext);
         this.testStatisticService = testStatisticService;
         this.userService = userService;
         this.testTypeService = testTypeService;
