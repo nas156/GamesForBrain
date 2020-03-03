@@ -30,35 +30,30 @@ public class GetTestPagesTest {
     @Test
     public void getAnonCountGreenTest() throws Exception {
         this.mockMvc.perform(get("/tests/countGreen"))
-                .andDo(print())
                 .andExpect(status().isOk());
     }
 
     @Test
     public void getAnonIsPrevGameTest() throws Exception {
         this.mockMvc.perform(get("/tests/isPrevGame"))
-                .andDo(print())
                 .andExpect(status().isOk());
     }
 
     @Test
     public void getAnonReactionGameTest() throws Exception {
         this.mockMvc.perform(get("/tests/reactionGame"))
-                .andDo(print())
                 .andExpect(status().isOk());
     }
 
     @Test
     public void getAnonRepeatNumbersTest() throws Exception {
         this.mockMvc.perform(get("/tests/repeatNumbers"))
-                .andDo(print())
                 .andExpect(status().isOk());
     }
 
     @Test
     public void getAnonRepeatSequenceTest() throws Exception {
         this.mockMvc.perform(get("/tests/repeatSequence"))
-                .andDo(print())
                 .andExpect(status().isOk());
     }
 
@@ -66,7 +61,6 @@ public class GetTestPagesTest {
     @WithUserDetails("admin")
     public void getCountGreenTest() throws Exception {
         this.mockMvc.perform(get("/tests/countGreen"))
-                .andDo(print())
                 .andExpect(content().string(containsString("admin")))
                 .andExpect(status().isOk());
     }
@@ -75,7 +69,6 @@ public class GetTestPagesTest {
     @WithUserDetails("admin")
     public void getIsPrevGameTest() throws Exception {
         this.mockMvc.perform(get("/tests/isPrevGame"))
-                .andDo(print())
                 .andExpect(content().string(containsString("admin")))
                 .andExpect(status().isOk());
     }
@@ -84,7 +77,6 @@ public class GetTestPagesTest {
     @WithUserDetails("admin")
     public void getReactionGameTest() throws Exception {
         this.mockMvc.perform(get("/tests/reactionGame"))
-                .andDo(print())
                 .andExpect(content().string(containsString("admin")))
                 .andExpect(status().isOk());
     }
@@ -93,7 +85,6 @@ public class GetTestPagesTest {
     @WithUserDetails("admin")
     public void getRepeatNumbersTest() throws Exception {
         this.mockMvc.perform(get("/tests/repeatNumbers"))
-                .andDo(print())
                 .andExpect(content().string(containsString("admin")))
                 .andExpect(status().isOk());
     }
@@ -102,7 +93,6 @@ public class GetTestPagesTest {
     @WithUserDetails("admin")
     public void getRepeatSequenceTest() throws Exception {
         this.mockMvc.perform(get("/tests/repeatSequence"))
-                .andDo(print())
                 .andExpect(content().string(containsString("admin")))
                 .andExpect(status().isOk());
     }

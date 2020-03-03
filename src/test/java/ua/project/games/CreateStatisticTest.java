@@ -70,7 +70,6 @@ public class CreateStatisticTest {
                 .content(asJsonString(anonymousStatistic))
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON))
-                .andDo(print())
                 .andExpect(status().isOk());
     }
 
@@ -78,7 +77,6 @@ public class CreateStatisticTest {
     @WithUserDetails("admin")
     public void getStatisticByUserAndType() throws Exception {
         this.mockMvc.perform(get("/createStatistic/statisticByUserForRepeatNumbers?type=CountGreenTest"))
-                .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(content().string("[3,2,1]"));
     }
@@ -87,7 +85,6 @@ public class CreateStatisticTest {
     @WithAnonymousUser
     public void getStatisticByAnonUserAndType() throws Exception {
         this.mockMvc.perform(get("/createStatistic/statisticByUserForRepeatNumbers?type=CountGreenTest"))
-                .andDo(print())
                 .andExpect(status().is3xxRedirection())
                 .andExpect(redirectedUrl("http://localhost/accounts/login"));
     }
@@ -96,7 +93,6 @@ public class CreateStatisticTest {
     @WithUserDetails("admin")
     public void getStatisticByTypeOneUserTest() throws Exception {
         this.mockMvc.perform(get("/createStatistic/statisticByType?type=CountGreenTest"))
-                .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(content().string("[3,2,1]"));
     }
@@ -105,7 +101,6 @@ public class CreateStatisticTest {
     @WithUserDetails("admin")
     public void getStatisticByTypeManyUsersTest() throws Exception {
         this.mockMvc.perform(get("/createStatistic/statisticByType?type=ReactionTest"))
-                .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(content().string("[2,1]"));
     }

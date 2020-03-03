@@ -52,7 +52,8 @@
         </div>
         <div class="row">
             <a href="#">
-                <button class="btn btn-primary btn-lg btn-block" style=" margin: 5rem; padding: 3rem; border-radius: 9999px; ">
+                <button class="btn btn-primary btn-lg btn-block"
+                        style=" margin: 5rem; padding: 3rem; border-radius: 9999px; ">
                     <h1 style="font-size: 3rem; color:#d3d3d3;">GO TO TESTS</h1>
                 </button>
             </a>
@@ -66,27 +67,25 @@
     </div>
     <div class="col-6">
         <h1 style="margin-top: 2rem">OUR TESTS</h1>
-        <div class="row d-flex justify-content-around">
-            <a th:href="@{/tests/repeatNumbers}">
-                <button class="testbtn btn btn-primary">1</button>
-            </a>
-            <a th:href="@{/tests/reactionGame}">
-                <button class="testbtn btn btn-primary">2</button>
-            </a>
-            <a th:href="@{/tests/repeatSequence}">
-                <button class="testbtn btn btn-primary">3</button>
-            </a>
-        </div>
-        <div class="row d-flex justify-content-around">
-            <a th:href="@{/tests/isPrevGame}">
-                <button class="testbtn btn btn-primary">4</button>
-            </a>
-            <a th:href="@{/tests/countGreen}">
-                <button class="testbtn btn btn-primary">5</button>
-            </a>
-            <a href="#">
-                <button class="testbtn btn  btn-primary">6</button>
-            </a>
+        <div th:each="test, row: ${tests}" th:with="numList=${ {2,1,0} }" th:if="${row.count % 3 == 0 or row.last}"
+             class="row d-flex justify-content-around">
+
+            <span th:each="num : ${numList}"
+                  th:with="dataIndex=(${row.index} - ${num})"
+                  th:if="${row.count % 3 == 0}">
+                <a th:href="@{'/tests/' + ${tests[dataIndex].TestURL}}">
+                <button class="testbtn btn btn-primary" th:text="${tests[dataIndex].id}"></button>
+                </a>
+            </span>
+
+            <span th:each="num : ${numList}"
+                  th:with="dataIndex=(${row.index} - ${num})"
+                  th:if="${row.last} and ${row.count % 3 != 0} and ${num &lt; row.count % 3}">
+                <a th:href="@{'/tests/' + ${tests[dataIndex].TestURL}}">
+                    <button class="testbtn btn btn-primary" th:text="${tests[dataIndex].id}"></button>
+                </a>
+            </span>
+
         </div>
     </div>
     <div class="col-3 d-flex justify-content-center">

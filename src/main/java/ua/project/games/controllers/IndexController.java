@@ -6,11 +6,16 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import ua.project.games.entity.User;
+import ua.project.games.entity.enums.CurrentStatus;
 import ua.project.games.entity.enums.Role;
+import ua.project.games.repository.TestTypeRepository;
 import ua.project.games.service.UserService;
 
+import javax.sql.DataSource;
 import java.security.Principal;
+import java.sql.DatabaseMetaData;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
 /**
  * Class that controls get's ad post's requests to / </br>
@@ -23,6 +28,7 @@ import java.security.Principal;
 public class IndexController {
 
     private UserService userService;
+    private final TestTypeRepository testTypeRepository;
 
     /**
      * Constructor for class with dependencies injection provided by Spring framework </br>
@@ -30,27 +36,19 @@ public class IndexController {
      * @param userService               object of service that contains business logic for User class </br>
      *                                  об'єкт классу сервісу який містить бізнес логігу для классу User
      * @see UserService
-     * @see User
      * @see Autowired
      */
     @Autowired
-    public IndexController(UserService userService) {
+    public IndexController(UserService userService, TestTypeRepository testTypeRepository) {
         this.userService = userService;
+        this.testTypeRepository = testTypeRepository;
     }
 
     @GetMapping(value = "/")
-    //TODO add special permissions for user and admin in config class
-    public String getIndexPage(Principal principal, Model model){
-        if (!(principal==null)){
-            Role role = userService.getUserRole(principal.getName());
-            switch (role){
-                case USER:
-                    final String currentUserName = SecurityContextHolder.getContext().getAuthentication().getName();
-                    model.addAttribute("username", currentUserName);
-                case ADMIN:
-                    //redirect to admin page
-            }
-        }
+    public String getIndexPage(Principal principal, Model model) throws SQLException {
+        final String currentUserName = SecurityContextHolder.getContext().getAuthentication().getName();
+        model.addAttribute("tests", testTypeRepository.findAllByCurrentStatus(CurrentStatus.Active));
+        model.addAttribute("username", currentUserName);
         return "index";
     }
 }
