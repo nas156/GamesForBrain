@@ -78,7 +78,6 @@ public class AccountController {
      * @return          html template</br>
      *                  html шаблон
      * @see GetMapping
-     * @see Model
      * @see User
      */
     @GetMapping(value = "/registration")
@@ -87,7 +86,8 @@ public class AccountController {
     }
 
     /**
-     *
+     *Method for handling post requests to /accounts/registration page </br>
+     *Метод для обробки post запросів на сторінку registration/login
      * @param user       object for binding User object to html form</br>
      *                   об'єкт для зв'язування об'єкту User з html формою
      * @param model      object for adding attributes for model and than put it in template html</br>

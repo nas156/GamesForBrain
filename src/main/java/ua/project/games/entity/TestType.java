@@ -19,7 +19,7 @@ public class TestType {
     @Column
     private String testType;
 
-    //todo rewrite with small letter
+    //todo rename to templateName
     @Column
     private String TestURL;
 
