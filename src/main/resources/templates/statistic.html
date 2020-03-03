@@ -12,10 +12,31 @@
 </head>
 <body>
 <div th:replace="~{index :: nav}"></div>
-<div id="plot-1" style="width:400px;height:500px;"></div>
-<div id="plot-2" style="width:400px;height:500px;"></div>
-<div id="plot-3" style="width:400px;height:500px;"></div>
-<div id="plot-4" style="width:400px;height:500px;"></div>
-<div id="plot-5" style="width:400px;height:500px;"></div>
+<div class="slideInRight">
+    <div id="header-container">
+        <h1 th:text="#{string.statistics.plotHeader}" style="color: white"></h1>
+    </div>
+</div>
+<div class="plots-container">
+    <div class="row slideInLeft">
+        <div class="col">
+            <div id="plot-1" style="width:400px;height:500px;"></div>
+        </div>
+        <div class="col">
+            <div id="plot-2" style="width:400px;height:500px;"></div>
+        </div>
+        <div class="col">
+            <div id="plot-3" style="width:400px;height:500px;"></div>
+        </div>
+    </div>
+    <div class="row slideInRight">
+        <div class="col">
+            <div id="plot-4" style="width:400px;height:500px;"></div>
+        </div>
+        <div class="col">
+            <div id="plot-5" style="width:400px;height:500px;"></div>
+        </div>
+    </div>
+</div>
 </body>
 </html>
