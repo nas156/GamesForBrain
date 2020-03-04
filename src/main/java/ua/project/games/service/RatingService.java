@@ -17,7 +17,8 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 /**
- * Сервісний клас, де описані методи для роботи з рейтинговою таблицею
+ * Сервісний клас, де описана логіка для роботи з рейтинговою системою
+ * @see Service
  */
 @Service
 public class RatingService {
@@ -25,6 +26,14 @@ public class RatingService {
     private final TestStatisticService testStatisticService;
     private final RatingTableRepository ratingTableRepository;
 
+    /**
+     * Конструктор для классу з підтримкою підставлення залежностей за допомогою Spring framework
+     * @param testStatisticService обє'єкт класу TestStatisticService, який містить логіку для роботи з класом TestStatistic
+     * @param ratingTableRepository обєкт репозиторію RatingTableRepository, який містить методи для роботи з таблицею rating_table
+     * @see TestStatisticService
+     * @see RatingTableRepository
+     * @see Autowired
+     */
     @Autowired
     public RatingService(TestStatisticService testStatisticService, RatingTableRepository ratingTableRepository) {
         this.testStatisticService = testStatisticService;
@@ -33,7 +42,10 @@ public class RatingService {
 
     /**
      * Метод, який збирає і повертає топ найкращих результатів статистики для всіх тестів
-     * @return список всієї статистики для всіх ігор
+     * @return List<TestStatistic> список всієї статистики для всіх ігор
+     * @see List
+     * @see TestStatistic
+     * @see java.util.stream.Stream
      */
     private List<TestStatistic> getAllTestStatisticForRatingTable(){
         return testStatisticService.getAllActiveTests().stream().map(TestType::getTestType)
@@ -80,7 +92,7 @@ public class RatingService {
 
     /**
      * Метод для пошуку та статистики тестів для кожного типу тестів, які увійшли в рейтингову таблицю
-     * @return список результів методу getParticularGameStatisticStatisticForRatingTable() для кожного активного тесту
+     * @return Map<String, List<UsernameScoreDTO>> список результів методу getParticularGameStatisticStatisticForRatingTable() для кожного активного тесту
      * @see java.util.stream.Stream
      * @see UsernameScoreDTO
      * @see TestStatisticService

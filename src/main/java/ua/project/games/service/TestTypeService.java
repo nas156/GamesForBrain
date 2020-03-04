@@ -1,5 +1,6 @@
 package ua.project.games.service;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ua.project.games.entity.TestType;
 import ua.project.games.entity.enums.CurrentStatus;
@@ -13,7 +14,13 @@ public class TestTypeService {
 
     private final TestTypeRepository testTypeRepository;
 
-
+    /**
+     * Конструктор для классу з підтримкою підставлення залежностей за допомогою Spring framework
+     * @param testTypeRepository об'кт репозиторію TestTypeRepository, який містить медоти для роботи з таблицею test_type
+     * @see TestTypeRepository
+     * @see Autowired
+     */
+    @Autowired
     public TestTypeService(TestTypeRepository testTypeRepository) {
         this.testTypeRepository = testTypeRepository;
     }
