@@ -26,7 +26,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest
 @AutoConfigureMockMvc
 @TestPropertySource("/application-test.properties")
-@Sql(value = {"/create-user-before.sql", "/create-statistic-before.sql"}, executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
+@Sql(value = {"/create-user-before.sql", "/create_test_type.sql", "/create-statistic-before.sql"}, executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
 @Sql(value = {"/after.sql"}, executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)
 public class AdminPageTest {
 
@@ -245,6 +245,41 @@ public class AdminPageTest {
         this.mockMvc.perform(get("/admin/TestType"))
                 .andExpect(status().isOk())
                 .andExpect(content().string(Matchers.not(containsString("ACTIVATE"))));
+
+    }
+
+    @Test
+    @WithUserDetails("admin")
+    public void getUpdateTestType() throws Exception {
+        this.mockMvc.perform(get("/admin/TestType/update/1"))
+                .andExpect(status().isOk())
+                .andExpect(content().string(containsString("ReactionTest")))
+                .andExpect(content().string(containsString("reactionGame")));
+    }
+
+    @Test
+    @WithUserDetails("admin")
+    public void postUpdateTestType() throws Exception {
+        this.mockMvc.perform(get("/admin/TestType"))
+                .andExpect(status().isOk())
+                .andExpect(content().string(containsString("ReactionTest")));
+
+        this.mockMvc.perform(post("/admin/TestType/update/1")
+                .with(csrf().asHeader())
+                .content(buildUrlEncodedFormEntity(
+                        "testType", "updated",
+                        "currentStatus", "Active",
+                        "TestURL", "upd"
+                ))
+                .contentType(MediaType.APPLICATION_FORM_URLENCODED)
+                .accept(MediaType.APPLICATION_JSON))
+                .andExpect(redirectedUrl("/admin/TestType"));
+
+        this.mockMvc.perform(get("/admin/TestType"))
+                .andExpect(status().isOk())
+                .andExpect(content().string(Matchers.not(containsString("ReactionTest"))))
+                .andExpect(content().string(containsString("upd")))
+                .andExpect(content().string(containsString("updated")));
 
     }
 
