@@ -4,7 +4,3 @@ jdk:
 dist: trusty
 before_install:
   - chmod +x mvnw
-install:
-  - mvn -e test
-after_success:
-  - mvn -e clean cobertura:cobertura coveralls:report
