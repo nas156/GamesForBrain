@@ -1,14 +1,11 @@
 package ua.project.games.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import ua.project.games.entity.User;
-import ua.project.games.entity.enums.Role;
-import ua.project.games.service.RegistrationService;
 import ua.project.games.service.UserService;
 
 import java.security.Principal;
@@ -23,27 +20,11 @@ import java.security.Principal;
 @RequestMapping("")
 public class StatisticController {
 
-    private UserService userService;
-
-    /**
-     * Constructor for class with dependencies injection provided by Spring framework </br>
-     * Конструктор для классу з підтримкою підставлення залежностей за допомогою Spring framework
-     * @param userService               object of service that contains business logic for User class </br>
-     *                                  об'єкт классу сервісу який містить бізнес логігу для классу User
-     * @see UserService
-     * @see User
-     * @see Autowired
-     */
-    @Autowired
-    public StatisticController(UserService userService) {
-        this.userService = userService;
-    }
-
     /**
      *Method for handling get requests to /statistic page </br>
-     * Метод для обробки get запросів на сторінку /statistic
+     * Метод для обробки get запитів на сторінку /statistic
      * @param model      object for adding attributes for model and than put it in template html</br>
-     *                   обьект для додавання атрибутів до моделі с наступною обробкою в шалонах html
+     *                   об'єкт для додавання атрибутів до моделі с наступною обробкою в шалонах html
      * @param principal interface object that represents User entity</br>
      *                  інтерфейс об'єкту що презентує сущність User
      * @return          html template</br>
@@ -54,7 +35,6 @@ public class StatisticController {
      */
     @GetMapping(value = "/statistic")
     public String getIndexPage(Principal principal, Model model){
-        model.addAttribute("username", principal.getName());
         return "statistic";
     }
 }

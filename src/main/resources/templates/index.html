@@ -27,7 +27,7 @@
                 </div>
                 <div style="display: inline-block" class="col-3 d-flex align-items-center justify-content-end">
                     <div sec:authorize="isAuthenticated()">
-                        <a href="#" class="item nav-item nav-link active" th:text="${username}"></a>
+                        <a href="#" class="item nav-item nav-link active" th:text="${session.username}"></a>
                         <a href="/logout    " class="item nav-item nav-link active">logout</a>
                     </div>
                     <div sec:authorize="isAnonymous()">

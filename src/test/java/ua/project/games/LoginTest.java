@@ -1,6 +1,7 @@
 package ua.project.games;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +14,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import ua.project.games.entity.User;
 
+import javax.servlet.http.HttpSession;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
@@ -38,6 +40,7 @@ public class LoginTest {
     @Autowired
     private MockMvc mockMvc;
 
+
     @Test
     public void accessDeniedTest() throws Exception {
         this.mockMvc.perform(get("/createStatistic/repeatNumbersStatistic"))
@@ -60,16 +63,23 @@ public class LoginTest {
 
     @Test
     public void correctUserLoginTest() throws Exception {
-        this.mockMvc.perform(formLogin("/accounts/login").user("user").password("grib1111"))
+        HttpSession session = this.mockMvc.perform(formLogin("/accounts/login").user("user").password("grib1111"))
                 .andExpect(status().is3xxRedirection())
-                .andExpect(redirectedUrl("/"));
+                .andExpect(redirectedUrl("/"))
+                .andReturn().getRequest().getSession();
+
+        assert session != null;
+        Assert.assertEquals("user", session.getAttribute("username"));
     }
 
     @Test
     public void correctAdminLoginTest() throws Exception {
-        this.mockMvc.perform(formLogin("/accounts/login").user("admin").password("grib1111"))
+        HttpSession session = this.mockMvc.perform(formLogin("/accounts/login").user("admin").password("grib1111"))
                 .andExpect(status().is3xxRedirection())
-                .andExpect(redirectedUrl("/admin"));
+                .andExpect(redirectedUrl("/admin"))
+                .andReturn().getRequest().getSession();;
+        assert session != null;
+        Assert.assertEquals("admin", session.getAttribute("username"));
     }
 
     @Test

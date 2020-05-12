@@ -29,6 +29,7 @@ import java.util.Set;
  * @see Controller
  * @see RequestMapping
  */
+@SuppressWarnings("SpringMVCViewInspection")
 @Slf4j
 @Controller
 @RequestMapping("/admin")
@@ -44,18 +45,18 @@ public class AdminPageController {
 
     /**
      * Constructor for class with dependencies injection provided by Spring framework </br>
-     * Конструктор для классу з підтримкою підставлення залежностей за допомогою Spring framework
+     * Конструктор для класу з підтримкою підставлення залежностей за допомогою Spring framework
      *
      * @param entityManager        manager for all Entity's in project</br>
      *                             менеджер всіх сутностей в проекті
      * @param testStatisticService object of service that contains business logic for TestStatistic entity </br>
-     *                             об'єкт классу сервісу який містить бізнес логігу для сутності TestStatistic
+     *                             об'єкт класу сервісу який містить бізнес логіну для сутності TestStatistic
      * @param userService          object of service that contains business logic for User class </br>
-     *                             об'єкт классу сервісу який містить бізнес логігу для классу User
+     *                             об'єкт класу сервісу який містить бізнес логіну для класу User
      * @param testTypeService      object of service that contains business logic for TestType entity</br>
-     *                             об'єкт классу сервісу який містить бізнес логігу для TestType сутності
+     *                             об'єкт класу сервісу який містить бізнес логіну для TestType сутності
      * @param registrationService  object of service that contains business logic for registration </br>
-     *                             об'єкт классу сервісу який містить бізнес логігу для реєстрування користовачів
+     *                             об'єкт класу сервісу який містить бізнес логіну для реєстрування користовачів
      */
     public AdminPageController(EntityManager entityManager, TestStatisticService testStatisticService, UserService userService, TestTypeService testTypeService, RegistrationService registrationService) {
         this.entityManager = entityManager;
@@ -68,12 +69,12 @@ public class AdminPageController {
 
     /**
      * Method for handling get requests to /admin </br>
-     * Метод для обробки get запросів на сторінку /admin
+     * Метод для обробки get запитів на сторінку /admin
      *
      * @param model     object for adding attributes for model and than put it in template html</br>
-     *                  обьект для додавання атрибутів до моделі с наступною обробкою в шалонах html
+     *                  об'єкт для додавання атрибутів до моделі с наступною обробкою в шаблонах html
      * @param principal interface object that represents User entity</br>
-     *                  інтерфейс об'єкту що презентує сущність User
+     *                  інтерфейс об'єкту що презентує сутність User
      * @return html template</br>
      * html шаблон
      * @see GetMapping
@@ -82,21 +83,18 @@ public class AdminPageController {
      */
     @GetMapping
     public String getAdminPage(Model model, Principal principal) {
-        model.addAttribute("username", principal.getName());
         model.addAttribute("classes", classes);
         return "/admin/adminIndex";
     }
 
     /**
      * Method for handling get requests to /admin/User </br>
-     * Метод для обробки get запросів на сторінку /admin/User
+     * Метод для обробки get запитів на сторінку /admin/User
      *
      * @param search    optional query string for searching the user</br>
      *                  необов'язковий параметр запиту для пошуку користувача
      * @param model     object for adding attributes for model and than put it in template html</br>
-     *                  обьект для додавання атрибутів до моделі с наступною обробкою в шалонах html
-     * @param principal interface object that represents User entity</br>
-     *                  інтерфейс об'єкту що презентує сущність User
+     *                  об'єкт для додавання атрибутів до моделі с наступною обробкою в шаблонах html
      * @return          html template</br>
      *                  html шаблон
      * @see GetMapping
@@ -104,15 +102,14 @@ public class AdminPageController {
      * @see Principal
      */
     @GetMapping(value = "/User")
-    public String getUsers(@RequestParam Optional<String> search, Model model, Principal principal) {
-        model.addAttribute("username", principal.getName());
+    public String getUsers(@RequestParam Optional<String> search, Model model) {
         model.addAttribute("users", userService.findByUsername(search.orElse("_")).orElseGet(userService::getAll));
         return "admin/user/adminUser";
     }
 
     /**
      * Method for handling post requests to /admin/User/delete/{user_id} </br>
-     * Метод для обробки post запросів на сторінку /admin/User/delete/{user_id}
+     * Метод для обробки post запитів на сторінку /admin/User/delete/{user_id}
      *
      * @param user_id   String that contains in path as {user_id}</br>
      *                  Строка що міститься в шляху як {usr_id}
@@ -132,7 +129,7 @@ public class AdminPageController {
 
     /**
      * Method for handling post requests to /admin/User/clearStat/{user_id} </br>
-     * Метод для обробки post запросів на сторінку /admin/User/clearStat/{user_id}
+     * Метод для обробки post запитів на сторінку /admin/User/clearStat/{user_id}
      *
      * @param user_id    String that contains in path as {user_id}</br>
      *                   Строка що міститься в шляху як {usr_id}
@@ -151,21 +148,18 @@ public class AdminPageController {
 
     /**
      * Method for handling get requests to /admin/User/update/{user_id} </br>
-     * Метод для обробки get запросів на сторінку /admin/User/update/{user_id}
+     * Метод для обробки get запитів на сторінку /admin/User/update/{user_id}
      * @param user_id    String that contains in path as {user_id}</br>
      *                   Строка що міститься в шляху як {usr_id}
      * @param model     object for adding attributes for model and than put it in template html</br>
-     *                  обьект для додавання атрибутів до моделі с наступною обробкою в шалонах html
-     * @param principal interface object that represents User entity</br>
-     *                  інтерфейс об'єкту що презентує сущність User
+     *                  об'єкт для додавання атрибутів до моделі с наступною обробкою в шалонах html
      * @param user       object for binding User object to html form</br>
      *                   об'єкт для зв'язування об'єкту User з html формою
      * @return          html template</br>
      *                  html шаблон
      */
     @GetMapping(value = "/User/update/{user_id}")
-    public String updateUser(@PathVariable String user_id, Model model, Principal principal, @ModelAttribute("usrr") User user) {
-        model.addAttribute("username", principal.getName());
+    public String updateUser(@PathVariable String user_id, Model model, @ModelAttribute("usrr") User user) {
         Optional<User> userToUpdate = userService.getById(Long.parseLong(user_id));
         if (!userToUpdate.isPresent()){
             return "redirect:/admin/User";
@@ -179,7 +173,7 @@ public class AdminPageController {
 
     /**
      * Method for handling post requests to /admin/User/update/{user_id} </br>
-     * Метод для обробки post запросів на сторінку /admin/User/update/{user_id}
+     * Метод для обробки post запитів на сторінку /admin/User/update/{user_id}
      * @param user_id    String that contains in path as {user_id}</br>
      *                   Строка що міститься в шляху як {usr_id}
      * @param user       object for binding User object to html form</br>
@@ -200,31 +194,26 @@ public class AdminPageController {
 
     /**
      * Method for handling get requests to /admin/User.add </br>
-     * Метод для обробки get запросів на сторінку /admin/User/add
-     * @param model     object for adding attributes for model and than put it in template html</br>
-     *                  обьект для додавання атрибутів до моделі с наступною обробкою в шалонах html
-     * @param principal interface object that represents User entity</br>
-     *                  інтерфейс об'єкту що презентує сущність User
+     * Метод для обробки get запитів на сторінку /admin/User/add
      * @param user       object for binding User object to html form</br>
      *                   об'єкт для зв'язування об'єкту User з html формою
      * @return          html template</br>
      *                  html шаблон
      */
     @GetMapping(value = "/User/add")
-    public String addUser(Model model, Principal principal, @ModelAttribute("usr") User user) {
-        model.addAttribute("username", principal.getName());
+    public String addUser(@ModelAttribute("usr") User user) {
         return "admin/user/addUser";
     }
 
     /**
      * Method for handling post requests to /admin/User/add </br>
-     * Метод для обробки post запросів на сторінку /admin/User/add
+     * Метод для обробки post запитів на сторінку /admin/User/add
      * @param user       object for binding User object to html form</br>
      *                   об'єкт для зв'язування об'єкту User з html формою
      * @param result     object for registration errors in form inputs</br>
      *                   об'єкт для реєстрації помило в полях html форми
      * @return          if adding of user is success redirect to /admin/User page else redirect to /admin/User/add</br>
-     *                  якщо користувача успішлно довблено то перенаправлення на /admin/User в іншому разі перпревлення на /admin/User/add
+     *                  якщо користувача успішно ддоваленото перенаправлення на /admin/User в іншому разі переправлення на /admin/User/add
      */
     @PostMapping(value = "/User/add")
     public String addUser(@ModelAttribute("usr") User user, BindingResult result) {
@@ -240,24 +229,21 @@ public class AdminPageController {
 
     /**
      * Method for handling get requests to /admin/TestType </br>
-     * Метод для обробки get запросів на сторінку /admin/TestType
+     * Метод для обробки get запитів на сторінку /admin/TestType
      * @param model     object for adding attributes for model and than put it in template html</br>
-     *                  обьект для додавання атрибутів до моделі с наступною обробкою в шалонах html
-     * @param principal interface object that represents User entity</br>
-     *                  інтерфейс об'єкту що презентує сущність User
+     *                  об'єкт для додавання атрибутів до моделі с наступною обробкою в шалонах html
      * @return          html template</br>
      *                  html шаблон
      */
     @GetMapping(value = "/TestType")
-    public String geTestTypes(Model model, Principal principal) {
-        model.addAttribute("username", principal.getName());
+    public String geTestTypes(Model model) {
         model.addAttribute("testTypes", testTypeService.getAll());
         return "admin/testType/adminTestType";
     }
 
     /**
      * Method for handling post requests to /admin/TestType/delete/{test_id} </br>
-     * Метод для обробки post запросів на сторінку /admin/TestType/delete/{test_id}
+     * Метод для обробки post запитів на сторінку /admin/TestType/delete/{test_id}
      * @param test_id    String that contains in path as {test_id}</br>
      *                   Строка що міститься в шляху як {test_id}
      * @return           redirect to /admin/TestType</br>
@@ -271,7 +257,7 @@ public class AdminPageController {
 
     /**
      * Method for handling get requests to /admin/TestType/activate/{test_id} </br>
-     * Метод для обробки get запросів на сторінку /admin/TestType/activate/{test_id}
+     * Метод для обробки get запитів на сторінку /admin/TestType/activate/{test_id}
      * @param test_id    String that contains in path as {test_id}</br>
      *                   Строка що міститься в шляху як {test_id}
      * @return           redirect to /admin/TestType</br>
@@ -285,7 +271,7 @@ public class AdminPageController {
 
     /**
      * Method for handling get requests to /admin/TestType/update/{user_id} </br>
-     * Метод для обробки get запросів на сторінку /admin/TestType/update/{user_id}
+     * Метод для обробки get запитів на сторінку /admin/TestType/update/{user_id}
      * @param model     object for adding attributes for model and than put it in template html</br>
      *                  обьект для додавання атрибутів до моделі с наступною обробкою в шалонах html
      * @param principal interface object that represents User entity</br>
@@ -318,7 +304,7 @@ public class AdminPageController {
 
     /**
      * Method for handling post requests to /admin/TestType/update/{user_id} </br>
-     * Метод для обробки post запросів на сторінку /admin/TestType/update/{user_id}
+     * Метод для обробки post запитів на сторінку /admin/TestType/update/{user_id}
      * @param test_id    String that contains in path as {test_id}</br>
      *                   Строка що міститься в шляху як {test_id}
      * @param testType   object for binding TestType object to html form</br>

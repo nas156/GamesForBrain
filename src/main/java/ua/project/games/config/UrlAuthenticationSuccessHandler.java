@@ -6,6 +6,7 @@ import org.springframework.security.web.DefaultRedirectStrategy;
 import org.springframework.security.web.RedirectStrategy;
 import org.springframework.security.web.WebAttributes;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
+import ua.project.games.entity.User;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -24,6 +25,8 @@ public class UrlAuthenticationSuccessHandler
                                         HttpServletResponse response, Authentication authentication)
             throws IOException {
 
+        User user = (User) authentication.getPrincipal();
+        request.getSession().setAttribute("username", user.getUsername());
         handle(request, response, authentication);
         clearAuthenticationAttributes(request);
     }

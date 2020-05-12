@@ -11,10 +11,8 @@ import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
-import static org.hamcrest.Matchers.containsString;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -61,7 +59,6 @@ public class GetTestPagesTest {
     @WithUserDetails("admin")
     public void getCountGreenTest() throws Exception {
         this.mockMvc.perform(get("/tests/countGreen"))
-                .andExpect(content().string(containsString("admin")))
                 .andExpect(status().isOk());
     }
 
@@ -69,7 +66,6 @@ public class GetTestPagesTest {
     @WithUserDetails("admin")
     public void getIsPrevGameTest() throws Exception {
         this.mockMvc.perform(get("/tests/isPrevGame"))
-                .andExpect(content().string(containsString("admin")))
                 .andExpect(status().isOk());
     }
 
@@ -77,7 +73,6 @@ public class GetTestPagesTest {
     @WithUserDetails("admin")
     public void getReactionGameTest() throws Exception {
         this.mockMvc.perform(get("/tests/reactionGame"))
-                .andExpect(content().string(containsString("admin")))
                 .andExpect(status().isOk());
     }
 
@@ -85,7 +80,6 @@ public class GetTestPagesTest {
     @WithUserDetails("admin")
     public void getRepeatNumbersTest() throws Exception {
         this.mockMvc.perform(get("/tests/repeatNumbers"))
-                .andExpect(content().string(containsString("admin")))
                 .andExpect(status().isOk());
     }
 
@@ -93,7 +87,6 @@ public class GetTestPagesTest {
     @WithUserDetails("admin")
     public void getRepeatSequenceTest() throws Exception {
         this.mockMvc.perform(get("/tests/repeatSequence"))
-                .andExpect(content().string(containsString("admin")))
                 .andExpect(status().isOk());
     }
 }
