@@ -12,6 +12,9 @@ import ua.project.games.exceptions.UserExistsException;
 import ua.project.games.repository.UserRepository;
 import ua.project.games.validators.NewUserValidator;
 
+/**
+ * Клас, для описання методів, які пов'язані з реєстрацією користувачів, створенням нових об'єктів класу User та запису їх в базу даних
+ */
 @Service
 public class RegistrationService {
 
@@ -24,6 +27,14 @@ public class RegistrationService {
         this.passwordEncoder = passwordEncoder;
     }
 
+    /**
+     * Метод, який записує унікального юзера в таблицю usr. Викидає UserExistsException, якщо у переданого в пераметрах класу User не унікльний юзернейм.
+     * Викидає InvalidUserException, якщо переданий в параметрах клас User не проходить валідування в методі validate() класу NewUserValidator
+     * @param user
+     * @param result
+     * @throws InvalidUserException
+     * @throws UserExistsException
+     */
     public void registerUser(User user, BindingResult result) throws InvalidUserException, UserExistsException {
         new NewUserValidator().validate(user, result);
         if(result.hasErrors()) {

@@ -12,6 +12,9 @@ import ua.project.games.repository.UserRepository;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * Клас, в якому описуються методи для роботи з таблицею usr(класом User)
+ */
 @Slf4j
 @Service
 public class UserService implements UserDetailsService {
@@ -22,7 +25,13 @@ public class UserService implements UserDetailsService {
         this.userRepository = userRepository;
     }
 
-
+    /**
+     * Метод, який знаходить в таблиці usr запис, поле username якого співпадає з переданим в параметрах об'єктом типу String
+     * Викидає UsernameNotFoundException, якщо запису, поле username якого співпадає з переданою в параметрі строкою немає
+     * @param s
+     * @return Об'єкт типу User, поле username якого співпадає з переданим в параметрах об'єктом типу String, або Optional.empty()
+     * @throws UsernameNotFoundException
+     */
     @Override
     public User loadUserByUsername(String s) throws UsernameNotFoundException {
         return userRepository.findByUsername(s).orElse(null);
@@ -39,9 +48,9 @@ public class UserService implements UserDetailsService {
         userRepository.save(userToUpdate);
     }
 
-    public User getById(long id) {
+    public Optional<User> getById(long id) {
         Optional<User> user = userRepository.findById(id);
-        return user.orElse(null);
+        return user;
 
     }
 
@@ -54,6 +63,6 @@ public class UserService implements UserDetailsService {
     }
 
     public Optional<List<User>> findByUsername(String username) {
-        return userRepository.findAllByUsername(username);
+        return userRepository.findAllByUsernameLike(username);
     }
 }

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="username" th:content="${username}"/>
+    <meta name="_csrf" th:content="${_csrf.token}"/>
+    <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+          integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link rel="stylesheet" th:href="@{/css/main.css}">
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+            integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
+            crossorigin="anonymous"></script>
+    <title>Users</title>
+</head>
+<body>
+<div th:replace="~{index :: nav}"></div>
+<form th:object="${testTypes}" method="post" th:action="@{'/admin/TestType/update/' + ${testTypes.getId()}}">
+
+    <input id="id" name="id" type="hidden" th:value="${testTypes.getId()}">
+    <div class="form-group">
+        <label for="testType">Test Type</label>
+        <input th:name="testType" th:id="testType" type="text" required class="form-control" id="testType"
+               aria-describedby="testType" placeholder="Test Type"
+               th:value="${testTypes.getTestType()}">
+    </div>
+    <div class="form-group">
+        <label for="currentStatus">Status</label>
+        <select th:name="currentStatus" th:id="currentStatus" required class="form-control" id="currentStatus">
+            <option th:selected="${testTypes.getCurrentStatus().toString() == 'Active'}">Active</option>
+            <option th:selected="${testTypes.getCurrentStatus().toString() == 'Deleted'}">Deleted</option>
+        </select>
+    </div>
+    </div>
+    <div class="form-group">
+        <label for="TestURL">File Name</label>
+        <input th:name="TestURL" th:id="age" type="text" required class="form-control" id="TestURL" aria-describedby="TestURL"
+               placeholder="TestURL"
+               th:value="${testTypes.getTestURL()}">
+    </div>
+    <button type="submit" class="btn btn-primary">Submit</button>
+</form>
+</body>
+</html>

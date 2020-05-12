@@ -47,7 +47,7 @@ public class User implements UserDetails {
     @Column(nullable = false)
     private String email;
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "user")
     @JsonManagedReference
     private List<TestStatistic> tests;
 

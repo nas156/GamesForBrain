@@ -31,7 +31,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest
 @AutoConfigureMockMvc
 @TestPropertySource("/application-test.properties")
-@Sql(value = {"/create-user-before.sql", "/create-statistic-before.sql"}, executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
+@Sql(value = {"/create-user-before.sql", "/create_test_type.sql", "/create-statistic-before.sql"}, executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
 @Sql(value = {"/after.sql"}, executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)
 public class LoginTest {
 
@@ -43,6 +43,19 @@ public class LoginTest {
         this.mockMvc.perform(get("/createStatistic/repeatNumbersStatistic"))
                 .andExpect(status().is3xxRedirection())
                 .andExpect(redirectedUrl("http://localhost/accounts/login"));
+    }
+
+    @Test
+    public void getLoginTest() throws Exception {
+        this.mockMvc.perform(get("/accounts/login"))
+                .andExpect(status().isOk());
+
+    }
+
+    @Test
+    public void getRegistrationTest() throws Exception {
+        this.mockMvc.perform(get("/accounts/registration"))
+                .andExpect(status().isOk());
     }
 
     @Test

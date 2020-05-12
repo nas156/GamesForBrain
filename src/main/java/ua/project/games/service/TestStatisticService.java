@@ -11,9 +11,14 @@ import ua.project.games.repository.TestStatisticRepository;
 import ua.project.games.repository.TestTypeRepository;
 
 import java.time.LocalDate;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
+/**
+ * Клас для опису методів які працюють з даними класу TestStatistic
+ */
 @Service
 @Slf4j
 public class TestStatisticService {
@@ -56,10 +61,19 @@ public class TestStatisticService {
         }
     }
 
+    /**
+     * Метод який дістає всі записи в таблиці test_statistic
+     * @return список об'єктів класу TestStatistic
+     */
     public List<TestStatistic> getAll() {
         return testStatisticRepository.findAll();
     }
 
+    /**
+     * Метод який приймеє на всіх об'єкти типу String та порівнює його з  строкою "anonymousUser"
+     * @param username
+     * @return true, якщо параметр не співпадає з строкою "anonymousUser", та false, якщо співпадає
+     */
     private boolean notAnonymousCheck(String username) {
         return !username.equals("anonymousUser");
     }
@@ -94,7 +108,7 @@ public class TestStatisticService {
                 .orElse(new ArrayList<>());
     }
 
-    public void deleteAllbyUser(User user) {
+    public void deleteAllByUser(User user) {
         List<TestStatistic> userTests = user.getTests();
         testStatisticRepository.deleteAll(userTests);
     }
