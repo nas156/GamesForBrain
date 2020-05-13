@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import ua.project.games.annotations.AdminPage;
 import ua.project.games.entity.TestType;
 import ua.project.games.entity.User;
@@ -18,6 +19,7 @@ import ua.project.games.service.RegistrationService;
 import ua.project.games.service.TestStatisticService;
 import ua.project.games.service.TestTypeService;
 import ua.project.games.service.UserService;
+import ua.project.games.service.fileStorage.StorageService;
 
 import javax.persistence.EntityManager;
 import javax.validation.Valid;
@@ -45,28 +47,29 @@ public class AdminPageController {
     private final UserService userService;
     private final TestTypeService testTypeService;
     private final RegistrationService registrationService;
+    private final StorageService storageService;
 
     /**
      * Constructor for class with dependencies injection provided by Spring framework </br>
      * Конструктор для класу з підтримкою підставлення залежностей за допомогою Spring framework
-     *
-     * @param entityManager        manager for all Entity's in project</br>
+     *  @param entityManager        manager for all Entity's in project</br>
      *                             менеджер всіх сутностей в проекті
      * @param testStatisticService object of service that contains business logic for TestStatistic entity </br>
      *                             об'єкт класу сервісу який містить бізнес логіну для сутності TestStatistic
      * @param userService          object of service that contains business logic for User class </br>
-     *                             об'єкт класу сервісу який містить бізнес логіну для класу User
+ *                             об'єкт класу сервісу який містить бізнес логіну для класу User
      * @param testTypeService      object of service that contains business logic for TestType entity</br>
-     *                             об'єкт класу сервісу який містить бізнес логіну для TestType сутності
+*                             об'єкт класу сервісу який містить бізнес логіну для TestType сутності
      * @param registrationService  object of service that contains business logic for registration </br>
-     *                             об'єкт класу сервісу який містить бізнес логіну для реєстрування користувачів
+     * @param storageService
      */
-    public AdminPageController(EntityManager entityManager, TestStatisticService testStatisticService, UserService userService, TestTypeService testTypeService, RegistrationService registrationService) {
+    public AdminPageController(EntityManager entityManager, TestStatisticService testStatisticService, UserService userService, TestTypeService testTypeService, RegistrationService registrationService, StorageService storageService) {
         this.entityManager = entityManager;
         this.testStatisticService = testStatisticService;
         this.userService = userService;
         this.testTypeService = testTypeService;
         this.registrationService = registrationService;
+        this.storageService = storageService;
     }
 
     /**
@@ -333,6 +336,22 @@ public class AdminPageController {
         testTypeService.updateTestType(testTypeToUpdate.get(), testType);
         return "redirect:/admin/TestType";
     }
+
+    @GetMapping("/TestType/add")
+    public String getAddTestType() {
+        return "/admin/testType/addTestType";
+    }
+
+    @PostMapping("/TestType/add")
+    public String postAddTestType(@RequestParam("file") MultipartFile file,
+                                  @RequestParam("testType") String testType,
+                                  @RequestParam("TestURL") String TestURL) {
+        storageService.store(file);
+        System.out.println(testType);
+        System.out.println(TestURL);
+        return "redirect:/admin/TestType";
+    }
+
 }
 
 

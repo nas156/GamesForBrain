@@ -17,28 +17,19 @@
 </head>
 <body>
 <div th:replace="~{index :: nav}"></div>
-<form th:object="${testTypes}" method="post" th:action="@{'/admin/TestType/update/' + ${testTypes.getId()}}">
-
-    <input id="id" name="id" type="hidden" th:value="${testTypes.getId()}">
+<form method="post" th:action="@{'/admin/TestType/add/'}" enctype="multipart/form-data">
     <div class="form-group">
         <label for="testType">Test Type</label>
-        <input th:name="testType" th:id="testType" type="text" required class="form-control" id="testType"
-               aria-describedby="testType" placeholder="Test Type"
-               th:value="${testTypes.getTestType()}">
-    </div>
-    <div class="form-group">
-        <label for="currentStatus">Status</label>
-        <select th:name="currentStatus" th:id="currentStatus" required class="form-control" id="currentStatus">
-            <option th:selected="${testTypes.getCurrentStatus().toString() == 'Active'}">Active</option>
-            <option th:selected="${testTypes.getCurrentStatus().toString() == 'Deleted'}">Deleted</option>
-        </select>
-    </div>
+        <input name="testType" id="testType" type="text" required class="form-control"
+               aria-describedby="testType" placeholder="Test Type">
     </div>
     <div class="form-group">
         <label for="TestURL">File Name</label>
-        <input th:name="TestURL" th:id="TestURL" type="text" required class="form-control" id="TestURL" aria-describedby="TestURL"
-               placeholder="TestURL"
-               th:value="${testTypes.getTestURL()}">
+        <input name="TestURL" id="TestURL" type="text" required class="form-control" aria-describedby="TestURL"
+               placeholder="TestURL">
+    </div>
+    <div class="form-group">
+    <input type="file" name="file" placeholder="file">
     </div>
     <button type="submit" class="btn btn-primary">Submit</button>
 </form>

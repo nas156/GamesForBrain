@@ -31,3 +31,4 @@ build/
 .vscode/
 
 project_log.txt
+/upload-dir/
