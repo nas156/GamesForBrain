@@ -101,7 +101,6 @@ public class LoginTest {
                 ))
                 .contentType(MediaType.APPLICATION_FORM_URLENCODED)
                 .accept(MediaType.APPLICATION_JSON))
-                .andDo(print())
                 .andExpect(status().is3xxRedirection());
     }
 

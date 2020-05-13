@@ -63,6 +63,6 @@ public class UserService implements UserDetailsService {
     }
 
     public Optional<List<User>> findByUsername(String username) {
-        return userRepository.findAllByUsernameLike(username);
+        return userRepository.findAllByUsernameContaining(username);
     }
 }

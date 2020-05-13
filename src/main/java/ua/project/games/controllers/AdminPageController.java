@@ -18,6 +18,8 @@ import javax.persistence.EntityManager;
 import javax.validation.Valid;
 import java.security.Principal;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
@@ -56,7 +58,7 @@ public class AdminPageController {
      * @param testTypeService      object of service that contains business logic for TestType entity</br>
      *                             об'єкт класу сервісу який містить бізнес логіну для TestType сутності
      * @param registrationService  object of service that contains business logic for registration </br>
-     *                             об'єкт класу сервісу який містить бізнес логіну для реєстрування користовачів
+     *                             об'єкт класу сервісу який містить бізнес логіну для реєстрування користувачів
      */
     public AdminPageController(EntityManager entityManager, TestStatisticService testStatisticService, UserService userService, TestTypeService testTypeService, RegistrationService registrationService) {
         this.entityManager = entityManager;
@@ -102,8 +104,9 @@ public class AdminPageController {
      * @see Principal
      */
     @GetMapping(value = "/User")
-    public String getUsers(@RequestParam Optional<String> search, Model model) {
-        model.addAttribute("users", userService.findByUsername(search.orElse("_")).orElseGet(userService::getAll));
+    public String getUsers(@RequestParam(required = false) String search, Model model) {
+        String searchString = Optional.ofNullable(search).orElse("");
+        model.addAttribute("users", userService.findByUsername(searchString).orElse(new ArrayList<>()));
         return "admin/user/adminUser";
     }
 
