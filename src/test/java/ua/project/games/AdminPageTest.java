@@ -165,9 +165,7 @@ public class AdminPageTest {
     @WithUserDetails("admin")
     public void searchNotValidString() throws Exception {
         this.mockMvc.perform(get("/admin/User?search=abcd"))
-                .andExpect(status().isOk())
-                .andExpect(content().string(containsString("email2@pavlo")))
-                .andExpect(content().string(containsString("admin")));
+                .andExpect(status().isOk());
     }
 
     @Test
