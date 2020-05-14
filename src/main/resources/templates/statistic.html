@@ -3,11 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+          integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link rel="stylesheet" th:href="@{/css/main.css}">
     <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
     <script type="text/javascript" th:src="@{/js/statistics/commonFunctions.js}"></script>
     <script type="text/javascript" th:src="@{/js/statistics/statisticsPage/main.js}"></script>
 </head>
 <body>
+<div th:replace="~{index :: nav}"></div>
 <div id="plot-1" style="width:400px;height:500px;"></div>
 <div id="plot-2" style="width:400px;height:500px;"></div>
 <div id="plot-3" style="width:400px;height:500px;"></div>
