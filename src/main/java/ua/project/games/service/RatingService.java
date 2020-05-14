@@ -10,9 +10,10 @@ import ua.project.games.entity.TestType;
 import ua.project.games.repository.RatingTableRepository;
 
 import javax.transaction.Transactional;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.function.Function;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 /**
@@ -85,6 +86,8 @@ public class RatingService {
      */
     public List<UsernameScoreDTO> getParticularGameStatisticStatisticForRatingTable(String testType){
         return ratingTableRepository.findAllByTestStatistic_TestType_TestType(testType).orElse(new ArrayList<>()).stream()
+                .sorted(Comparator.comparing(RatingTable::getScore).reversed())
+                .filter(isDuplicateByAProperty(x -> x.getTestStatistic().getUser().getUsername()))
                 .map(x -> new UsernameScoreDTO(x.getTestStatistic().getUser().getUsername(), x.getTestStatistic().getScore()))
                 .collect(Collectors.toList());
     }
@@ -100,5 +103,10 @@ public class RatingService {
         return testStatisticService.getAllActiveTests().stream()
                 .map(TestType::getTestType)
                 .collect(Collectors.toMap(x -> x, this::getParticularGameStatisticStatisticForRatingTable));
+    }
+
+    public static <T> Predicate<T> isDuplicateByAProperty(Function<? super T, ?> keyExtractor) {
+        Set<Object> seen = ConcurrentHashMap.newKeySet();
+        return t -> seen.add(keyExtractor.apply(t));
     }
 }
