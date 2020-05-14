@@ -2,9 +2,6 @@ package ua.project.games.controllers;
 
 import lombok.extern.slf4j.Slf4j;
 import org.reflections.Reflections;
-import org.springframework.beans.factory.config.BeanDefinition;
-import org.springframework.context.annotation.ClassPathScanningCandidateComponentProvider;
-import org.springframework.core.type.filter.AnnotationTypeFilter;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -13,13 +10,11 @@ import org.springframework.web.multipart.MultipartFile;
 import ua.project.games.annotations.AdminPage;
 import ua.project.games.entity.TestType;
 import ua.project.games.entity.User;
+import ua.project.games.entity.enums.CurrentStatus;
 import ua.project.games.exceptions.InvalidUserException;
 import ua.project.games.exceptions.UserExistsException;
-import ua.project.games.service.RegistrationService;
-import ua.project.games.service.TestStatisticService;
-import ua.project.games.service.TestTypeService;
-import ua.project.games.service.UserService;
-import ua.project.games.service.fileStorage.StorageService;
+import ua.project.games.service.*;
+import ua.project.games.service.fileStorage.JsStorageService;
 
 import javax.persistence.EntityManager;
 import javax.validation.Valid;
@@ -47,29 +42,33 @@ public class AdminPageController {
     private final UserService userService;
     private final TestTypeService testTypeService;
     private final RegistrationService registrationService;
-    private final StorageService storageService;
+    private final JsStorageService jsStorageService;
+    private final GameCreationService gameCreationService;
+
 
     /**
      * Constructor for class with dependencies injection provided by Spring framework </br>
      * Конструктор для класу з підтримкою підставлення залежностей за допомогою Spring framework
-     *  @param entityManager        manager for all Entity's in project</br>
+     * @param entityManager        manager for all Entity's in project</br>
      *                             менеджер всіх сутностей в проекті
      * @param testStatisticService object of service that contains business logic for TestStatistic entity </br>
      *                             об'єкт класу сервісу який містить бізнес логіну для сутності TestStatistic
      * @param userService          object of service that contains business logic for User class </br>
- *                             об'єкт класу сервісу який містить бізнес логіну для класу User
+*                             об'єкт класу сервісу який містить бізнес логіну для класу User
      * @param testTypeService      object of service that contains business logic for TestType entity</br>
 *                             об'єкт класу сервісу який містить бізнес логіну для TestType сутності
      * @param registrationService  object of service that contains business logic for registration </br>
-     * @param storageService
+     * @param gameCreationService
      */
-    public AdminPageController(EntityManager entityManager, TestStatisticService testStatisticService, UserService userService, TestTypeService testTypeService, RegistrationService registrationService, StorageService storageService) {
+    public AdminPageController(EntityManager entityManager, TestStatisticService testStatisticService, UserService userService, TestTypeService testTypeService,
+                               RegistrationService registrationService, JsStorageService jsStorageService, GameCreationService gameCreationService) {
         this.entityManager = entityManager;
         this.testStatisticService = testStatisticService;
         this.userService = userService;
         this.testTypeService = testTypeService;
         this.registrationService = registrationService;
-        this.storageService = storageService;
+        this.jsStorageService = jsStorageService;
+        this.gameCreationService = gameCreationService;
     }
 
     /**
@@ -343,12 +342,15 @@ public class AdminPageController {
     }
 
     @PostMapping("/TestType/add")
-    public String postAddTestType(@RequestParam("file") MultipartFile file,
+    public String postAddTestType(@RequestParam("file") MultipartFile[] file,
                                   @RequestParam("testType") String testType,
-                                  @RequestParam("TestURL") String TestURL) {
-        storageService.store(file);
-        System.out.println(testType);
-        System.out.println(TestURL);
+                                  @RequestParam("TestURL") String testURL) {
+        jsStorageService.setFolder(testType);
+        Arrays.stream(file).forEach(jsStorageService::verifyJs);
+        Arrays.stream(file).forEach(jsStorageService::store);
+        gameCreationService.createGameTemplate(testURL, file, testType);
+        TestType test = TestType.builder().currentStatus(CurrentStatus.Active).testType(testType).TestURL(testURL).build();
+        testTypeService.save(test);
         return "redirect:/admin/TestType";
     }
 

@@ -21,11 +21,11 @@ import org.springframework.web.multipart.MultipartFile;
 @Service
 public class FileSystemStorageService implements StorageService {
 
-    private final Path rootLocation;
+    protected Path rootLocation;
 
     @Autowired
     public FileSystemStorageService(StorageProperties properties) {
-        this.rootLocation = Paths.get(properties.getLocation());
+        init(properties);
     }
 
     @Override
@@ -42,6 +42,7 @@ public class FileSystemStorageService implements StorageService {
                                 + filename);
             }
             try (InputStream inputStream = file.getInputStream()) {
+                Files.createDirectories(rootLocation);
                 Files.copy(inputStream, this.rootLocation.resolve(filename),
                         StandardCopyOption.REPLACE_EXISTING);
             }
@@ -94,7 +95,8 @@ public class FileSystemStorageService implements StorageService {
     }
 
     @Override
-    public void init() {
+    public void init(StorageProperties properties) {
+        rootLocation = Paths.get(properties.getLocation());
         try {
             Files.createDirectories(rootLocation);
         }

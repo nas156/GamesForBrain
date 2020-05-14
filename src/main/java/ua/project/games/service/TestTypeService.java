@@ -53,6 +53,10 @@ public class TestTypeService {
         });
     }
 
+    public void save(TestType testType){
+        testTypeRepository.save(testType);
+    }
+
     /**
      * method for updating TestType entity and save it to repository</br>
      * метод для оновлення сутноті TestType і збереження до бази даних
