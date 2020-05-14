@@ -12,7 +12,6 @@ import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.web.servlet.MockMvc;
 import ua.project.games.repository.TestStatisticRepository;
-import ua.project.games.repository.UserRepository;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
@@ -22,13 +21,12 @@ import static org.hamcrest.Matchers.containsString;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @SpringBootTest
 @AutoConfigureMockMvc
 @TestPropertySource("/application-test.properties")
-@Sql(value = {"/create-user-before.sql", "/create-statistic-before.sql"}, executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
+@Sql(value = {"/create-user-before.sql", "/create_test_type.sql", "/create-statistic-before.sql"}, executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
 @Sql(value = {"/after.sql"}, executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)
 public class AdminPageTest {
 
@@ -167,9 +165,7 @@ public class AdminPageTest {
     @WithUserDetails("admin")
     public void searchNotValidString() throws Exception {
         this.mockMvc.perform(get("/admin/User?search=abcd"))
-                .andExpect(status().isOk())
-                .andExpect(content().string(containsString("email2@pavlo")))
-                .andExpect(content().string(containsString("admin")));
+                .andExpect(status().isOk());
     }
 
     @Test
@@ -204,6 +200,83 @@ public class AdminPageTest {
         this.mockMvc.perform(get("/admin/User"))
                 .andExpect(status().isOk())
                 .andExpect(content().string(Matchers.not(containsString("userToUpdate"))))
+                .andExpect(content().string(containsString("updated")));
+
+    }
+
+    @Test
+    @WithUserDetails("admin")
+    public void getTestTypePage() throws Exception {
+        this.mockMvc.perform(get("/admin/TestType"))
+                .andExpect(status().isOk())
+                .andExpect(content().string(containsString("repeatSequence")));
+    }
+
+    @Test
+    @WithUserDetails("admin")
+    public void postDeleteTestType() throws Exception {
+        this.mockMvc.perform(post("/admin/TestType/delete/1")
+                .with(csrf().asHeader())
+                .contentType(MediaType.APPLICATION_FORM_URLENCODED)
+                .accept(MediaType.APPLICATION_JSON))
+                .andExpect(redirectedUrl("/admin/TestType"));
+
+        this.mockMvc.perform(get("/admin/TestType"))
+                .andExpect(status().isOk())
+                .andExpect(content().string(containsString("ACTIVATE")));
+    }
+
+    @Test
+    @WithUserDetails("admin")
+    public void postActivateTestType() throws Exception {
+        this.mockMvc.perform(post("/admin/TestType/delete/1")
+                .with(csrf().asHeader())
+                .contentType(MediaType.APPLICATION_FORM_URLENCODED)
+                .accept(MediaType.APPLICATION_JSON));
+
+        this.mockMvc.perform(post("/admin/TestType/activate/1")
+                .with(csrf().asHeader())
+                .contentType(MediaType.APPLICATION_FORM_URLENCODED)
+                .accept(MediaType.APPLICATION_JSON))
+                .andExpect(redirectedUrl("/admin/TestType"));
+
+        this.mockMvc.perform(get("/admin/TestType"))
+                .andExpect(status().isOk())
+                .andExpect(content().string(Matchers.not(containsString("ACTIVATE"))));
+
+    }
+
+    @Test
+    @WithUserDetails("admin")
+    public void getUpdateTestType() throws Exception {
+        this.mockMvc.perform(get("/admin/TestType/update/1"))
+                .andExpect(status().isOk())
+                .andExpect(content().string(containsString("ReactionTest")))
+                .andExpect(content().string(containsString("reactionGame")));
+    }
+
+    @Test
+    @WithUserDetails("admin")
+    public void postUpdateTestType() throws Exception {
+        this.mockMvc.perform(get("/admin/TestType"))
+                .andExpect(status().isOk())
+                .andExpect(content().string(containsString("ReactionTest")));
+
+        this.mockMvc.perform(post("/admin/TestType/update/1")
+                .with(csrf().asHeader())
+                .content(buildUrlEncodedFormEntity(
+                        "testType", "updated",
+                        "currentStatus", "Active",
+                        "TestURL", "upd"
+                ))
+                .contentType(MediaType.APPLICATION_FORM_URLENCODED)
+                .accept(MediaType.APPLICATION_JSON))
+                .andExpect(redirectedUrl("/admin/TestType"));
+
+        this.mockMvc.perform(get("/admin/TestType"))
+                .andExpect(status().isOk())
+                .andExpect(content().string(Matchers.not(containsString("ReactionTest"))))
+                .andExpect(content().string(containsString("upd")))
                 .andExpect(content().string(containsString("updated")));
 
     }

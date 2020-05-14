@@ -8,12 +8,13 @@ import lombok.ToString;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import ua.project.games.annotations.AdminPage;
 import ua.project.games.entity.enums.Role;
 
 import javax.persistence.*;
 import java.util.*;
 
-
+@AdminPage
 @Entity
 @Builder
 @AllArgsConstructor

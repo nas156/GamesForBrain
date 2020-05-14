@@ -55,9 +55,9 @@ public class UserService implements UserDetailsService {
         userRepository.save(userToUpdate);
     }
 
-    public User getById(long id) {
+    public Optional<User> getById(long id) {
         Optional<User> user = userRepository.findById(id);
-        return user.orElse(null);
+        return user;
 
     }
 
@@ -70,6 +70,6 @@ public class UserService implements UserDetailsService {
     }
 
     public Optional<List<User>> findByUsername(String username) {
-        return userRepository.findAllByUsername(username);
+        return userRepository.findAllByUsernameContaining(username);
     }
 }

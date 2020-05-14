@@ -54,11 +54,11 @@ function plot(data, containerId, testTitle = "Global statistics") {
 
 /**
  * Searches the index of your last game result in sorted array of all results
- * @param arr
- * @param x
- * @param start
- * @param end
- * @returns {number}
+ * @param {Array} arr - array of results
+ * @param {number} x - element, whose index will be searched
+ * @param {number} start - starting index of array
+ * @param {number} end - ending index of array
+ * @returns {number} - index of element
  */
 let searchPlace = function (arr, x, start, end) {
     let mid = Math.floor((start + end) / 2);

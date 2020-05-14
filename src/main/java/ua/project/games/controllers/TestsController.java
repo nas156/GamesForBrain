@@ -8,10 +8,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import ua.project.games.entity.User;
-import ua.project.games.service.RegistrationService;
 import ua.project.games.service.TestStatisticService;
-import ua.project.games.service.UserService;
 
 import java.security.Principal;
 
@@ -27,28 +24,10 @@ import java.security.Principal;
 @RequestMapping("tests")
 public class TestsController {
 
-    private final TestStatisticService testStatisticService;
-
-    /**
-     * Constructor for class with dependencies injection provided by Spring framework </br>
-     * Конструктор для классу з підтримкою підставлення залежностей за допомогою Spring framework
-     * @param testStatisticService       object of service that contains business logic for TestStatistic entity </br>
-     *                                   об'єкт классу сервісу який містить бізнес логігу для сутності TestStatistic
-     * @see TestStatisticService
-     * @see Autowired
-     */
-    @Autowired
-    public TestsController(TestStatisticService testStatisticService) {
-        this.testStatisticService = testStatisticService;
-    }
 
     /**
      *Method for handling get requests to /{testType} </br>
-     * Метод для обробки get запросів на сторінку /{testType}
-     * @param model      object for adding attributes for model and than put it in template html</br>
-     *                   обьект для додавання атрибутів до моделі с наступною обробкою в шалонах html
-     * @param principal  interface object that represents User entity</br>
-     *                   інтерфейс об'єкту що презентує сущність User
+     * Метод для обробки get запитів на сторінку /{testType}
      * @param testType   String that goes after /tests/{testType}</br>
      *                   Строка що йде після /tests/{testType}
      * @return           html template</br>
@@ -59,9 +38,8 @@ public class TestsController {
      * @see PathVariable
      */
     @GetMapping(value = "/{testType}")
-    public String getRepeatNumbersTest(Principal principal, Model model, @PathVariable String testType) {
+    public String getRepeatNumbersTest(@PathVariable String testType) {
         final String currentUserName = SecurityContextHolder.getContext().getAuthentication().getName();
-        model.addAttribute("username", currentUserName);
         return "games/" + testType;
     }
 }

@@ -12,36 +12,38 @@
     <title>Hello, world!</title>
 </head>
 <body>
-
-<div id="nav" class="slideInLeft fadeIn" th:fragment="nav">
-    <div class="row">
-        <div class="col-2"></div>
-        <div class="col-8">
-            <div class="row">
-                <div class="col-auto d-flex align-items-center">
-                    <a id="logo" href="/" class="navbar-brand">GameForBrain</a>
-                </div>
-                <div style="display: inline-block;" class="col-5 d-flex align-items-center">
-                    <img id="stat" th:src="@{/img/index/statistic.png}" alt="stat">
-                    <a th:href="@{/statistic}" class="item nav-item nav-link active">Statistic</a>
-                </div>
-                <div style="display: inline-block" class="col-3 d-flex align-items-center justify-content-end">
-                    <div sec:authorize="isAuthenticated()">
-                        <a href="#" class="item nav-item nav-link active" th:text="${username}"></a>
-                        <a href="/logout    " class="item nav-item nav-link active">logout</a>
-                    </div>
-                    <div sec:authorize="isAnonymous()">
-                        <a class="item nav-item nav-link active" href="/accounts/login">Login</a>
-                        <a class="item nav-item nav-link active" href="/accounts/registration">Registration</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-2"></div>
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary slideInLeft fadeIn" th:fragment="nav">
+    <a id="logo" href="/" class="navbar-brand">GameForBrain</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".dual-collapse2">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="navbar-collapse collapse w-100 order-1 order-md-0 dual-collapse2">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+                <img id="stat" th:src="@{/img/index/statistic.png}" alt="stat" src="">
+                <a th:href="@{/statistic}" class="item nav-item nav-link active">Statistic</a>
+            </li>
+        </ul>
     </div>
-</div>
+    <div class="navbar-collapse collapse w-100 order-3 dual-collapse2">
+        <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+                                <span sec:authorize="isAuthenticated()">
+                                    <a href="#" class="item nav-item nav-link active" th:text="${session.username}"></a>
+                                    <a href="/logout" class="item nav-item nav-link active">logout</a>
+                                </span>
+                <span sec:authorize="isAnonymous()">
+                                    <a class="item nav-item nav-link active" href="/accounts/login">Login</a>
+                                    <a class="item nav-item nav-link active"
+                                       href="/accounts/registration">Registration</a>
+                                </span>
+            </li>
+        </ul>
+    </div>
 
-<div class="slideInRight row fadeIn secblock">
+</nav>
+
+<div class="slideInRight row fadeIn secblock" style="width: 100%; margin: 0">
     <div class="col d-flex justify-content-center align-items-center">
         <img id="cup" th:src="@{/img/index/cup.png}" alt="cup">
     </div>
@@ -50,18 +52,21 @@
             <h1 style="margin-top: 2rem;">Test and train your reaction, verbal, number, visual memory,typing and
                 hearing</h1>
         </div>
+
         <div class="row">
-            <a href="#">
-                <button class="btn btn-primary btn-lg btn-block"
-                        style=" margin: 5rem; padding: 3rem; border-radius: 9999px; ">
-                    <h1 style="font-size: 3rem; color:#d3d3d3;">GO TO TESTS</h1>
-                </button>
-            </a>
+            <div class="col d-flex justify-content-center align-items-center">
+                <a href="#">
+                    <button class="btn btn-primary btn-lg btn-block"
+                            style="margin-top: 3rem ; margin-bottom: 3rem; border-radius: 9999px; ">
+                        <h1 style="font-size: 3rem; color:#d3d3d3;">GO TO TESTS</h1>
+                    </button>
+                </a>
+            </div>
         </div>
     </div>
     <div class="col"></div>
 </div>
-<div class="slideInLeft fadeIn row" id="thirdblock">
+<div class="slideInLeft fadeIn row" id="thirdblock" style="width: 100%">
     <div class="col-3 d-flex justify-content-center align-items-end ">
         <img th:src="@{/img/index/laptop.png}" id="laptop">
     </div>
@@ -74,7 +79,9 @@
                   th:with="dataIndex=(${row.index} - ${num})"
                   th:if="${row.count % 3 == 0}">
                 <a th:href="@{'/tests/' + ${tests[dataIndex].TestURL}}">
-                <button class="testbtn btn btn-primary" th:text="${tests[dataIndex].id}"></button>
+                <button class="testbtn btn btn-primary">
+                    <img style="height: 70px; width: 70px;" th:src="@{/img/index/brain.png}">
+                </button>
                 </a>
             </span>
 
@@ -82,7 +89,9 @@
                   th:with="dataIndex=(${row.index} - ${num})"
                   th:if="${row.last} and ${row.count % 3 != 0} and ${num &lt; row.count % 3}">
                 <a th:href="@{'/tests/' + ${tests[dataIndex].TestURL}}">
-                    <button class="testbtn btn btn-primary" th:text="${tests[dataIndex].id}"></button>
+                    <button class="testbtn btn btn-primary">
+                        <img style="height: 70px; width: 70px;" th:src="@{/img/index/brain.png}">
+                    </button>
                 </a>
             </span>
 
@@ -99,6 +108,13 @@
         crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
         integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+        crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-2.2.4.min.js"
+        integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
+
+<!--Boostrap jQuery-->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+        integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
         crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
         integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
