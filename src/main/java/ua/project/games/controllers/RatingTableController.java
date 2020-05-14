@@ -1,10 +1,12 @@
 package ua.project.games.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import ua.project.games.dto.UsernameScoreDTO;
 import ua.project.games.service.RatingService;
 
+import java.security.Principal;
 import java.util.List;
 import java.util.Map;
 
@@ -30,5 +32,6 @@ public class RatingTableController {
     public List<UsernameScoreDTO> getRatingForTest(@RequestParam(name = "type") String testType){
         return ratingService.getParticularGameStatisticStatisticForRatingTable(testType);
     }
+
 
 }

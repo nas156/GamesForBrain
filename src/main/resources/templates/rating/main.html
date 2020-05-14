@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+          integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link rel="stylesheet" th:href="@{/css/main.css}">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+            integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
+            crossorigin="anonymous"></script>
+    <script type="text/javascript" th:src="@{/js/rating/main.js}"></script>
+
+</head>
+<body>
+<div th:replace="~{index :: nav}"></div>
+<div class="slideInRight">
+    <div id="header-container">
+        <h1 th:text="#{string.rating.header}" style="color: white"></h1>
+    </div>
+</div>
+<div>
+
+
+</div>
+
+<div class="row">
+    <div class="col-3">
+        <ul class="list-group fade-in-1500ms">
+            <li class="list-group-item hover-event event-listener" id="ReactionTest">Reaction game</li>
+            <li class="list-group-item hover-event event-listener" id="RepeatNumbersTest">Repeat Numbers</li>
+            <li class="list-group-item hover-event event-listener" id="RepeatSequenceTest">Repeat sequence</li>
+            <li class="list-group-item hover-event event-listener" id="CountGreenTest">Count green</li>
+            <li class="list-group-item hover-event event-listener" id="IsPreviousTest">Is previous</li>
+        </ul>
+    </div>
+    <div class="col-6">
+        <div id="rating-container">Click some test to see results</div>
+    </div>
+
+</div>
+</body>
+</html>
