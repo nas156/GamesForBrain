@@ -1,10 +1,15 @@
 package ua.project.games.controllers;
 
 import lombok.extern.slf4j.Slf4j;
+import org.reflections.Reflections;
+import org.springframework.beans.factory.config.BeanDefinition;
+import org.springframework.context.annotation.ClassPathScanningCandidateComponentProvider;
+import org.springframework.core.type.filter.AnnotationTypeFilter;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import ua.project.games.annotations.AdminPage;
 import ua.project.games.entity.TestType;
 import ua.project.games.entity.User;
 import ua.project.games.exceptions.InvalidUserException;
@@ -18,15 +23,12 @@ import javax.persistence.EntityManager;
 import javax.validation.Valid;
 import java.security.Principal;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 
 
 /**
  * Class that controls get's ad post's requests to /admin/** </br>
- * Клас для контролю та відданю зображень на запроси які надходять до  /admin/**
+ * Клас для контролю та передачі зображень на запроси які надходять до  /admin/**
  *
  * @see Controller
  * @see RequestMapping
@@ -39,7 +41,6 @@ public class AdminPageController {
 
 
     final EntityManager entityManager;
-    private final Set<?> classes;
     private final TestStatisticService testStatisticService;
     private final UserService userService;
     private final TestTypeService testTypeService;
@@ -62,7 +63,6 @@ public class AdminPageController {
      */
     public AdminPageController(EntityManager entityManager, TestStatisticService testStatisticService, UserService userService, TestTypeService testTypeService, RegistrationService registrationService) {
         this.entityManager = entityManager;
-        this.classes = entityManager.getMetamodel().getEntities();
         this.testStatisticService = testStatisticService;
         this.userService = userService;
         this.testTypeService = testTypeService;
@@ -75,8 +75,6 @@ public class AdminPageController {
      *
      * @param model     object for adding attributes for model and than put it in template html</br>
      *                  об'єкт для додавання атрибутів до моделі с наступною обробкою в шаблонах html
-     * @param principal interface object that represents User entity</br>
-     *                  інтерфейс об'єкту що презентує сутність User
      * @return html template</br>
      * html шаблон
      * @see GetMapping
@@ -84,8 +82,12 @@ public class AdminPageController {
      * @see Principal
      */
     @GetMapping
-    public String getAdminPage(Model model, Principal principal) {
-        model.addAttribute("classes", classes);
+    public String getAdminPage(Model model) {
+        Set<String> clazz = new HashSet<>();
+        Reflections reflections = new Reflections("ua.project.games");
+        Set<Class<?>> annotated = reflections.getTypesAnnotatedWith(AdminPage.class);
+        annotated.forEach((claz) -> clazz.add(claz.getSimpleName()));
+        model.addAttribute("classes", clazz);
         return "/admin/adminIndex";
     }
 
@@ -216,7 +218,7 @@ public class AdminPageController {
      * @param result     object for registration errors in form inputs</br>
      *                   об'єкт для реєстрації помило в полях html форми
      * @return          if adding of user is success redirect to /admin/User page else redirect to /admin/User/add</br>
-     *                  якщо користувача успішно ддоваленото перенаправлення на /admin/User в іншому разі переправлення на /admin/User/add
+     *                  якщо користувача успішно додано перенаправлення на /admin/User в іншому разі переправлення на /admin/User/add
      */
     @PostMapping(value = "/User/add")
     public String addUser(@ModelAttribute("usr") User user, BindingResult result) {
@@ -276,9 +278,9 @@ public class AdminPageController {
      * Method for handling get requests to /admin/TestType/update/{user_id} </br>
      * Метод для обробки get запитів на сторінку /admin/TestType/update/{user_id}
      * @param model     object for adding attributes for model and than put it in template html</br>
-     *                  обьект для додавання атрибутів до моделі с наступною обробкою в шалонах html
+     *                  об'єкт для додавання атрибутів до моделі с наступною обробкою в шалонах html
      * @param principal interface object that represents User entity</br>
-     *                  інтерфейс об'єкту що презентує сущність User
+     *                  інтерфейс об'єкту що презентує сутність User
      * @param test_id    String that contains in path as {test_id}</br>
      *                   Строка що міститься в шляху як {test_id}
      * @param testType   object for binding TestType object to html form</br>
