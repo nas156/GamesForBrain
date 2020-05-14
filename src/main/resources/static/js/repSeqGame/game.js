@@ -125,7 +125,7 @@ function game(width, height, gridLen, seqLen) {
       let padding = 100;
       let yPaddingTop = 50;
       this.grid = new Grid(size = this.gridLen, [padding, padding + yPaddingTop],
-                           [this.width - padding, this.height - padding + yPaddingTop], this.seqLen)
+                           [this.width - padding, this.height - padding + yPaddingTop], this.seqLen);
       this.grid.stage = 1;
       this.grid.genSeq();
     }

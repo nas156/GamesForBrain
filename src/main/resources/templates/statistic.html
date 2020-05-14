@@ -5,36 +5,54 @@
     <title>Title</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
           integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-    <link rel="stylesheet" th:href="@{/css/main.css}">
     <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <link rel="stylesheet" th:href="@{/css/main.css}">
+    <link rel="stylesheet" th:href="@{/css/statistics.css}">
     <script type="text/javascript" th:src="@{/js/statistics/commonFunctions.js}"></script>
     <script type="text/javascript" th:src="@{/js/statistics/statisticsPage/main.js}"></script>
+    <script type="text/javascript" th:src="@{/js/statistics/statisticsPage/dropDownAnimation.js}"></script>
 </head>
 <body>
 <div th:replace="~{index :: nav}"></div>
-<div class="slideInRight">
+<div>
     <div id="header-container">
-        <h1 th:text="#{string.statistics.plotHeader}" style="color: white"></h1>
+        <h1 th:text="#{string.statistics.plotHeader}"></h1>
     </div>
 </div>
 <div class="plots-container">
-    <div class="row slideInLeft">
+    <div class="row">
         <div class="col">
-            <div id="plot-1" style="width:400px;height:500px;"></div>
+            <div class="plot-header notClicked" >
+                <h1>Test1</h1>
+            </div>
+            <div id="plot-1" class="plotContainer" style="width:400px;height:500px;"></div>
         </div>
         <div class="col">
-            <div id="plot-2" style="width:400px;height:500px;"></div>
+            <div class="plot-header notClicked" >
+                <h1>Test2</h1>
+            </div>
+            <div id="plot-2" class="plotContainer" style="width:400px;height:500px;"></div>
         </div>
         <div class="col">
-            <div id="plot-3" style="width:400px;height:500px;"></div>
+            <div class="plot-header notClicked">
+                <h1>Test3</h1>
+            </div>
+            <div id="plot-3" class="plotContainer" style="width:400px;height:500px;"></div>
         </div>
     </div>
-    <div class="row slideInRight">
+    <div class="row">
         <div class="col">
-            <div id="plot-4" style="width:400px;height:500px;"></div>
+            <div class="plot-header notClicked">
+                <h1>Test4</h1>
+            </div>
+            <div id="plot-4" class="plotContainer" style="width:400px;height:500px;"></div>
         </div>
         <div class="col">
-            <div id="plot-5" style="width:400px;height:500px;"></div>
+            <div class="plot-header notClicked">
+                <h1>Test5</h1>
+            </div>
+            <div id="plot-5" class="plotContainer" style="width:400px;height:500px;"></div>
         </div>
     </div>
 </div>
