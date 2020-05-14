@@ -76,6 +76,8 @@ public class TestStatisticService {
     /**
      * Метод який дістає всі записи в таблиці test_statistic
      * @return список об'єктів класу TestStatistic
+     * @see TestStatistic
+     * @see TestTypeRepository
      */
     public List<TestStatistic> getAll() {
         return testStatisticRepository.findAll();
