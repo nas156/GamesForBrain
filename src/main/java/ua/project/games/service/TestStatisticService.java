@@ -2,6 +2,7 @@ package ua.project.games.service;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 import ua.project.games.dto.TestStatisticDTO;
 import ua.project.games.entity.TestStatistic;
@@ -11,6 +12,7 @@ import ua.project.games.entity.enums.CurrentStatus;
 import ua.project.games.repository.TestStatisticRepository;
 import ua.project.games.repository.TestTypeRepository;
 
+import javax.swing.text.html.parser.Entity;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -45,20 +47,50 @@ public class TestStatisticService {
         this.testTypeRepository = testTypeRepository;
     }
 
-    //TODO optional checking
+    /**
+     * Метод, який знаходить всі записи з певним юзернеймом в таблиці TestStatistic
+     * Якщо таких записів немає, повертається пустий масив
+     * @param username юзернейм за яким відбувається пошук записів
+     * @return List<TestStatistic> список об'єктів типу TestStatistic, які були знайдені в таблиці
+     * @see TestStatistic
+     * @see List
+     * @see String
+     */
     @Deprecated
     public List<TestStatistic> findAllTestsByUsername(String username) {
-        return testStatisticRepository.findAllByUser_Username(username).get();
+        return testStatisticRepository.findAllByUser_Username(username).orElse(new ArrayList<>());
     }
 
+    /**
+     * Метод який записує об'єкт типу TestStatistic в таблицю test_statistic
+     * @param testStatistic об'єкт для запису в базу
+     * @see TestStatistic
+     * @see TestStatisticRepository
+     */
     public void saveStatistic(TestStatistic testStatistic) {
         testStatisticRepository.save(testStatistic);
     }
 
+    /**
+     * Метод який записує кожен об'єкт типу TestStatistic зі списку в таблицю test_statistic
+     * @param testStatistics список об'єктів для запису в базу
+     * @see TestStatistic
+     * @see List
+     * @see TestStatisticRepository
+     */
     public void saveStatistic(List<TestStatistic> testStatistics) {
         testStatisticRepository.saveAll(testStatistics);
     }
 
+    /**
+     * Метод, який створює і записує в таблицю test_statistic об'єкт типу TestStatistic,
+     * який збираэться з полів переданого об'єкта TestStatisticDTO
+     * @param testStatisticDTO об'єкт з полів якого збирається TestStatistic
+     * @see TestStatistic
+     * @see TestStatisticDTO
+     * @see TestStatisticRepository
+     * @see Slf4j
+     */
     public void createStatistic(TestStatisticDTO testStatisticDTO) {
         if (notAnonymousCheck(testStatisticDTO.getUsername())) {
             TestStatistic testStatisticEntity = TestStatistic.builder()

@@ -67,6 +67,7 @@ public class RatingService {
      * Метод, який кожного дня о 18:00 оновлює рейтингову таблицю. Записує в неї резульат методу getAllRatingFields()
      * @see Transactional
      * @see RatingTableRepository
+     * @see Scheduled
      */
     @Transactional
     @Scheduled(cron = "0 0 6 * * *")
@@ -105,7 +106,7 @@ public class RatingService {
                 .collect(Collectors.toMap(x -> x, this::getParticularGameStatisticStatisticForRatingTable));
     }
 
-    public static <T> Predicate<T> isDuplicateByAProperty(Function<? super T, ?> keyExtractor) {
+    private static <T> Predicate<T> isDuplicateByAProperty(Function<? super T, ?> keyExtractor) {
         Set<Object> seen = ConcurrentHashMap.newKeySet();
         return t -> seen.add(keyExtractor.apply(t));
     }
