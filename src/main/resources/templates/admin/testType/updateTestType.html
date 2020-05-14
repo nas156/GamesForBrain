@@ -17,34 +17,28 @@
 </head>
 <body>
 <div th:replace="~{index :: nav}"></div>
-<form th:object="${usr}" method="post" th:action="@{'/admin/User/add/'}">
+<form th:object="${testTypes}" method="post" th:action="@{'/admin/TestType/update/' + ${testTypes.getId()}}">
 
+    <input id="id" name="id" type="hidden" th:value="${testTypes.getId()}">
     <div class="form-group">
-        <label for="username">Username</label>
-        <input th:field="*{username}" type="text" required class="form-control" id="username"
-               aria-describedby="username" placeholder="Username">
+        <label for="testType">Test Type</label>
+        <input th:name="testType" th:id="testType" type="text" required class="form-control" id="testType"
+               aria-describedby="testType" placeholder="Test Type"
+               th:value="${testTypes.getTestType()}">
     </div>
     <div class="form-group">
-        <label for="age">Age</label>
-        <input th:field="*{age}" type="date" required class="form-control" id="age" aria-describedby="age"
-               placeholder="Age">
-    </div>
-    <div class="form-group">
-        <label for="email">Email</label>
-        <input th:field="*{email}" type="email" required class="form-control" id="email"
-               aria-describedby="email" placeholder="Email">
-    </div>
-    <div class="form-group">
-        <label for="password">Password</label>
-        <input th:field="*{password}" type="text" required class="form-control" id="password"
-               aria-describedby="password" placeholder="Password">
-    </div>
-    <div class="form-group">
-        <label for="role">Role</label>
-        <select th:field="*{role}" required class="form-control" id="role">
-            <option th:value="USER">USER</option>
-            <option th:value="USER">ADMIN</option>
+        <label for="currentStatus">Status</label>
+        <select th:name="currentStatus" th:id="currentStatus" required class="form-control" id="currentStatus">
+            <option th:selected="${testTypes.getCurrentStatus().toString() == 'Active'}">Active</option>
+            <option th:selected="${testTypes.getCurrentStatus().toString() == 'Deleted'}">Deleted</option>
         </select>
+    </div>
+    </div>
+    <div class="form-group">
+        <label for="TestURL">File Name</label>
+        <input th:name="TestURL" th:id="age" type="text" required class="form-control" id="TestURL" aria-describedby="TestURL"
+               placeholder="TestURL"
+               th:value="${testTypes.getTestURL()}">
     </div>
     <button type="submit" class="btn btn-primary">Submit</button>
 </form>

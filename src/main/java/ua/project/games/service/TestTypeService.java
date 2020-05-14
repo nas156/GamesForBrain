@@ -1,5 +1,7 @@
 package ua.project.games.service;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Service;
 import ua.project.games.entity.TestType;
 import ua.project.games.entity.enums.CurrentStatus;
@@ -13,13 +15,33 @@ public class TestTypeService {
 
     private final TestTypeRepository testTypeRepository;
 
-
+    /**
+     * Конструктор для классу з підтримкою підставлення залежностей за допомогою Spring framework
+     * @param testTypeRepository об'кт репозиторію TestTypeRepository, який містить медоти для роботи з таблицею test_type
+     * @see TestTypeRepository
+     * @see Autowired
+     */
+    @Autowired
     public TestTypeService(TestTypeRepository testTypeRepository) {
         this.testTypeRepository = testTypeRepository;
     }
 
     public List<TestType> getAll() {
         return testTypeRepository.findAll();
+    }
+
+    /**
+     * method wrapper for controller interaction with TestType repository. Use to find TestType by its id</br>
+     * метод обертка для взаємодії контролера та TestType репозиторія. Використовувати для отриманння TestType по id
+     * @param id    id of testType we wont to find</br>
+     *              id об'єкта testType якого ми хочемо знайти
+     * @return      TestType object with specified id</br>
+     *              TestType об'єкт з зазначеним id
+     * @see TestTypeRepository
+     * @see TestType
+     */
+    public Optional<TestType> getById(long id) {
+        return testTypeRepository.findById(id);
     }
 
     public void deleteTestbyId(long testTypeId) {
@@ -36,5 +58,20 @@ public class TestTypeService {
             testType.setCurrentStatus(CurrentStatus.Active);
             testTypeRepository.save(testType);
         });
+    }
+
+    /**
+     * method for updating TestType entity and save it to repository</br>
+     * метод для оновлення сутноті TestType і збереження до бази даних
+     * @param testTypeToUpdate      TestType object that from db that we wont to update</br>
+     *                              об'єкт TestType з бази даних який ми хочемо оновити
+     * @param testType              TestType object with fields that you'll set to entity you wont update</br>
+     *                              TestType об'єкт з полями які ми будемо передавати до сутності яку хочемо оновити
+     */
+    public void updateTestType(@NonNull TestType testTypeToUpdate, @NonNull TestType testType) {
+        testTypeToUpdate.setTestType(testType.getTestType());
+        testTypeToUpdate.setCurrentStatus(testType.getCurrentStatus());
+        testTypeToUpdate.setTestURL(testType.getTestURL());
+        testTypeRepository.save(testTypeToUpdate);
     }
 }

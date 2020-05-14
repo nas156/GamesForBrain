@@ -1,6 +1,7 @@
 package ua.project.games.service;
 
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ua.project.games.dto.TestStatisticDTO;
 import ua.project.games.entity.TestStatistic;
@@ -11,9 +12,15 @@ import ua.project.games.repository.TestStatisticRepository;
 import ua.project.games.repository.TestTypeRepository;
 
 import java.time.LocalDate;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
+/**
+ * Сервісний клас для опису логіки роботи з даними статистики тестів
+ * @see Service
+ */
 @Service
 @Slf4j
 public class TestStatisticService {
@@ -21,7 +28,17 @@ public class TestStatisticService {
     private final UserService userService;
     private final TestTypeRepository testTypeRepository;
 
-
+    /**
+     * Конструктор для классу з підтримкою підставлення залежностей за допомогою Spring framework
+     * @param testStatisticRepository об'єкт репозиторію TestStatisticRepository, який містить методи для роботи з таблицею test_statistic
+     * @param userService об'єкт сервісу userService, який містить логіку для роботи з класом User
+     * @param testTypeRepository об'єкт репозиторію TestTypeRepository, який містить методи для роботи з таблицею test_type
+     * @see TestStatisticRepository
+     * @see UserService
+     * @see TestTypeRepository
+     * @see Autowired
+     */
+    @Autowired
     public TestStatisticService(TestStatisticRepository testStatisticRepository, UserService userService, TestTypeRepository testTypeRepository) {
         this.testStatisticRepository = testStatisticRepository;
         this.userService = userService;
@@ -56,10 +73,22 @@ public class TestStatisticService {
         }
     }
 
+    /**
+     * Метод який дістає всі записи в таблиці test_statistic
+     * @return список об'єктів класу TestStatistic
+     * @see TestStatistic
+     * @see TestTypeRepository
+     */
     public List<TestStatistic> getAll() {
         return testStatisticRepository.findAll();
     }
 
+    /**
+     * Метод який приймеє на всіх об'єкти типу String та порівнює його з  строкою "anonymousUser"
+     * @param username ім'я юзера, яке потрібно перевірити
+     * @return true, якщо параметр не співпадає з строкою "anonymousUser", та false, якщо співпадає
+     * @see String/equals()
+     */
     private boolean notAnonymousCheck(String username) {
         return !username.equals("anonymousUser");
     }
@@ -90,11 +119,11 @@ public class TestStatisticService {
 
     public List<TestStatistic> getTopScoresForATest(String test, int score){
         return testStatisticRepository
-                .findTop100ByScoreGreaterThanAndTestType_TestTypeOrderByScore(score, test)
+                .findAllByScoreGreaterThanAndTestType_TestType(score, test)
                 .orElse(new ArrayList<>());
     }
 
-    public void deleteAllbyUser(User user) {
+    public void deleteAllByUser(User user) {
         List<TestStatistic> userTests = user.getTests();
         testStatisticRepository.deleteAll(userTests);
     }
