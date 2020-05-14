@@ -1,12 +1,10 @@
 package ua.project.games.entity;
 
 import lombok.*;
-import ua.project.games.annotations.AdminPage;
 import ua.project.games.entity.enums.CurrentStatus;
 
 import javax.persistence.*;
 
-@AdminPage
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
