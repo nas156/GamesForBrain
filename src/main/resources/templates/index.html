@@ -79,7 +79,9 @@
                   th:with="dataIndex=(${row.index} - ${num})"
                   th:if="${row.count % 3 == 0}">
                 <a th:href="@{'/tests/' + ${tests[dataIndex].TestURL}}">
-                <button class="testbtn btn btn-primary" th:text="${tests[dataIndex].id}"></button>
+                <button class="testbtn btn btn-primary">
+                    <img style="height: 70px; width: 70px;" th:src="@{/img/index/brain.png}">
+                </button>
                 </a>
             </span>
 
@@ -87,7 +89,9 @@
                   th:with="dataIndex=(${row.index} - ${num})"
                   th:if="${row.last} and ${row.count % 3 != 0} and ${num &lt; row.count % 3}">
                 <a th:href="@{'/tests/' + ${tests[dataIndex].TestURL}}">
-                    <button class="testbtn btn btn-primary" th:text="${tests[dataIndex].id}"></button>
+                    <button class="testbtn btn btn-primary">
+                        <img style="height: 70px; width: 70px;" th:src="@{/img/index/brain.png}">
+                    </button>
                 </a>
             </span>
 
