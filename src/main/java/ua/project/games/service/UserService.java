@@ -20,6 +20,12 @@ import java.util.Optional;
 public class UserService implements UserDetailsService {
     private final UserRepository userRepository;
 
+    /**
+     * Конструктор для классу з підтримкою підставлення залежностей за допомогою Spring framework
+     * @param userRepository об'єкт репозиторію UserRepository, який містить методи для роботи з таблицею usr
+     * @see UserRepository
+     * @see Autowired
+     */
     @Autowired
     public UserService(UserRepository userRepository) {
         this.userRepository = userRepository;
@@ -27,10 +33,11 @@ public class UserService implements UserDetailsService {
 
     /**
      * Метод, який знаходить в таблиці usr запис, поле username якого співпадає з переданим в параметрах об'єктом типу String
-     * Викидає UsernameNotFoundException, якщо запису, поле username якого співпадає з переданою в параметрі строкою немає
-     * @param s
+     * @param s ім'я юзера, якого потрібно знайти
      * @return Об'єкт типу User, поле username якого співпадає з переданим в параметрах об'єктом типу String, або Optional.empty()
-     * @throws UsernameNotFoundException
+     * @throws UsernameNotFoundException якщо запису, поле username якого співпадає з переданою в параметрі, строкою немає
+     * @see User
+     * @see UsernameNotFoundException
      */
     @Override
     public User loadUserByUsername(String s) throws UsernameNotFoundException {

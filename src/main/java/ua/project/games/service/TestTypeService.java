@@ -1,6 +1,7 @@
 package ua.project.games.service;
 
-import lombok.NonNull;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Service;
 import ua.project.games.entity.TestType;
 import ua.project.games.entity.enums.CurrentStatus;
@@ -14,7 +15,13 @@ public class TestTypeService {
 
     private final TestTypeRepository testTypeRepository;
 
-
+    /**
+     * Конструктор для классу з підтримкою підставлення залежностей за допомогою Spring framework
+     * @param testTypeRepository об'кт репозиторію TestTypeRepository, який містить медоти для роботи з таблицею test_type
+     * @see TestTypeRepository
+     * @see Autowired
+     */
+    @Autowired
     public TestTypeService(TestTypeRepository testTypeRepository) {
         this.testTypeRepository = testTypeRepository;
     }
@@ -61,7 +68,7 @@ public class TestTypeService {
      * @param testType              TestType object with fields that you'll set to entity you wont update</br>
      *                              TestType об'єкт з полями які ми будемо передавати до сутності яку хочемо оновити
      */
-    public void updateTestType(@NonNull TestType testTypeToUpdate,@NonNull TestType testType) {
+    public void updateTestType(@NonNull TestType testTypeToUpdate, @NonNull TestType testType) {
         testTypeToUpdate.setTestType(testType.getTestType());
         testTypeToUpdate.setCurrentStatus(testType.getCurrentStatus());
         testTypeToUpdate.setTestURL(testType.getTestURL());

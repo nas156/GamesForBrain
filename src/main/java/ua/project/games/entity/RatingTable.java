@@ -22,4 +22,8 @@ public class RatingTable {
     public RatingTable(TestStatistic testStatistic) {
         this.testStatistic = testStatistic;
     }
+
+    public int getScore(){
+        return this.testStatistic.getScore();
+    }
 }
